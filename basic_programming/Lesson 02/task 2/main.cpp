@@ -31,5 +31,7 @@ int main()
     editSchot(schot, nowMoney);
     std::cout << "Ваш счёт: ";
     std::wcout << schot.name;
+    std::cout.setf(std::ios::fixed); //  почему-то обнуляет всё после точки
+    std::cout.precision(2);
     std::cout << ", " << schot.number << ", " << schot.money;
 }
