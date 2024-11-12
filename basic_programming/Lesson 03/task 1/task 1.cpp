@@ -41,6 +41,23 @@ public:
 
 };
 
+/*
+bool(Calculator::* setNum)(double);
+
+void seter (Calculator obj, bool(Calculator::*setNum)(double) ){
+    while (true) {
+        double n;
+        std::cout << "Введите num1: ";
+        std::cin >> n;
+        if ((obj.*setNum)(n))
+            break;
+        else {
+            std::cout << "Неверный ввод!" << std::endl;
+            continue;
+        }
+    }
+};*/
+
 void  main()
 {
     setlocale(LC_ALL, "Russian");
@@ -68,6 +85,12 @@ void  main()
                 continue;
             }
         } //while num2
+
+        /* setNum = &Calculator::set_num1;
+        seter(calc, setNum);
+        setNum = &Calculator::set_num2;
+        seter(calc, setNum); */
+
         std::cout << std::endl;
         std::cout << "num1 + num2 = " << calc.add()<<std::endl;
         std::cout << "num1 - num2 = " << calc.subtract_1_2() << std::endl;
@@ -77,6 +100,6 @@ void  main()
         std::cout << "num2 / num1 = " << calc.divide_2_1() << std::endl << std::endl;
     }
 
-
+    
 }
 
