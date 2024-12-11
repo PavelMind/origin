@@ -1,0 +1,3 @@
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 10/task 2/out/build/x64-Debug/CMakeFiles/figurEX.dir
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 10/task 2/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 10/task 2/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
