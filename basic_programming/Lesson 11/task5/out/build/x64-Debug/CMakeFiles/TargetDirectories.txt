@@ -1,0 +1,4 @@
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/dunamicFigure.dir
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/dunamicMyLib.dir
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

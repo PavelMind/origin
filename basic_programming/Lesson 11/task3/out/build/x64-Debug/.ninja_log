@@ -1,0 +1,6 @@
+# ninja log v5
+6	265	7558058473500454	CMakeFiles/dunamicMyLib.dir/dunamo.cpp.obj	ae3e7e8644391f44
+267	774	7558058478081515	dunamicMyLib.dll	35e6c17e9ae6e15
+267	774	7558058478081515	dunamicMyLib.lib	35e6c17e9ae6e15
+1	777	7558058478677410	CMakeFiles/dunamicCMake.dir/client.cpp.obj	bac919e83d5a8c0
+778	1269	7558058483131134	dunamicCMake.exe	ed1e86ce376b3107
