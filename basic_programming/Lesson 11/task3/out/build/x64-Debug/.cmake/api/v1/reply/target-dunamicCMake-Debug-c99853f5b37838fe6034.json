@@ -2,13 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "dunamicMyLib.dll"
+			"path" : "dunamicCMake.exe"
 		},
 		{
-			"path" : "dunamicMyLib.lib"
-		},
-		{
-			"path" : "dunamicMyLib.pdb"
+			"path" : "dunamicCMake.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -16,7 +13,8 @@
 	{
 		"commands" : 
 		[
-			"add_library"
+			"add_executable",
+			"target_link_libraries"
 		],
 		"files" : 
 		[
@@ -30,7 +28,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 4,
+				"line" : 3,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 7,
 				"parent" : 0
 			}
 		]
@@ -44,27 +48,37 @@
 					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd"
 				}
 			],
-			"defines" : 
-			[
-				{
-					"define" : "dunamicMyLib_EXPORTS"
-				}
-			],
 			"language" : "CXX",
 			"sourceIndexes" : 
 			[
-				1
+				0
 			]
 		}
 	],
-	"id" : "dunamicMyLib::@6890427a1f51a3e7e1df",
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "dunamicMyLib::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "dunamicCMake::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/machine:x64 /debug /INCREMENTAL",
+				"fragment" : "/DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "dunamicMyLib.lib",
+				"role" : "libraries"
 			},
 			{
 				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
@@ -73,8 +87,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "dunamicMyLib",
-	"nameOnDisk" : "dunamicMyLib.dll",
+	"name" : "dunamicCMake",
+	"nameOnDisk" : "dunamicCMake.exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -83,17 +97,10 @@
 	"sourceGroups" : 
 	[
 		{
-			"name" : "Header Files",
-			"sourceIndexes" : 
-			[
-				0
-			]
-		},
-		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				1
+				0
 			]
 		}
 	],
@@ -101,15 +108,10 @@
 	[
 		{
 			"backtrace" : 1,
-			"path" : "dunamo.h",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "dunamo.cpp",
-			"sourceGroupIndex" : 1
+			"path" : "client.cpp",
+			"sourceGroupIndex" : 0
 		}
 	],
-	"type" : "SHARED_LIBRARY"
+	"type" : "EXECUTABLE"
 }

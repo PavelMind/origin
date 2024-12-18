@@ -86,7 +86,7 @@ build dunamicCMake.exe: CXX_EXECUTABLE_LINKER__dunamicCMake_Debug CMakeFiles\dun
 build cmake_object_order_depends_target_dunamicMyLib: phony || .
 
 build CMakeFiles\dunamicMyLib.dir\dunamo.cpp.obj: CXX_COMPILER__dunamicMyLib_unscanned_Debug C$:\Users\я\Desktop\Netology$ homework\basic_programming\Lesson$ 11\task3\dunamo.cpp || cmake_object_order_depends_target_dunamicMyLib
-  DEFINES = -DdunamicMyLib_EXPORTS
+  DEFINES = -DLEAVER_EXPORTS -DdunamicMyLib_EXPORTS
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   OBJECT_DIR = CMakeFiles\dunamicMyLib.dir
   OBJECT_FILE_DIR = CMakeFiles\dunamicMyLib.dir

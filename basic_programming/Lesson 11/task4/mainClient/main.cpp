@@ -1,17 +1,17 @@
 ﻿#include <iostream>
 #include <string>
-#include "libFigure.h"
+
 #include <windows.h>
 
-//#include "quadrangle.h"
-//#include "triangle.h"
-//#include "rightTriangle.h"
-//#include "isoscelesTriangle.h"
-//#include "equiLatTriangle.h"
-//#include "rectangle.h"
-//#include "square.h"
-//#include "parallelogram.h"
-//#include "rhombus.h"
+#include "quadrangle.h"
+#include "triangle.h"
+#include "rightTriangle.h"
+#include "isoscelesTriangle.h"
+#include "equiLatTriangle.h"
+#include "rectangle.h"
+#include "square.h"
+#include "parallelogram.h"
+#include "rhombus.h"
 
 
 
