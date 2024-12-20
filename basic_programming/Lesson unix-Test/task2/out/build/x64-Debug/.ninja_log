@@ -1,0 +1,4 @@
+# ninja log v5
+15	158	7564134750716192	build.ninja	8d2df0ae1cae0437
+17	376	7563218268722997	CMakeFiles/testMn.dir/testMain.cpp.obj	72c85a102aec13d4
+377	564	7563218269998381	testMn.exe	651a71e8f7eaeb62

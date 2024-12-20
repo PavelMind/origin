@@ -1,0 +1,3 @@
+R:/Работа/Netology homework/basic_programming/Lesson unix-Test/task1/out/build/x64-Debug/CMakeFiles/testN.dir
+R:/Работа/Netology homework/basic_programming/Lesson unix-Test/task1/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+R:/Работа/Netology homework/basic_programming/Lesson unix-Test/task1/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
