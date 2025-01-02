@@ -39,7 +39,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
       
       The C compiler identification is MSVC, found in:
-        C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/3.29.5-msvc4/CompilerIdC/CMakeCCompilerId.exe
+        R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/3.29.5-msvc4/CompilerIdC/CMakeCCompilerId.exe
       
   -
     kind: "message-v1"
@@ -51,7 +51,7 @@ events:
     message: |
       Detecting C compiler /showIncludes prefix:
         main.c
-        Примечание: включение файла:  C:\\Users\\я\\Desktop\\Netology homework\\basic_programming\\Lesson 11\\task4\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
+        Примечание: включение файла:  R:\\Работа\\Netology homework\\basic_programming\\Lesson 11\\task5\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "Примечание: включение файла:  "
   -
@@ -85,7 +85,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
       
       The CXX compiler identification is MSVC, found in:
-        C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/3.29.5-msvc4/CompilerIdCXX/CMakeCXXCompilerId.exe
+        R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/3.29.5-msvc4/CompilerIdCXX/CMakeCXXCompilerId.exe
       
   -
     kind: "message-v1"
@@ -97,7 +97,7 @@ events:
     message: |
       Detecting CXX compiler /showIncludes prefix:
         main.c
-        Примечание: включение файла:  C:\\Users\\я\\Desktop\\Netology homework\\basic_programming\\Lesson 11\\task4\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
+        Примечание: включение файла:  R:\\Работа\\Netology homework\\basic_programming\\Lesson 11\\task5\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "Примечание: включение файла:  "
   -
@@ -109,8 +109,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/\u044f/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-k0qa11"
-      binary: "C:/Users/\u044f/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-k0qa11"
+      source: "R:/\u0420\u0430\u0431\u043e\u0442\u0430/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-otsy3f"
+      binary: "R:/\u0420\u0430\u0431\u043e\u0442\u0430/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-otsy3f"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -119,11 +119,11 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-k0qa11'
+        Change Dir: 'R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-otsy3f'
         
-        Run Build Command(s): "R:/Development/IDE/Visual Studio/IDE files/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_08029
-        [1/2] "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS  /Zi /Ob0 /Od /RTC1 -MDd /showIncludes /FoCMakeFiles\\cmTC_08029.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_08029.dir\\ /FS -c "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_08029.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_08029.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_08029.exe /implib:cmTC_08029.lib /pdb:cmTC_08029.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "R:/Development/IDE/Visual Studio/IDE files/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_fec7e
+        [1/2] "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS  /Zi /Ob0 /Od /RTC1 -MDd /showIncludes /FoCMakeFiles\\cmTC_fec7e.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_fec7e.dir\\ /FS -c "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_fec7e.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_fec7e.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_fec7e.exe /implib:cmTC_fec7e.lib /pdb:cmTC_fec7e.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
@@ -151,8 +151,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/\u044f/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-cf1tah"
-      binary: "C:/Users/\u044f/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-cf1tah"
+      source: "R:/\u0420\u0430\u0431\u043e\u0442\u0430/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-6a4poi"
+      binary: "R:/\u0420\u0430\u0431\u043e\u0442\u0430/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-6a4poi"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -162,11 +162,11 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/я/Desktop/Netology homework/basic_programming/Lesson 11/task4/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-cf1tah'
+        Change Dir: 'R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-6a4poi'
         
-        Run Build Command(s): "R:/Development/IDE/Visual Studio/IDE files/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_ea86e
-        [1/2] "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Zi /Ob0 /Od /RTC1 -MDd /showIncludes /FoCMakeFiles\\cmTC_ea86e.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_ea86e.dir\\ /FS -c "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_ea86e.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_ea86e.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_ea86e.exe /implib:cmTC_ea86e.lib /pdb:cmTC_ea86e.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "R:/Development/IDE/Visual Studio/IDE files/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_6d460
+        [1/2] "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Zi /Ob0 /Od /RTC1 -MDd /showIncludes /FoCMakeFiles\\cmTC_6d460.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_6d460.dir\\ /FS -c "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
+        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "R:\\Development\\IDE\\Visual Studio\\IDE files\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_6d460.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "R:\\Development\\IDE\\Visual Studio\\IDE files\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_6d460.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_6d460.exe /implib:cmTC_6d460.lib /pdb:cmTC_6d460.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -

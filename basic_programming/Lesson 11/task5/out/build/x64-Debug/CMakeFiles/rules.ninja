@@ -65,7 +65,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "R:\Development\IDE\Visual Studio\IDE files\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -S"C:\Users\я\Desktop\Netology homework\basic_programming\Lesson 11\task4" -B"C:\Users\я\Desktop\Netology homework\basic_programming\Lesson 11\task4\out\build\x64-Debug"
+  command = "R:\Development\IDE\Visual Studio\IDE files\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -S"R:\Работа\Netology homework\basic_programming\Lesson 11\task5" -B"R:\Работа\Netology homework\basic_programming\Lesson 11\task5\out\build\x64-Debug"
   description = Re-running CMake...
   generator = 1
 
