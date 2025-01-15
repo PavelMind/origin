@@ -1,3 +1,4 @@
 .vs/
 x64/
 task*/task*/
+task*/out/build/
