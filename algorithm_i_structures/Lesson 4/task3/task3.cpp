@@ -1,26 +1,39 @@
 ﻿#include <iostream>
+#include <windows.h>
 #include <string>
 #include "print.h"
 
+ 
+void remove_dynamic_array_head(int*& arr, int& logical_size, int& actual_size) {
+    --logical_size;
+    if (logical_size == 0) {
+        actual_size = 1;
+        arr[0] = 0;
+        return;
+    }
+    int third = actual_size / 3;  
 
-void append_to_dynamic_array(int*& arr, int& logical_size, int& actual_size, int var) {
-    if (logical_size >= actual_size) {
-        actual_size = actual_size * 2;
+    if (logical_size <= third && third > 0) {
+        actual_size = third;
         int* temp = new int[actual_size];
         for (int i = 0; i < logical_size; ++i) {
-            temp[i] = arr[i];
-        }
-        //memcpy(temp, arr, logical_size * sizeof(int));
+            temp[i] = arr[i + 1];
+        }        
         delete[] arr;
         arr = temp;
     }
-    arr[logical_size] = var;
-    ++logical_size;
+    else {
+        for (int i = 0; i < logical_size; ++i) {
+            arr[i] = arr[i + 1];
+        }
+    }
 }
 
 
 int main()
 {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
     int logSize, realSize;
     while (true) {
@@ -42,20 +55,27 @@ int main()
         arr[i] = input;
     }
     print_dynamic_array(arr, logSize, realSize);
-    int add;
+    std::string add;
+    
     while (true) {
-        std::cout << "Введите число для добавления (0 - выход): ";
+        
+        std::cout << "Введите \"да\" или 1 для удаления 1го элемента(другое- для выхода): ";
         std::cin >> add;
-        if (add == 0) { 
-            std::cout << "Спасибо. ";
-            print_dynamic_array(arr, logSize, realSize);
-            break;
+        if (add == "да" || add =="1") {
+            remove_dynamic_array_head(arr, logSize, realSize);
+            if (logSize <= 0) {
+                std::cout << "Массив пуст!";
+                break;
+            }
+            print_dynamic_array(arr, logSize, realSize);            
+            continue;
         }
-        append_to_dynamic_array(arr, logSize, realSize, add);
+        std::cout << "Конец. ";
         print_dynamic_array(arr, logSize, realSize);
+        break;
     }
-    
-    
+
+
     delete[] arr;
 }
 
