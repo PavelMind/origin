@@ -39,4 +39,14 @@ TEST_CASE("List class", "[list]") {
         CHECK(obj.PopBack() == 7);
         CHECK(obj.Size() == 2);
     }
+    
+    SECTION("exceptions") {
+        obj.Clear();
+        
+        INFO("throw in PopFront");        
+        CHECK_THROWS(obj.PopFront());
+        
+        INFO("throw in PopBack");        
+        CHECK_THROWS_AS(obj.PopBack(), std::runtime_error);
+    }
 }
