@@ -49,4 +49,5 @@ TEST_CASE("List class", "[list]") {
         INFO("throw in PopBack");        
         CHECK_THROWS_AS(obj.PopBack(), std::runtime_error);
     }
+
 }
