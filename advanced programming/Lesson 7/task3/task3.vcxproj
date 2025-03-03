@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="task3.cpp" />
-    <ClCompile Include="vectory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vectory.hpp" />
