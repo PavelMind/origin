@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 
 #include <set>
-
+#include <vector>
 
 int main()
 {
@@ -15,8 +15,14 @@ int main()
         list.insert(input);
     }
 
-    std::cout << "[OUT]" << std::endl;
-    for (auto i = list.rbegin(); i != list.rend(); ++i) {
-        std::cout << *i << std::endl;
+
+    std::vector<int> result;
+    for (auto i = list.rbegin() ; i != list.rend(); ++i) {
+        result.push_back(*i);
+    }
+
+    std::cout << "[OUT]" << std::endl;    
+    for (auto i : result) {
+        std::cout << i << std::endl;
     }
 }

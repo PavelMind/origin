@@ -1,6 +1,4 @@
 #pragma once
-
-#include <initializer_list>
 #include <exception>
 #include <stdexcept>
 
@@ -16,15 +14,18 @@ namespace my {
     public:
         vector();
         vector(size_t sz);
+        vector(vector&);
+#if 0
         vector(std::initializer_list<T> list);
+#endif
+        ~vector();
+
+        void operator =(vector&);
 
         size_t size();
         size_t capacity();
         T& at(int);
         void push_back(T);
     };
-
-
-
 
 }

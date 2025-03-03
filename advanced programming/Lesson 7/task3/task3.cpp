@@ -1,5 +1,9 @@
 ﻿#include <iostream>
-#include "myvector.h"
+#include "vectory.hpp"
+
+
+
+
 
 
 
@@ -12,10 +16,11 @@ int main()
         //std::cout << std::endl << "v1 at[0] " << v1.at(0);// except
 
         my::vector<double> v2(5);
+        v2.push_back(8);
         std::cout << std::endl << "v2 size " << v2.size();
-        std::cout << std::endl << "v2 capacity " << v2.capacity();
+        std::cout << std::endl << "v2 capacity " << v2.capacity();        
         std::cout << std::endl << "v2 at[0] " << v2.at(0);
-
+#if 0
         my::vector<int> v3{ 2, 4, 7 };
         std::cout << std::endl << "v3 size " << v3.size();
         std::cout << std::endl << "v3 capacity " << v3.capacity();
@@ -32,7 +37,7 @@ int main()
         }
         //std::cout << v3.at(10);//except
 
-
+#endif
 
 
     }
