@@ -4,9 +4,9 @@
 
 namespace my {
 
-    template<typename T>
+    //template<typename int>
     class vector {
-        T* arr;
+        int* arr;
         size_t _size;
         size_t _reserved;
 
@@ -16,7 +16,7 @@ namespace my {
         vector(size_t sz);
         vector(vector&);
 #if 0
-        vector(std::initializer_list<T> list);
+        vector(std::initializer_list<int> list);
 #endif
         ~vector();
 
@@ -24,8 +24,8 @@ namespace my {
 
         size_t size();
         size_t capacity();
-        T& at(int);
-        void push_back(T);
+        int& at(int);
+        void push_back(int);
     };
 
 }

@@ -10,12 +10,12 @@
 int main()
 {
     try {
-        my::vector<int> v1;
+        my::vector v1;
         std::cout << std::endl << "v1 size " << v1.size();
         std::cout << std::endl << "v1 capacity " << v1.capacity();
         //std::cout << std::endl << "v1 at[0] " << v1.at(0);// except
 
-        my::vector<double> v2(5);
+        my::vector v2(5);
         v2.push_back(8);
         std::cout << std::endl << "v2 size " << v2.size();
         std::cout << std::endl << "v2 capacity " << v2.capacity();        

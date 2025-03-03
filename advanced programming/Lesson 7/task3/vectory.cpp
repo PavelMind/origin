@@ -2,9 +2,9 @@
 
 namespace my {
 
-    template<typename T>
-    void vector<T>::alloc(int newSZ) {
-        T* temp = new T[newSZ];
+    //template<typename int>
+    void vector::alloc(int newSZ) {
+        int* temp = new int[newSZ];
         _reserved = newSZ;
         size_t min = _size < newSZ ? _size : newSZ;
         _size = min;
@@ -16,67 +16,67 @@ namespace my {
         arr = temp;
     }
 
-    template<typename T>
-    vector<T>::vector() : _size(0), _reserved(4), arr(nullptr) {}
+    //template<typename int>
+    vector::vector() : _size(0), _reserved(4), arr(nullptr) {}
 
-    template<typename T>
-    vector<T>::vector(size_t sz) : _size(0), _reserved(sz), arr(nullptr) {
+    //template<typename int>
+    vector::vector(size_t sz) : _size(0), _reserved(sz), arr(nullptr) {
         if (sz <= 0) throw std::range_error("bad size");
-        arr = new T[sz];
+        arr = new int[sz];
     }
 
-    template<typename T>
-    vector<T>::vector(vector& other) {
+    //template<typename int>
+    vector::vector(vector& other) {
         _size = other._size;
         _reserved = other._reserved;
         for (int i = 0; i < _size; ++i) {
-            arr.at(i) = other.at(i);
+           this->at(i) = other.at(i);
         }
     }
 
 #if 0
-    template<typename T>
-    vector<T>::vector(std::initializer_list<T> list) : _size(list.size()) {
+    //template<typename int>
+    vector::vector(std::initializer_list<int> list) : _size(list.size()) {
         alloc(_size);
         arr = list.begin();
     }
 #endif
-    template<typename T>
-    vector<T>::~vector() {
+    //template<typename int>
+    vector::~vector() {
         if (arr != nullptr) {
             delete[] arr;
         }
     }
 
-    template<typename T>
-    void vector<T>::operator = (vector& other) {
+    //template<typename int>
+    void vector::operator = (vector& other) {
         _size = other._size;
         _reserved = other._reserved;
         for (int i = 0; i < _size; ++i) {
-            arr.at(i) = other.at(i);
+            this->at(i) = other.at(i);
         }
     }
 
-    template<typename T>
-    size_t vector<T>::size() {
+    //template<typename int>
+    size_t vector::size() {
         return _size;
     }
 
-    template<typename T>
-    size_t vector<T>::capacity() {
+    //template<typename int>
+    size_t vector::capacity() {
         return _reserved;
     }
 
-    template<typename T>
-    T& vector<T>::at(int index) {
+    //template<typename int>
+    int& vector::at(int index) {
         if (index < 0 || index >= _size) {
             throw std::out_of_range("bad range");
         }
         return arr[index];
     }
 
-    template<typename T>
-    void vector<T>::push_back(T value) {
+    //template<typename int>
+    void vector::push_back(int value) {
         if (_size == _reserved) {
             alloc(_reserved * 2);
         }
