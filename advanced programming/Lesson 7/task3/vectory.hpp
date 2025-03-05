@@ -49,7 +49,7 @@ namespace my {
     }
 
     template<typename T>
-    vector<T>::vector() : _size(0), _reserved(4), arr(nullptr) {}
+    vector<T>::vector() : _size(0), _reserved(0), arr(nullptr) {}
 
     template<typename T>
     vector<T>::vector(size_t sz) : _size(0), _reserved(sz), arr(nullptr) {
@@ -117,6 +117,10 @@ namespace my {
 
     template<typename T>
     void vector<T>::push_back(T value) {
+        if (arr == nullptr) {
+            arr = new T[4];
+            _reserved = 4;
+        }
         if (_size == _reserved) {
             alloc(_reserved * 2);
         }

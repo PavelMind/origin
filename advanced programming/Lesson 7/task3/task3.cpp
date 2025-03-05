@@ -20,11 +20,16 @@ int main()
     try {
 
         my::vector<int> v1;
-        std::cout << "v1 size " << v1.size();
-        std::cout << std::endl << "v1 capacity " << v1.capacity();
-        //std::cout << std::endl << "v1 at[0] " << v1.at(0);// except
+        print(v1, "v1"); 
+        my::vector<int> v7(v1);
+        my::vector<int> v8 = v1;
 
-        std::cout << std::endl << std::endl;
+        //std::cout << std::endl << "v1 at[0] " << v1.at(0);// except
+        v1.push_back(1);
+        v1.push_back(2);
+        print(v1, "v1");
+                
+        std::cout << std::endl;
         my::vector<double> v2(5);
         v2.push_back(2);
         v2.push_back(4);
@@ -62,6 +67,8 @@ int main()
         print<>(v5, "v5");
         
         //std::cout << "v6";  my::vector<short> v6(0);//exept
+
+        
 #endif
 
     }
