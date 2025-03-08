@@ -18,8 +18,8 @@ namespace my {
             other.ptr = nullptr;
         }
 
-        T* operator *() {
-            return ptr;
+        T& operator *() {
+            return *ptr;
         }
         T* release() {
             T* temp = ptr;

@@ -22,11 +22,14 @@ int main()
 
     {
         my::unique_ptr<exampl> v = new exampl('v');
-        (*v)->a = 'w';
+        (*v).a = 'w';
     }
     my::unique_ptr<exampl> y = new exampl('y');
     my::unique_ptr<exampl> mov(std::move(y));
 
     exampl* smpl = h.release();
     delete smpl;
+
+    my::unique_ptr<int> Int = new int(666);
+    int inT = *Int;
 }
