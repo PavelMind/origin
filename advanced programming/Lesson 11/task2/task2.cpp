@@ -23,6 +23,12 @@ int main()
     auto mult = big3 *  big4;
     std::cout << "mult: " << mult << "\n";
 
+    auto multNum = big3 * 10;
+    std::cout << "mult(big3 * 10): " << multNum << "\n";
+
+    big_integer big5{ "999999999999999999999" };
+    auto moreBig = big5 + 1;
+    std::cout << "more(+1): " << moreBig << "\n";
 
     auto number1 = big_integer("114575");
     auto number2 = big_integer("78524");

@@ -4,6 +4,30 @@ big_integer::big_integer() {
     arrNumber.push_back(0);
 }
 
+big_integer::big_integer(int number) {
+    std::vector<char> tempVec;
+    for (int i = 0; i < 10; ++i) {
+
+        long long divider = 1;
+        for (int j = 0; j < i; ++j) {
+            divider *= 10;
+        }
+
+        long long digit;
+        digit = number / divider;
+        digit = digit % 10;
+        tempVec.push_back(digit);
+    }
+
+    for (int i = tempVec.size() - 1; i >= 0; --i) {
+        if (tempVec[i] == 0)
+            tempVec.pop_back();
+        else
+            break;
+    }
+    arrNumber = std::move(tempVec);
+}
+
 big_integer::big_integer(long long number) {
     std::vector<char> tempVec;
     for (int i = 0; i < 19; ++i) { 
@@ -55,25 +79,25 @@ big_integer::big_integer(const char* str) {
 
 big_integer::~big_integer() = default;
 
-big_integer::big_integer(big_integer& other) {
+big_integer::big_integer(const big_integer& other) {
     arrNumber = other.arrNumber;
 }
 
-big_integer::big_integer(big_integer&& other) {
+big_integer::big_integer(const big_integer&& other) noexcept {
     arrNumber = std::move(other.arrNumber);
 }
 
-big_integer& big_integer::operator = (big_integer& other) {
+big_integer& big_integer::operator = (const big_integer& other) {
     arrNumber = other.arrNumber;
     return *this;
 }
 
-big_integer& big_integer::operator = (big_integer&& other) {
+big_integer& big_integer::operator = (const big_integer&& other) noexcept {
     arrNumber = std::move(other.arrNumber);
     return *this;
 }
 
-big_integer operator + (big_integer& const a, big_integer& const b) {
+big_integer operator + (const big_integer& a, const big_integer& b) {
     big_integer result;
     result.arrNumber.clear();
     int aSize = a.arrNumber.size();
@@ -98,10 +122,10 @@ big_integer operator + (big_integer& const a, big_integer& const b) {
 }
 
 
-big_integer big_integer::multyNum(int mult) {
+big_integer big_integer::multyNum(int mult) const {
     big_integer result;
     if (mult != 0) {
-        result = *this;
+        result=(*this );
     }
     else
         return result;
@@ -125,7 +149,7 @@ big_integer big_integer::multyNum(int mult) {
     return result;
 }
 
-big_integer operator * (big_integer& const a, big_integer& const b) {
+big_integer operator * (const big_integer& a, const big_integer& b) {
     big_integer result;
     for (int i = 0; i < a.arrNumber.size(); ++i) {
         //auto temp = b.multyNum(a.arrNumber[i] * pow(10, i));
