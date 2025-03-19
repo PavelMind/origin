@@ -9,40 +9,43 @@
 
 class ini_parser {
     std::ifstream file;
-    
-    std::string getSection(std::string& line, int, int);
+
     void pairRequest(std::string& request, std::string& sect, std::string& var);
-    std::string printVariant(std::vector<std::string>&);
+    std::string getSection(std::string& line, int, int);   
     std::string getVar(std::string& line, int start, int num, int& baginval);
     std::string getValue(std::string& line, int start, int numLine);
+    std::string printVariant(std::vector<std::string>&);
+    bool skip(std::string&, int,int);
 
     template<typename T>
-    T readValue(std::string&, int, int) {};
+    T readValue(std::string&) { };
+
+    template<>
+    int readValue<int>(std::string& str) {        
+        int result = std::stoi(str);
+        return result;
+    }
+
+    template<>
+    double readValue<double>(std::string& str) {         
+        double result = std::stod(str);
+        return result;
+    }
+
+    template<>
+    std::string readValue<std::string>(std::string& str) {                
+        return str;
+    }
 public:
     ini_parser(std::string);
     ~ini_parser();
 
     template<typename T>
     T get_value(std::string);
-
     
 };
 
 
-
-template<>
-int ini_parser::readValue<int>(std::string& line, int start, int numLine) {
-    auto str = getValue(line, start, numLine);
-    int result = std::stoi(str);
-    return result;
-}
-
-template<>
-double ini_parser::readValue<double>(std::string& line, int start, int numLine) {
-    auto str = getValue(line, start, numLine);
-    double result = std::stod(str);
-    return result;
-}
 
 
 #if 3
@@ -56,56 +59,61 @@ T ini_parser::get_value(std::string request) {
 
     int numLine = 0;
     std::string line;
+    bool inNeedSection = false;
     bool haveSection = false;
+    bool haveVar = false;
     bool haveValue = false;
-    int beginVal = -1;  //начало value
+    int beginValue = -1;  //начало value
     std::vector<std::string> variantOfVar;
 
     while (file) {
         ++numLine;
         std::getline(file, line);
-        if (line.size() == 0) // пустая строка
-            continue;
         int firstChar = line.find_first_not_of(" \t");
-        if (firstChar == -1) //пробелы  и \t в стоке
+        if (skip(line, firstChar, numLine))
             continue;
-        if (firstChar == ';') //коментарий
-            continue;
-        
-        if (firstChar == '[' && !haveSection) {
-            haveSection = (getSection(line, firstChar, numLine) == section);
+                
+        if(line[firstChar] == '[') {
+            inNeedSection = (getSection(line, firstChar, numLine) == section);
+            if (inNeedSection)
+                haveSection = true;
             continue;
         }
-        if (firstChar == '[' && haveSection) {
-            /*if (!haveVar) { // не надо. Вместо этого проверка списка на саиз=0
-                printVariant(variantOfVar);
-            }*/
-            break;
-        }
-        if (line.find('=', firstChar) == -1)
-            throw myexpect(L"Некорректный синтаксис!", numLine);
 
-        if (haveSection) {            
-            auto nameVar = getVar(line, firstChar, numLine, beginVal);
+        if (inNeedSection) {            
+            auto nameVar = getVar(line, firstChar, numLine, beginValue);
             if (nameVar != var) {
                 variantOfVar.push_back(nameVar);
                 continue;
             }
             else {
-                result = readValue<T>(line, beginVal, numLine);
+                haveVar = true;
+                std::string str = getValue(line, beginValue, numLine);
+                if (str.empty()) {
+                    continue;
+                }
+                result = readValue<T>(str);
                 haveValue = true;
-                break;
+                continue;
             }
                 
         }
         
-
     }//while
-    if (!haveValue) {
+
+    if (!haveSection) {
+        throw std::exception("Выбранной секции нет");
+    }
+    if (!haveValue && variantOfVar.empty()) {
+        throw std::exception("В выбранной секции нет переменных");
+    }
+
+    if (!haveVar) {// если не найдено переменной var
         throw std::exception( printVariant(variantOfVar).c_str() );
     }
-    return result;
-
-    
+    if (haveVar && !haveValue) {
+        throw std::exception("Переменная не имеет значения");
+    }
+    return result;       
 }
 #endif

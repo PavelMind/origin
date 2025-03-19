@@ -36,6 +36,10 @@ std::string ini_parser::getSection(std::string& line, int start, int numLine) {
     if ((endSkob - start == 1) || (endSkob == -1))
         throw myexpect(L"Некорректный синтаксис!", numLine); // [] или нет ']'
 
+    int charComment = line.find_first_not_of(" \t", endSkob + 1);
+    if (charComment != -1 && line[charComment] != ';')
+        throw myexpect(L"Некорректный синтаксис!", numLine); //  [abc] ddd
+
     int beginName = line.find_first_not_of(" \t", start + 1);
     if (beginName == endSkob)
         throw myexpect(L"Некорректный синтаксис!", numLine); //нет названия
@@ -67,13 +71,14 @@ std::string ini_parser::getVar(std::string& line, int start, int numLine, int& b
 std::string ini_parser::getValue(std::string& line, int start, int numLine) {
     int beginValue = line.find_first_not_of(" \t", start);
     if (beginValue == -1)
-        throw myexpect(L"Некорректный синтаксис!", numLine);  //если   ="     "
+        return std::string{};    
+        //throw myexpect(L"Некорректный синтаксис!", numLine);  //если   ="     "
 
-    int charComment = line.find(';', start);
-    int endVal;
+    int charComment = line.find(';', start);    
     if (charComment != -1 && (charComment == beginValue))
         throw myexpect(L"Некорректный синтаксис!", numLine); //если  " ;  comm "
 
+    int endVal;
     if (charComment != -1) {
         endVal = line.find_last_not_of(" \t", charComment - 1);
     }
@@ -90,4 +95,18 @@ std::string ini_parser::printVariant(std::vector<std::string>& list) {
         str = str + i + "\n";
     }
     return str;
+}
+
+bool ini_parser::skip(std::string& line, int firstChar, int numLine) {    
+    if (line.size() == 0) // пустая строка
+        return true;
+    if (firstChar == -1) //пробелы  и \t в стоке
+        return true;
+    if (line[firstChar] == ';') //коментарий
+        return true;
+    if (line[firstChar] != '[') {
+        if (line[firstChar] == '=' || line.find('=', firstChar)==-1)
+            throw myexpect(L"Некорректный синтаксис!", numLine);
+    }
+    return false;
 }
