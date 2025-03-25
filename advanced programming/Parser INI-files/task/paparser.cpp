@@ -57,18 +57,6 @@ namespace var2 {
                     itSection->second->insert_or_assign( nameVar,strVal );
                 }
 
-
-                /*if (itSection!=fileData.end()) {
-                    mapVarType* p=(itSection->second).get();
-                    (*p)[nameVar] = strVal;
-                }
-                else {                    
-                    mapVarType* t = (itSection->second).get();
-                    t = new mapVarType;
-                    (*t)[nameVar] = strVal;
-                }*/
-
-
                 continue;
             }
 
