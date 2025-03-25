@@ -128,10 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="paparser.cpp" />
     <ClCompile Include="parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="externHead.h" />
     <ClInclude Include="myexpect.h" />
+    <ClInclude Include="paparser.h" />
     <ClInclude Include="parser.h" />
   </ItemGroup>
   <ItemGroup>
