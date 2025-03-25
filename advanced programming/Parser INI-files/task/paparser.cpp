@@ -44,16 +44,11 @@ namespace var2 {
                 std::string nameVar = getVar(line, firstChar, numLine, beginValue);
                 std::string strVal = getValue(line, beginValue, numLine);
                 auto itSection = fileData.find(currSection);
-                if (itSection->second==nullptr) {  
-                    //mapVarType* p = itSection->second;                    
-                    //p = new mapVarType;
-                    //p->insert({ nameVar,strVal });
+                if (itSection->second==nullptr) {                     
                     itSection->second = new mapVarType;
                     itSection->second->insert_or_assign( nameVar,strVal );
                 }
-                else {
-                    //mapVarType* p = itSection->second;
-                    //p->insert({ nameVar,strVal });
+                else {                    
                     itSection->second->insert_or_assign( nameVar,strVal );
                 }
 
