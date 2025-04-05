@@ -34,12 +34,6 @@ CREATE TABLE IF NOT EXISTS Track (
 	duration TIME NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS TrackPerformer (
-	track_id INTEGER REFERENCES Track(id),
-	performer_id INTEGER REFERENCES Performer(id),
-	CONSTRAINT keyPT PRIMARY KEY (track_id, performer_id)
-);
-
 CREATE TABLE IF NOT EXISTS Сollection (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(40) NOT NULL,
