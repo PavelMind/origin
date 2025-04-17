@@ -4,9 +4,9 @@ DBclass::DBclass() {
         pqxx::connection c(
             "host=localhost "
             "port=5432 "
-            "dbname=my_database "
-            "user=my_database_user "
-            "password=my_password_123");
+            "dbname=test "
+            "user=myTest "
+            "password=2806");
         conn = std::move(c);
     }
 
@@ -32,11 +32,11 @@ int DBclass::addClient(std::string name, std::string famil, std::string mail) {
     tr.exec("INSERT INTO Clients(first_name, last_name, email)"
         "VALUES('" + tr.esc(name) + "', '" + tr.esc(famil) + "', '" + tr.esc(mail) + "'); ");
 
-    int id = tr.query_value<int>("SELECT id FROM Clients"\
+    int id = tr.query_value<int>("SELECT id FROM Clients"
                                     "WHERE first_name ='" + tr.esc(name)
                                     + "' AND last_name = '" + tr.esc(famil)
                                     + "' AND mail = '" + tr.esc(mail)
-                                    +"' ORDER BY id DESC LIMIT 1;");
+                                    + "' ORDER BY id DESC LIMIT 1;");
 
     tr.commit();
     return id;
@@ -44,12 +44,12 @@ int DBclass::addClient(std::string name, std::string famil, std::string mail) {
 
 void DBclass::addPhone(int id, std::string number) {
     pqxx::work tr{ conn };
-    int count = tr.query_value<int>("SELECT COUNT(*) FROM Clients WHERE id =" + tr.esc(id) + ";");
+    int count = tr.query_value<int>("SELECT COUNT(*) FROM Clients WHERE id =" + std::to_string(id) + ";");
     if (count == 0)
         throw std::exception("нет такого клиента");
 
     tr.exec("INSERT INTO phoneNumber(client_id, number)"
-        "VALUES('" + tr.esc(id) + "', '" + tr.esc(number) + "'); ");
+        "VALUES('" + std::to_string(id) + "', '" + tr.esc(number) + "'); ");
     tr.commit();
 }
 
@@ -112,14 +112,14 @@ void DBclass::updateClient(int id, std::string name, std::string fam, std::strin
     }
     condition.resize(condition.size() - 2);
 
-    tr.exec("UPDATE Clients SET " + tr.esc(condition) + " WHERE id=" + tr.esc(id) + " ;");
+    tr.exec("UPDATE Clients SET " + tr.esc(condition) + " WHERE id=" + std::to_string(id) + " ;");
     tr.commit();
 }
 
 void DBclass::deleteClient(int id) {
     pqxx::work tr{ conn };
-    tr.exec("DELETE FROM Clients WHERE id = " + tr.esc(id) + ";");
-    tr.exec("DELETE FROM phoneNumber WHERE client_id = " + tr.esc(id) + ";");
+    tr.exec("DELETE FROM Clients WHERE id = " + std::to_string(id) + ";");
+    tr.exec("DELETE FROM phoneNumber WHERE client_id = " + std::to_string(id) + ";");
     tr.commit();
 }
 

@@ -14,8 +14,6 @@ struct DBinfoClient{
 
 class DBclass {
     pqxx::connection conn;
-        
-   
 public:
     DBclass();
 

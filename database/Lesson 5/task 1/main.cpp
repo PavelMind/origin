@@ -2,7 +2,7 @@
 #include <pqxx/pqxx>
 #include "DBclass.h"
 #include <string>
-
+ 
 
 int main() {
     setlocale(LC_ALL, "Russian");
