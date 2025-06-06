@@ -85,11 +85,9 @@ int main()
     std::vector<int> vect(size);
     std::random_device rand;
     std::mt19937 gener{ rand()};
-    std::uniform_int_distribution<int> distr(0, 1000);    
-    for (int i = 0; i < size; ++i) {
-        vect[i] = distr(gener);
-    }
-    
+    std::uniform_int_distribution<int> distr(0, 1000);
+    for (auto& i : vect) { i = distr(gener); }
+
     std::promise<std::vector<int>> promis;
     std::future<std::vector<int>> futur = promis.get_future();
     auto result = std::async(choice_sort, vect, std::move(promis));
