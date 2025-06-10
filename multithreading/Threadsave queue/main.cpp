@@ -97,7 +97,7 @@ int main()
 
     thread_pool TPool;
     int countTime = 0;
-    while (countTime < 10) {
+    while (countTime < 3) {
         std::function<void(void)> task1(func1), task2(func1);        
         TPool.submit(task1);
         TPool.submit(task2);

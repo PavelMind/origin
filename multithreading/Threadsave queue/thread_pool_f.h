@@ -7,35 +7,39 @@
 
 
 class thread_pool {
-    int maxCore;
+    std::atomic<int> maxThread;
     std::vector<std::thread> vecThreads;
     safe_queue sQueue;
-    bool toStopThread = false;
+    std::atomic<bool> toStopThread{ false };
 public:
     thread_pool() {
-        maxCore = std::thread::hardware_concurrency();
-        for (int i = 0; i < maxCore; ++i) {
-            std::thread t(&thread_pool::work, this, std::ref(sQueue.mutx));
+        maxThread = std::thread::hardware_concurrency();
+        for (int i = 0; i < maxThread; ++i) {
+            std::thread t(&thread_pool::work, this);
             vecThreads.push_back(std::move(t));
             vecThreads[i].detach();
         }
     }
 
     ~thread_pool() {
-        toStopThread = true;
+        toStopThread.store(true);
+        sQueue.toStopThread.store(true);
+        sQueue.c_v.notify_all();
+        while(maxThread.load()!=0) {
+            using namespace std;
+            std::this_thread::sleep_for(100ms);
+        }
     }
 
-    void work(std::mutex& mtx) {
-        while (true) {
-            
-            std::unique_lock<std::mutex> mut(mtx);
-            sQueue.c_v.wait(mut, [&]() {return !sQueue.empty() || toStopThread; });
-            if (toStopThread) {
+    void work() {
+        while (!toStopThread) {
+            std::function<void(void)> f = sQueue.pop();
+            if (toStopThread.load()) {
+                maxThread.fetch_sub(1);
                 break;
             }
-            std::function<void(void)> f = sQueue.get_and_pop();
-            mut.unlock();
-            f();
+            else
+                f();
         }
     }
 
