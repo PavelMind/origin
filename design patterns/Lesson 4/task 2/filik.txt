@@ -4,15 +4,3 @@ Hello, good code
 <html>Hello, good code<html/>
 { "data": "Hello, good code"}
 Hello, good code
-<html>Hello, good code<html/>
-{ "data": "Hello, good code"}
-Hello, good code
-<html>Hello, good code<html/>
-{ "data": "Hello, good code"}
-Hello, good code
-<html>Hello, good code<html/>
-{ "data": "Hello, good code"}
-Hello, good code
-<html>Hello, good code<html/>
-{ "data": "Hello, good code"}
-Hello, good code

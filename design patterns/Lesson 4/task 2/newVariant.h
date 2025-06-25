@@ -61,14 +61,17 @@ void saveTo(std::ofstream& file, dataPrintableInt* printable, PrintTypeI* pType)
 void saveToAsHTML(std::ofstream& file,  dataPrintableInt* printable) {
     PrintTypeI* pTyp = new printAsHTML;
     saveTo(file, printable, pTyp);
+    delete pTyp;
 }
 
 void saveToAsJSON(std::ofstream& file, dataPrintableInt* printable) {
     PrintTypeI* pTyp = new printAsJSON;
     saveTo(file, printable, pTyp);
+    delete pTyp;
 }
 
 void saveToAsText(std::ofstream& file, dataPrintableInt* printable) {
     PrintTypeI* pTyp = new printAsText;
     saveTo(file, printable, pTyp);
+    delete pTyp;
 }
