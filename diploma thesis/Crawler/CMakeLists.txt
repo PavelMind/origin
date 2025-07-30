@@ -26,17 +26,20 @@ include_directories(${Boost_INCLUDE_DIRS})
 #message(STATUS "Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
 #message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}")
 message(STATUS "file ini: ${CMAKE_CURRENT_SOURCE_DIR}/crawler_data.ini")
-install(FILES "crawler_data.ini" DESTINATION .) 
+#install(FILES "crawler_data.ini" DESTINATION .) 
 
 find_package(libpqxx REQUIRED)
 find_package (Boost COMPONENTS locale REQUIRED )
 #find_package(Boost REQUIRED)
-
+find_path(fileInI NAMES crawler_data.ini PATHS ${CMAKE_CURRENT_SOURCE_DIR}/)
 #find_package(Boost COMPONENTS system asio REQUIRED)
 
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS}) 
-    add_executable(Crawler main.cpp ${DBfile} ${INIpars} ${INIpars} "indexator/indexator.h" "indexator/indexator.cpp" "http_connect.h" "my_utilites.h" "my_utilites.cpp" "crawler_data.ini")
+    add_executable(Crawler main.cpp ${DBfile} ${INIpars} ${INIpars} "indexator/indexator.h" "indexator/indexator.cpp" "http_connect.h" "my_utilites.h" "my_utilites.cpp"
+    #"${CMAKE_CURRENT_SOURCE_DIR}/crawler_data.ini"
+    ${fileInI}
+    )
     target_link_libraries(Crawler PRIVATE ${Boost_LIBRARIES} Boost::headers)
     
 endif()

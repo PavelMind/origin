@@ -3,10 +3,20 @@
 #include "data base/sql_query_builders.h"
 #include "indexator/indexator.h"
 #include "threads pool/threads_pool.h"
+#include "threads pool/threads_pool_arg.h"
 #include <boost/locale.hpp>
 #include "ini-parser/parser.h"
+#include <exception>
 
+void foo() {
+    std::cout << "foo";
+    throw std::exception("hyi");
+    return ;
+}
 
+int fooRet() { throw 2; return 666; }
+
+int fooII(int a, int b) { return a + b; }
 
 int main() {
     setlocale(LC_ALL, "Russian");
@@ -31,17 +41,32 @@ int main() {
     //std::string result = future.get();
     //std::cout << "Ответ сервера: " << result << std::endl;
     ////if (c.connect("duskworld.ru", "80", "/", 11) == EXIT_FAILURE)std::cout << "bad";
-    try {
-        std::string nameF{ "crawler_data.ini" };
-        ini_parser ini(nameF);
-        std::string host = ini.get_value<std::string>("DB.host");
-        std::string port = ini.get_value<std::string>("DB.port");
-        std::string DBname = ini.get_value<std::string>("DB.name");
-        std::string user = ini.get_value<std::string>("DB.user");
-        std::string password = ini.get_value<std::string>("DB.password");
-        std::cout << host << " " << port << " " << DBname << " " << user << " " << password;
+    
+    //try {
+    //    //std::string nameF{ "R:/Приложения/Работа/Netology homework/diploma thesis/Crawler/crawler_data.ini" };
+    //    std::string nameF{ "crawler_data.ini" };
+    //    ini_parser ini(nameF);
+    //    std::string host = ini.get_value<std::string>("DB.host");
+    //    std::string port = ini.get_value<std::string>("DB.port");
+    //    std::string DBname = ini.get_value<std::string>("DB.name");
+    //    std::string user = ini.get_value<std::string>("DB.user");
+    //    std::string password = ini.get_value<std::string>("DB.password");
+    //    std::cout << host << " " << port << " " << DBname << " " << user << " " << password;
+    //}
+    //catch (myexpect& m) { std::wcout << m.what(); }
+    //catch (std::exception& e) { std::cout << e.what(); }
+
+    my_thread_pool_a pool(5);
+    try{
+        
+
+        auto res2 = pool.submit(fooII, 2, 4);
+
+
+        auto s = res2.get();
+        std::cout << s;
     }
-    catch (myexpect& m) { std::wcout << m.what(); }
-    catch (std::exception& e) { std::cout << e.what(); }
+    catch (int d) { std::cout << "throw: " << d; }
+
     return 0;
 }
