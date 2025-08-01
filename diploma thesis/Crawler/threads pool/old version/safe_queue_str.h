@@ -4,6 +4,8 @@
 #include <condition_variable>
 #include <string>
 #include <atomic>
+#include <future>
+#include <utility>
 
 
 
@@ -11,7 +13,8 @@ class thread_pool_s;
 
 
 class safe_queue_s {
-    std::queue<std::string> Queue;
+    using task = std::packaged_task<std::string(std::string)>;
+    std::queue<std::pair<task, std::string> > Queue;
     std::condition_variable c_v;
     std::mutex mutx;
     std::atomic<bool> toStopThread{ false };
@@ -20,7 +23,7 @@ public:
     safe_queue_s() {}
     friend class thread_pool_s;
 
-    void push(std::string&& site) {
+    void push(std::pair<task, std::string>&& site) {
         std::lock_guard<std::mutex> mut(mutx);
         Queue.push(std::move(site));
         c_v.notify_all();
@@ -30,11 +33,11 @@ public:
         std::unique_lock<std::mutex> mut(mutx);
         c_v.wait(mut, [&]() {return !Queue.empty() || toStopThread.load(); });
         if (toStopThread.load()) {
-            return std::string{};
+            return std::move(std::pair<task, std::string>());
         }
-        auto top = Queue.front();
+        auto top = std::move(Queue.front());
         Queue.pop();
-        return top;
+        return std::move(top);
     }
 
     bool empty() {

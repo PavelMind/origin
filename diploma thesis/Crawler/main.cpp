@@ -2,71 +2,42 @@
 #include "DBManager.h"
 #include "data base/sql_query_builders.h"
 #include "indexator/indexator.h"
-#include "threads pool/threads_pool.h"
 #include "threads pool/threads_pool_arg.h"
 #include <boost/locale.hpp>
 #include "ini-parser/parser.h"
+#include "iterateSite.h"
 #include <exception>
+#include "http_connect.h"
 
-void foo() {
-    std::cout << "foo";
-    throw std::exception("hyi");
-    return ;
-}
+
 
 int fooRet() { throw 2; return 666; }
 
 int fooII(int a, int b) { return a + b; }
 
+std::string strFoo(std::string s) {
+    return "begin " + s;
+}
+
 int main() {
     setlocale(LC_ALL, "Russian");
-    setlocale(LC_NUMERIC, "C");
+    setlocale(LC_NUMERIC, "C");    
     
-    
-    //auto const host = "duskworld.ru";
-    //auto const port = "80";
-    //auto const target = "/";
-    //int version = 11;
-
-    //net::io_context ioc;
-
-    //std::promise<std::string> promise;
-    //std::future<std::string> future = promise.get_future();
-
-    //std::make_shared<session>(ioc, promise)->run(host, port, target, version);
-
-    //ioc.run();
-
-    //// Получаем результат из future
-    //std::string result = future.get();
-    //std::cout << "Ответ сервера: " << result << std::endl;
-    ////if (c.connect("duskworld.ru", "80", "/", 11) == EXIT_FAILURE)std::cout << "bad";
-    
-    //try {
-    //    //std::string nameF{ "R:/Приложения/Работа/Netology homework/diploma thesis/Crawler/crawler_data.ini" };
-    //    std::string nameF{ "crawler_data.ini" };
-    //    ini_parser ini(nameF);
-    //    std::string host = ini.get_value<std::string>("DB.host");
-    //    std::string port = ini.get_value<std::string>("DB.port");
-    //    std::string DBname = ini.get_value<std::string>("DB.name");
-    //    std::string user = ini.get_value<std::string>("DB.user");
-    //    std::string password = ini.get_value<std::string>("DB.password");
-    //    std::cout << host << " " << port << " " << DBname << " " << user << " " << password;
-    //}
-    //catch (myexpect& m) { std::wcout << m.what(); }
-    //catch (std::exception& e) { std::cout << e.what(); }
-
-    my_thread_pool_a pool(5);
-    try{
-        
-
-        auto res2 = pool.submit(fooII, 2, 4);
-
-
+    //thread_pool_a pool(5);
+    try{        
+        /*std::string site{ "-end" };
+        auto res2 = pool.submit(strFoo, site);
+        auto res3 = pool.submit(fooII, 3, 7);
         auto s = res2.get();
-        std::cout << s;
+        auto i = res3.get();
+        std::cout << s<<" "<<i;*/        
     }
     catch (int d) { std::cout << "throw: " << d; }
+    
+    indexator ind;//call to boost::locale
+    std::wstring str{ L"<tags> 343 ФфУуДд" };
+    ind.indexation(str);
+
 
     return 0;
 }

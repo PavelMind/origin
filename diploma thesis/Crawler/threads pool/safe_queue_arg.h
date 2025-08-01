@@ -1,88 +1,73 @@
 #pragma once
-#include <iostream>
 #include <mutex>
 #include <queue>
 #include <condition_variable>
 #include <atomic>
-#include <memory>
-#include <tuple>
+//#include <memory>
 
 
 
+class thread_pool_a;
 
-class my_thread_pool_a;
-
-
-class function_wrapp_a {
+class function_wrapp {
     struct fu_base {
         virtual void call() = 0;
         virtual ~fu_base() {}
     };
 
-    template<typename TypeFunc, typename ...TpArgs>
-    struct fu_impl: public fu_base {
+    template<typename TypeFunc>
+    struct fu_impl : public fu_base {
         TypeFunc f;
-        std::tuple<TpArgs...> argList;
-
-        fu_impl(TypeFunc&& o, TpArgs... args) : f(std::move(o)), argList(args...) {  }
-        void call() { std::apply(f, argList); }
+        fu_impl(TypeFunc&& o) : f(std::move(o)) {}
+        void call() { f(); }
     };
-    std::unique_ptr<fu_base> func;
+    //std::unique_ptr<fu_base> func;
+    fu_base* func;
 public:
-    function_wrapp_a() : func(nullptr) {}
+    function_wrapp() : func(nullptr) {}
 
-    template<typename TypeFunc, typename ...TpArgs>
-    function_wrapp_a(TypeFunc&& f, TpArgs... args):
-        func(new fu_impl<TypeFunc, TpArgs...>(std::move(f), args...)) {  }
-    
-    
-    function_wrapp_a(function_wrapp_a& oth) {
+    template<typename TypeFunc>
+    function_wrapp(TypeFunc&& f): func(new fu_impl<TypeFunc>(std::move(f))) { }
+
+    function_wrapp(function_wrapp& oth) = delete;
+    function_wrapp& operator = (function_wrapp& oth) = delete;
+
+    function_wrapp(function_wrapp&& oth) :
+        func(std::move(oth.func)) {    }
+
+    function_wrapp&& operator = (function_wrapp&& oth) {
         func = std::move(oth.func);
-    }
-    function_wrapp_a& operator = (function_wrapp_a& oth) {
-        func = std::move(oth.func); return *this; 
-    }
-
-    function_wrapp_a(function_wrapp_a&& oth) :
-        func (std::move(oth.func))   { }
-    function_wrapp_a& operator = (function_wrapp_a&& oth) {
-        func = std::move(oth.func); 
-        return *this; 
+        return std::move (*this);
     }
     void operator ()() { func->call(); }
 };
 
-
-
-class safe_queue_a {
-    std::queue<function_wrapp_a > Queue;
+class safe_queue {
+    std::queue<function_wrapp> Queue;
     std::condition_variable c_v;
     std::mutex mutx;
     std::atomic<bool> toStopThread{ false };
-
+    friend class thread_pool_a;
 public:
-    safe_queue_a() {}
-    friend class my_thread_pool_a;
-
-    template<typename TypeF, typename ...TpArgs>
-    void push(TypeF&& fu, TpArgs... args) {
+    safe_queue() {}
+    
+    template<typename TypeF>
+    void push(TypeF&& fu) {
         std::lock_guard<std::mutex> mut(mutx);
-        function_wrapp_a fwrap(std::move(fu), args...);
-        Queue.push(fwrap);
+        Queue.push(std::move(fu));
         c_v.notify_all();
     }
     
-    function_wrapp_a pop() {
+    function_wrapp&& pop() {
         std::unique_lock<std::mutex> mut(mutx);
         c_v.wait(mut, [&]() {return !Queue.empty() || toStopThread.load(); });
         
         if (toStopThread.load()) {
-            function_wrapp_a err();
-            return err;
+            return std::move(function_wrapp());
         }
-        auto top = Queue.front();
+        auto top = std::move(Queue.front());
         Queue.pop();
-        return top;
+        return std::move(top);
     }
 
     bool empty() {

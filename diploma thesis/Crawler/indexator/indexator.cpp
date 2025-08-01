@@ -1,13 +1,13 @@
 #include "indexator.h"
 #include <iostream>
 #include <boost/locale.hpp>
-#include "../my_utilites.h"
 
-std::vector<std::string> indexator::getLinks() { return links; }
 
-void indexator::cleanLinks() { links.clear(); }
+std::vector<std::string>&& indexator::getLinks() { return std::move(links); }
 
-void indexator::cleanerText(std::wstring& text){
+//void indexator::cleanLinks() { links.clear(); }
+
+void indexator::cleanerText(multString& text){
     boost::locale::generator gen;
     std::locale utf8Loc(gen(""));
     text = boost::locale::to_lower(text, utf8Loc);
@@ -26,7 +26,7 @@ void indexator::cleanerText(std::wstring& text){
                     --endAddr;
                 else
                     throw errorOfTextSite{};
-                std::wstring Waddr = text.substr(beginAddr, endAddr - beginAddr + 1);
+                multString Waddr = text.substr(beginAddr, endAddr - beginAddr + 1);
                 std::string addr = convertWStrToStr(Waddr);
                 links.push_back(addr);
             }
@@ -69,9 +69,9 @@ void indexator::cleanerText(std::wstring& text){
 
 
 
-void indexator::indexation(std::wstring& text) {
+void indexator::indexation(multString& text) {
     cleanerText(text);
-    std::wstring word;
+    multString word;
 
     size_t size = text.size();
     size_t beginWord = 0;
@@ -100,11 +100,11 @@ void indexator::indexation(std::wstring& text) {
         inputBD(word);
     }
 }
-void print(std::wstring s) {
+void print(multString s) {
     std::wcout <<L"\nÁÄ<-:"<< s << "|\n";
     // -incude
 }
-void indexator::inputBD(std::wstring word) {
+void indexator::inputBD(const multString& word) {
     print(word);
 }
 

@@ -1,4 +1,4 @@
-/*
+
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
@@ -95,4 +95,4 @@ public:
         if (ec && ec != beast::errc::not_connected)
             return fail(ec, "shutdown");
     }
-};*/
+};

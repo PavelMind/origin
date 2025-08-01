@@ -2,4 +2,8 @@
 #include <string>
 #include <vector>
 
-std::string convertWStrToStr(std::wstring wstr);
+using multString = std::wstring;
+
+std::string convertWStrToStr(const multString&);
+
+multString convertUTF8(const std::string&);

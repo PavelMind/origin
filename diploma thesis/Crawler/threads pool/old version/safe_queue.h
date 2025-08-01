@@ -11,7 +11,7 @@
 class my_thread_pool/*<Ret,Ar...>*/;
 
 
-class function_wrapp {
+class function_wrapp_o {
     struct fu_base {
         virtual void call() = 0;
         virtual ~fu_base() {}
@@ -25,18 +25,18 @@ class function_wrapp {
     };
     std::unique_ptr<fu_base> func;
 public:
-    function_wrapp() : func(nullptr) {}
+    function_wrapp_o() : func(nullptr) {}
 
     template<typename TypeFunc>
-    function_wrapp(TypeFunc&& f): func(new fu_impl<TypeFunc>(std::move(f))) {  }
+    function_wrapp_o(TypeFunc&& f): func(new fu_impl<TypeFunc>(std::move(f))) {  }
 
-    function_wrapp(function_wrapp& oth) = delete;
-    function_wrapp(const function_wrapp& oth) = delete;
-    function_wrapp& operator = (function_wrapp& oth) = delete;
+    function_wrapp_o(function_wrapp_o& oth) = delete;
+    function_wrapp_o(const function_wrapp_o& oth) = delete;
+    function_wrapp_o& operator = (function_wrapp_o& oth) = delete;
 
-    function_wrapp(function_wrapp&& oth) :
+    function_wrapp_o(function_wrapp_o&& oth) :
         func (std::move(oth.func))   { }
-    function_wrapp& operator = (function_wrapp&& oth) {
+    function_wrapp_o& operator = (function_wrapp_o&& oth) {
         func = std::move(oth.func); 
         return *this; 
     }
@@ -45,14 +45,14 @@ public:
 
 
 //template<typename TypeF>
-class safe_queue {
-    std::queue<function_wrapp > Queue;
+class safe_queue_o {
+    std::queue<function_wrapp_o > Queue;
     std::condition_variable c_v;
     std::mutex mutx;
     std::atomic<bool> toStopThread{ false };
 
 public:
-    safe_queue() {}
+    safe_queue_o() {}
     friend class my_thread_pool;
 
     template<typename TypeF>
@@ -67,7 +67,7 @@ public:
         c_v.wait(mut, [&]() {return !Queue.empty() || toStopThread.load(); });
         if (toStopThread.load()) {
             std::cout << "in POP return () of stop\n";
-            return function_wrapp();
+            return function_wrapp_o();
         }
         auto top = std::move(Queue.front());
         Queue.pop();

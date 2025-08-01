@@ -11,7 +11,7 @@
 class my_thread_pool {
     std::atomic<int> maxThread;
     std::vector<std::thread> vecThreads;
-    safe_queue/*<function_wrapp>*/ sQueue;
+    safe_queue_o/*<function_wrapp>*/ sQueue;
     std::atomic<bool> toStopThread{ false };    
 public:
     my_thread_pool(int m) {
