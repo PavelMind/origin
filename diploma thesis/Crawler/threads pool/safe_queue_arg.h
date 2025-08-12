@@ -3,7 +3,7 @@
 #include <queue>
 #include <condition_variable>
 #include <atomic>
-//#include <memory>
+#include <memory>
 
 
 
@@ -21,13 +21,24 @@ class function_wrapp {
         fu_impl(TypeFunc&& o) : f(std::move(o)) {}
         void call() { f(); }
     };
-    //std::unique_ptr<fu_base> func;
+    //std::unique_ptr<fu_base> func; // -> exception
     fu_base* func;
 public:
     function_wrapp() : func(nullptr) {}
 
     template<typename TypeFunc>
-    function_wrapp(TypeFunc&& f): func(new fu_impl<TypeFunc>(std::move(f))) { }
+    function_wrapp(TypeFunc&& f)/*: func(std::make_unique<TypeFunc>(std::move(f)))*/ {
+        func = new fu_impl<TypeFunc>(std::move(f));
+        //func = std::make_unique<fu_impl<TypeFunc>>(std::move(f));
+    }
+
+    ~function_wrapp() { 
+        //delete func; 
+    }
+
+    void deletFunc() {
+        delete func;
+    }
 
     function_wrapp(function_wrapp& oth) = delete;
     function_wrapp& operator = (function_wrapp& oth) = delete;

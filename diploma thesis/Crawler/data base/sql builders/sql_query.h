@@ -8,16 +8,21 @@ enum class JoinType {
 
 class valueSql {
     union {
-        std::wstring str_;
+        std::string str_;
         int i_;
     };
     bool isStr;
 public:
-    valueSql(std::wstring s) : str_(s), isStr(true) {}
+    valueSql(std::string s) : str_(s), isStr(true) {}
     valueSql(int i): i_(i), isStr(false){}
     ~valueSql() { if (isStr) str_.~basic_string/*<wchar_t>*/(); }
-    valueSql(const valueSql& oth) { if (isStr)str_ = oth.str_; else i_ = oth.i_; }
-    std::wstring getStr() {
+    valueSql(const valueSql& oth) { 
+        isStr = oth.isStr;
+        if (isStr)
+            str_ = oth.str_; 
+        else i_ = oth.i_; 
+    }
+    std::string getStr() {
         assert(isStr);
         return str_;
     }
@@ -30,14 +35,16 @@ public:
 
 struct SqlQuery
 {
-    std::wstring nameTable;
+    std::string nameTable;
 
-    std::vector<std::wstring> pairColumns;
+    std::vector<std::string> pairColumns;
     std::vector<valueSql> pairValues;
 
-    std::wstring column;
-    std::wstring from;
-    std::wstring where;
-    std::wstring join;
-
+    std::string column;
+    std::string from;
+    std::string where;
+    std::string join;
+    std::string group_by;
+    std::string order_by;
+    std::string limit;
 };

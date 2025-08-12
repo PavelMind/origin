@@ -15,9 +15,10 @@ class thread_pool_a {
 
     void run() {
         while (!toStopThread) {
-            auto f = sQueue.pop();
+            auto f = std::move(sQueue.pop());
             if (!toStopThread.load()) {
                 f();
+                f.deletFunc();
             }
             else
                 break;
@@ -57,7 +58,9 @@ public:
         std::future<result_type> res = task.get_future();
         sQueue.push([task = std::move(task)]() mutable {
             task();
-            });
+            }
+            //std::move(task)
+        );
         return res;
     }
 };

@@ -41,7 +41,7 @@ class ini_parser {
         return str;
     }
 public:
-    ini_parser(std::string&);
+    ini_parser(std::string);
     ~ini_parser();
 
     template<typename T>

@@ -8,36 +8,36 @@ protected:
 public:
     SqlInsertQueryBuilder() {}
 
-    SqlInsertQueryBuilder& AddNameTable(std::wstring& name) {
+    SqlInsertQueryBuilder& AddNameTable(std::string name) {
         query.nameTable = name;
         return *this;
     }
 
-    SqlInsertQueryBuilder& AddColumn(std::wstring& col, std::wstring& val) {
+    SqlInsertQueryBuilder& AddColumn(std::string col, std::string val) {
         query.pairColumns.push_back(col);
         query.pairValues.push_back(val);
         return *this;
     }
 
-    std::wstring BuildQuery() {
-        std::wstring result;
+    std::string BuildQuery() {
+        std::string result;
         if (query.nameTable.empty())
             return result;
 
-        result = L"INSERT INTO " + query.nameTable + L"(";
+        result = "INSERT INTO " + query.nameTable + "(";
         for (auto& i : query.pairColumns) {
-            result += i + L", ";
+            result += i + ", ";
         }
         result.resize(result.size() - 2);
-        result += L") VALUES(";
+        result += ") VALUES(";
         for (auto& i : query.pairValues) {
             if (i.isString())
-                result += L"'" + i.getStr() + L"', ";
+                result += "'" + i.getStr() + "', ";
             else
-                result += i.getInt() + L", ";
+                result += i.getInt() + ", ";
         }
         result.resize(result.size() - 2);
-        result += L");";
+        result += ");";
         return result;
     }
 };

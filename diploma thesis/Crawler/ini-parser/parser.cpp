@@ -2,7 +2,7 @@
 
 
 
-    ini_parser::ini_parser(std::string& name) {
+    ini_parser::ini_parser(std::string name) {
         std::ifstream file(name);
         if(!file.is_open())
             throw std::exception("Файл не найден");

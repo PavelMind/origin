@@ -1,43 +1,48 @@
 #include <iostream>
-#include "DBManager.h"
-#include "data base/sql_query_builders.h"
-#include "indexator/indexator.h"
-#include "threads pool/threads_pool_arg.h"
-#include <boost/locale.hpp>
+#include "DBclass.h"
+#include <memory>
 #include "ini-parser/parser.h"
 #include "iterateSite.h"
-#include <exception>
-#include "http_connect.h"
+
+//#define CPPHTTPLIB_OPENSSL_SUPPORT
+#include "internet/httpServer.h"
+//#include "data base/DBsimulation.h"
+#include "data base/DBclass.h"
 
 
-
-int fooRet() { throw 2; return 666; }
-
-int fooII(int a, int b) { return a + b; }
-
-std::string strFoo(std::string s) {
-    return "begin " + s;
+std::string fuunka(std::string str) {
+    return str + "---";
 }
+
+
 
 int main() {
     setlocale(LC_ALL, "Russian");
     setlocale(LC_NUMERIC, "C");    
-    
-    //thread_pool_a pool(5);
-    try{        
-        /*std::string site{ "-end" };
-        auto res2 = pool.submit(strFoo, site);
-        auto res3 = pool.submit(fooII, 3, 7);
-        auto s = res2.get();
-        auto i = res3.get();
-        std::cout << s<<" "<<i;*/        
+    //std::locale::global(std::locale(""));
+    try {
+        ini_parser parser("crawler_data.ini");
+        std::shared_ptr<DBclass> DB = std::make_shared<DBclass>(parser);
+        
+
+        int threadMax = std::thread::hardware_concurrency();
+        if (threadMax >= 4)
+            threadMax = threadMax - 2;
+
+        iterateSite iterSite(parser, DB, threadMax);
+        iterSite.scanning();
+        std::cout << "Server is ran" << std::endl;
+        //HTTPserver server(parser, &DB);
+        HTTPserver serv(parser, DB);
+        
+        using namespace std::literals::chrono_literals;
+        std::this_thread::sleep_for(2s);
+
+        char stoooop;
+        std::cin >> stoooop;
     }
-    catch (int d) { std::cout << "throw: " << d; }
-    
-    indexator ind;//call to boost::locale
-    std::wstring str{ L"<tags> 343 ‘Ù”Ûƒ‰" };
-    ind.indexation(str);
-
-
+    catch (std::exception& except) {
+        std::cout << except.what();
+    }
     return 0;
 }
