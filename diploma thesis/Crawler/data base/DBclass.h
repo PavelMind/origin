@@ -1,6 +1,7 @@
 #pragma once
 #include <pqxx/pqxx>
 #include <string>
+#include <memory>
 #include "../ini-parser/parser.h"
 
 struct respSelSiteList {
@@ -10,14 +11,14 @@ struct respSelSiteList {
 };
 
 class DBclass {
-    pqxx::connection connect;
+    std::unique_ptr<pqxx::connection> connect;
 
     void createTables();
 public:
     DBclass(ini_parser&);
     ~DBclass() = default;
-    pqxx::connection& getConn();
-
+    pqxx::connection& getConn();    
+    std::pair<int, int> status();
     
     void todo(std::string query);
     

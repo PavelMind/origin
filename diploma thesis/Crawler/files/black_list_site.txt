@@ -1,0 +1,7 @@
+www.apple.com 
+apps.apple.com 
+play.google.com 
+www.google.com
+www.youtube.com 
+twitter.com
+www.twitch.tv

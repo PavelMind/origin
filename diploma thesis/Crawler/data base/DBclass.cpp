@@ -1,14 +1,13 @@
 #include "DBclass.h"
-//#include "../my_utilites.h"
 #include <iostream>
 
 
 DBclass::DBclass(ini_parser& ini) {
-    std::string host;
-    std::string port;
-    std::string DBname;
-    std::string user;
-    std::string password;
+    std::string host{"localhost"};
+    std::string port{ "5432" };
+    std::string DBname{ "crawler" };
+    std::string user{"postgres"};
+    std::string password{"2806"};
     try{
         host = ini.get_value<std::string>("DB.host");
         port = ini.get_value<std::string>("DB.port");
@@ -23,29 +22,28 @@ DBclass::DBclass(ini_parser& ini) {
     catch (std::exception& e) {
         std::cout << e.what();
     }
-    //try {
+    try {
         std::string str{ "host=" + host +
             " port=" + port +
             " dbname=" + DBname +
             " user=" + user +
             " password=" + password };
-        pqxx::connection c(str);
 
-        connect = std::move(c);
-    /*}
+        connect = std::make_unique<pqxx::connection>(str);        
+    }
     catch (pqxx::sql_error& erPQXX) { std::cout << erPQXX.what(); }
-    catch (std::exception& e) { std::cout << e.what(); }*/
+    catch (std::exception& e) { std::cout << e.what(); }
 
     createTables();
 }
 
 pqxx::connection& DBclass::getConn() {
-    return connect;
+    return *connect;
 }
 
 void DBclass::createTables() {    
     try {
-        pqxx::work tr{ connect };
+        pqxx::work tr{ *connect };
         tr.exec("CREATE TABLE IF NOT EXISTS sites(\
             id SERIAL PRIMARY KEY,\
             title VARCHAR(30),\
@@ -53,7 +51,7 @@ void DBclass::createTables() {
 
         tr.exec("CREATE TABLE IF NOT EXISTS words (\
             id SERIAL PRIMARY KEY,\
-            word VARCHAR(20) NOT NULL);");
+            word VARCHAR(20) UNIQUE NOT NULL);");
 
         tr.exec("CREATE TABLE IF NOT EXISTS counts (\
             id_site INTEGER NOT NULL REFERENCES sites(id),\
@@ -65,16 +63,43 @@ void DBclass::createTables() {
     catch (std::exception& e) { std::cout << e.what(); }
 }
 
+std::pair<int, int> DBclass::status() {
+    pqxx::work tr{ *connect };
+    auto selectBld = [](const std::string& name) { return "SELECT COUNT(*) FROM " + name + ";"; };
+    
+    std::string nameTbl{ "sites" };
+    std::string req = selectBld(nameTbl);
+
+    int tmp = 0;
+    int cntSites = 0;
+    int cntWords = 0;
+
+    for (auto [tmp] : tr.query<int>(req))
+    {
+        cntSites = tmp;
+    }
+
+    nameTbl= "words";
+    req = selectBld(nameTbl);
+    for (auto [tmp] : tr.query<int>(req))
+    {
+        cntWords = tmp;
+    }
+
+    return std::pair{ cntSites , cntWords };
+}
+
+
 
 void DBclass::todo(std::string str) {
-    pqxx::work tr{ connect };
+    pqxx::work tr{ *connect };
     tr.exec(str);
     tr.commit();
 }
 
 
 std::vector<respSelSiteList> DBclass::selectSiteList(std::string req) {
-    pqxx::work tr{ connect };    
+    pqxx::work tr{ *connect };    
     std::string url;
     std::string nm;
     int c;
@@ -89,7 +114,7 @@ std::vector<respSelSiteList> DBclass::selectSiteList(std::string req) {
 }
 
 std::vector<int> DBclass::selectMultInt(std::string req) {
-    pqxx::work tr{ connect };
+    pqxx::work tr{ *connect };
     int c;
     std::vector<int> result;
 

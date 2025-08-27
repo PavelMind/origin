@@ -1,4 +1,5 @@
 #pragma once
+
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include <httplib.h>
 #include <string>
@@ -6,9 +7,9 @@
 
 class HTTPclient {
     const char* ca_cert = "./ca-bundle.crt";
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT    
     httplib::SSLClient clnt;
-#else
+#else    
     httplib::Client clnt;
 #endif
 

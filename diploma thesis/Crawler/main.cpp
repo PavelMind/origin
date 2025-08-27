@@ -3,16 +3,7 @@
 #include <memory>
 #include "ini-parser/parser.h"
 #include "iterateSite.h"
-
-//#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "internet/httpServer.h"
-//#include "data base/DBsimulation.h"
-#include "data base/DBclass.h"
-
-
-std::string fuunka(std::string str) {
-    return str + "---";
-}
 
 
 
@@ -23,7 +14,6 @@ int main() {
     try {
         ini_parser parser("crawler_data.ini");
         std::shared_ptr<DBclass> DB = std::make_shared<DBclass>(parser);
-        
 
         int threadMax = std::thread::hardware_concurrency();
         if (threadMax >= 4)
@@ -31,12 +21,16 @@ int main() {
 
         iterateSite iterSite(parser, DB, threadMax);
         iterSite.scanning();
-        std::cout << "Server is ran" << std::endl;
-        //HTTPserver server(parser, &DB);
+        auto status = DB->status();
+        std::cout << "Data base have URL: " << status.first << "; words: " << status.second << std::endl;
+
         HTTPserver serv(parser, DB);
-        
+        std::cout << "Server is ran" << std::endl;
+        std::cout << "Input char for stoped" << std::endl;
         using namespace std::literals::chrono_literals;
-        std::this_thread::sleep_for(2s);
+        std::this_thread::sleep_for(1s);
+        
+        
 
         char stoooop;
         std::cin >> stoooop;

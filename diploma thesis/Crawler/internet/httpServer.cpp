@@ -2,7 +2,6 @@
 #include <fstream>
 #include <exception>
 #include <chrono>
-//#include "../my_utilites.h"
 
 
 
@@ -13,16 +12,15 @@ HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
 {
     DB = db;
     readMyStartHtml();
-    serv.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
+    serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
         res.set_content(mainHTML, "text/html");
         }
     );
 
-    serv.Post("/", [&](const httplib::Request& req, httplib::Response& res) {
+    serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
         std::string stringReq = req.form.get_field("nameLabl");
-        std::string newPage = "/" + stringReq;
-        std::cout << newPage << " ";
-        serv.Get(newPage, [=](const httplib::Request&, httplib::Response& res) {
+        std::string newPage = "/" + stringReq;        
+        serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
             res.set_content(createListResp(stringReq), "text/html");
             });
 
@@ -63,16 +61,15 @@ HTTPserver::HTTPserver(ini_parser& p, std::shared_ptr<DBclass> db)
     }
     DB = db;
     readMyStartHtml();
-    serv.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
+    serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
         res.set_content(mainHTML, "text/html");
         }
     );
 
-    serv.Post("/", [&](const httplib::Request& req, httplib::Response& res) {
+    serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
         std::string stringReq = req.form.get_field("nameLabl");
         std::string newPage = "/" + stringReq;
-        std::cout << newPage << " ";
-        serv.Get(newPage, [=](const httplib::Request&, httplib::Response& res) {
+        serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
             res.set_content(createListResp(stringReq), "text/html");
             });
 
@@ -135,7 +132,6 @@ std::string HTTPserver::createListResp(const std::string stringReq) {
     }
 
     text += "</body>\n</html> ";
-    //std::cout << text;
     return text;
 }
 
@@ -171,9 +167,9 @@ std::vector<std::pair<std::string, std::string>> HTTPserver::reqFromDB(const std
         int c;
         
 
-        std::string req{ "SELECT title, URL, SUM(count_words) AS su FROM counter"
-          " INNER JOIN words ON words.id = counter.id_word"
-          " INNER JOIN sites ON sites.id = counter.id_site"
+        std::string req{ "SELECT title, URL, SUM(count_word) AS su FROM counts"
+          " INNER JOIN words ON words.id = counts.id_word"
+          " INNER JOIN sites ON sites.id = counts.id_site"
           " WHERE" };
         for (auto& w : words) {
             req += " word = \'" + tr.esc(w) + "\' OR";

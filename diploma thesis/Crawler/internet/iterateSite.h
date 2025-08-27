@@ -5,22 +5,24 @@
 #include "indexator.h"
 #include "../data base/DBclass.h"
 #include <memory>
+#include "addrSite.h"
+#include <set>
 
-//#include "../data base/DBsimulation.h"
 
 
-
-std::string downloadSite(std::string site);
+std::string downloadSite(addrSite site);
 
 class iterateSite {
     thread_pool_a pool;
     indexator indexat;
+    std::shared_ptr<DBclass> DB;
     int countRecurs;
-    std::string start;
-    int processedSite = 0;
+    addrSite start;
+    std::set<addrSite> processedSites;
+    //int processedSite = 0;
 
-    
-    void recursScan(std::string&, const std::string&, int count);
+    bool isProcessed(addrSite&); //true if have into DB
+    void recursScan(std::string&, const addrSite&, int count);
 public:
     iterateSite(ini_parser& p, std::shared_ptr<DBclass> db, int thrdCount);
     void scanning();

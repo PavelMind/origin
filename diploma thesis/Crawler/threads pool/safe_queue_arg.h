@@ -21,27 +21,21 @@ class function_wrapp {
         fu_impl(TypeFunc&& o) : f(std::move(o)) {}
         void call() { f(); }
     };
-    //std::unique_ptr<fu_base> func; // -> exception
-    fu_base* func;
+    std::shared_ptr<fu_base> func;
 public:
     function_wrapp() : func(nullptr) {}
 
     template<typename TypeFunc>
-    function_wrapp(TypeFunc&& f)/*: func(std::make_unique<TypeFunc>(std::move(f)))*/ {
-        func = new fu_impl<TypeFunc>(std::move(f));
-        //func = std::make_unique<fu_impl<TypeFunc>>(std::move(f));
+    function_wrapp(TypeFunc&& f) {
+        func = std::make_shared<fu_impl<TypeFunc>>(std::move(f));
     }
 
     ~function_wrapp() { 
-        //delete func; 
     }
 
-    void deletFunc() {
-        delete func;
-    }
 
-    function_wrapp(function_wrapp& oth) = delete;
-    function_wrapp& operator = (function_wrapp& oth) = delete;
+    function_wrapp(const function_wrapp& oth) = delete;
+    function_wrapp& operator = (const function_wrapp& oth) = delete;
 
     function_wrapp(function_wrapp&& oth) :
         func(std::move(oth.func)) {    }
@@ -69,7 +63,7 @@ public:
         c_v.notify_all();
     }
     
-    function_wrapp&& pop() {
+    function_wrapp pop() {
         std::unique_lock<std::mutex> mut(mutx);
         c_v.wait(mut, [&]() {return !Queue.empty() || toStopThread.load(); });
         
@@ -78,7 +72,7 @@ public:
         }
         auto top = std::move(Queue.front());
         Queue.pop();
-        return std::move(top);
+        return top;
     }
 
     bool empty() {

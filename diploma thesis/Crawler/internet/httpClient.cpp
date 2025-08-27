@@ -7,7 +7,7 @@ HTTPclient::HTTPclient(std::string host): clnt(host) {
     clnt.set_ca_cert_path(ca_cert);
     clnt.enable_server_certificate_verification(true);    
 #endif
-    clnt.set_connection_timeout(7, 0);//7 secund
+    clnt.set_connection_timeout(6, 0);//6 secund
 }
 
 HTTPclient::HTTPclient(std::string host, int port) : clnt(host, port) {
@@ -15,23 +15,13 @@ HTTPclient::HTTPclient(std::string host, int port) : clnt(host, port) {
     clnt.set_ca_cert_path(ca_cert);
     clnt.enable_server_certificate_verification(true);    
 #endif
-    clnt.set_connection_timeout(7, 0);//7 secund
+    clnt.set_connection_timeout(6, 0);//6 secund
 }
 
 HTTPclient::HTTPclient() : HTTPclient("localhost") {}
 
 std::string HTTPclient::Get(std::string target) {
-    auto beg = target.find("http:/");
-    if (beg != -1) {
-        target = target.erase(0, 6);
-    }
-    else {
-        beg = target.find("https:/");
-        if (beg != -1) {
-            target = target.erase(0, 7);
-        }
-    }
-
+    
 
     auto res = clnt.Get(target);
     if (res && res->status == 301) {
@@ -39,10 +29,8 @@ std::string HTTPclient::Get(std::string target) {
         res = clnt.Get(target);
     }
 
-    if (res) {
-        if (res->status == httplib::StatusCode::OK_200) {
-            return res->body;
-        }
+    if (res && res->status == httplib::StatusCode::OK_200) {
+        return res->body;
     }
     else {
         auto err = res.error();

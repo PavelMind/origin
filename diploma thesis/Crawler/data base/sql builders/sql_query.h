@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cassert>
 #include <vector>
 
 enum class JoinType {

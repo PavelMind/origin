@@ -1,20 +1,20 @@
 #pragma once
-//#define CPPHTTPLIB_OPENSSL_SUPPORT
-#include <httplib.h>
+#include <httplib_S.h>
 #include <string>
 #include <thread>
-#include "../ini-parser/parser.h"
-#include <vector>
-#include "../data base/DBclass.h"
 #include <memory>
+#include <vector>
+#include "../ini-parser/parser.h"
+#include "../data base/DBclass.h"
+
 
 class HTTPserver {
     const char* cert = "./cert.pem";
     const char* key = "./key.pem";
 #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
-    httplib::SSLServer serv;
+    httplib_S::SSLServer serv;
 #else
-    httplib::Server serv;
+    httplib_S::Server serv;
 #endif   
     std::string mainHTML;
     std::thread thrd;
@@ -28,8 +28,9 @@ class HTTPserver {
 public:
     HTTPserver(std::string, int, std::shared_ptr<DBclass> );
     HTTPserver(ini_parser&, std::shared_ptr<DBclass> );
+    HTTPserver(const HTTPserver&) = delete;
+    HTTPserver& operator=(const HTTPserver&) = delete;
     ~HTTPserver();
     void stop();
-    //void search(std::string&);
 };
 
