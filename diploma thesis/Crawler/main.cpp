@@ -6,7 +6,6 @@
 #include "internet/httpServer.h"
 
 
-
 int main() {
     setlocale(LC_ALL, "Russian");
     setlocale(LC_NUMERIC, "C");    
@@ -31,9 +30,11 @@ int main() {
         std::this_thread::sleep_for(1s);
         
         
-
         char stoooop;
         std::cin >> stoooop;
+    }
+    catch (pqxx::sql_error& erPQXX) { 
+        std::cout << erPQXX.what(); 
     }
     catch (std::exception& except) {
         std::cout << except.what();

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <boost/locale.hpp>
 #include <algorithm>
+#include "../data base/sql_query_builders.h"
 
 indexator::indexator(std::shared_ptr<DBclass> b): DB(b) {
     readBlackList();
@@ -9,6 +10,12 @@ indexator::indexator(std::shared_ptr<DBclass> b): DB(b) {
 
 std::vector<addrSite>&& indexator::getLinks() {
     return std::move(links); 
+}
+
+void indexator::getAdded(int& site, int& word, int& upd) {
+    site = addedS;
+    word = addedW;
+    upd = updatedW;
 }
 
 void indexator::readBlackList() {
@@ -184,21 +191,26 @@ void indexator::inputBD(const addrSite& site, const std::string& title, const st
         std::string url = site.url();
         if (url.size() > 50)
             return;
-        for (auto [i] : db.query<int>("SELECT id FROM sites WHERE URL = '" + db.esc(url) + "';"))
+        SqlSelectQueryBuilder sqlSelSite;
+        sqlSelSite.AddColumn("id").AddFrom("sites").AddWhereAnd("URL", url);
+        for (auto [i] : db.query<int>(sqlSelSite.BuildQuery()))
         {
             resSite.push_back(i);
         }
         if (resSite.empty()) {
-            db.exec("INSERT INTO sites(title, URL) VALUES('" + db.esc(smolTitle) + "', '" + db.esc(url) + "');");
+            SqlInsertQueryBuilder sqlInsSite;
+            sqlInsSite.AddNameTable("sites").AddColumn("title", smolTitle).AddColumn("URL", url);
+            db.exec(sqlInsSite.BuildQuery());
             db.commit();
-            for (auto [i] : db.query<int>("SELECT id FROM sites WHERE URL = '" + db.esc(url) + "';"))
+            ++addedS;
+            for (auto [i] : db.query<int>(sqlSelSite.BuildQuery()))
             {
                 resSite.push_back(i);
             }
         }        
     }
-    catch (pqxx::sql_error& erPQXX) { std::cout << "Err pqxx to site" << std::endl << erPQXX.what(); }
-    catch (std::exception& e) { std::cout << "Err to site" << std::endl << e.what(); }
+    catch (pqxx::sql_error& erPQXX) { std::cout << "Err pqxx to site. " << erPQXX.what() << std::endl; }
+    catch (std::exception& e) { std::cout << "Err to site. "  << e.what() << std::endl; }
 
     std::string forErr;
     for (auto word : words) {
@@ -208,13 +220,18 @@ void indexator::inputBD(const addrSite& site, const std::string& title, const st
             pqxx::work db{ DB->getConn() };
             forErr = word;
             std::vector<int> resWord;
-            for (auto [i] : db.query<int>("SELECT id FROM words WHERE word = '" + db.esc(word) + "';"))
+            SqlSelectQueryBuilder sqlSelWord;
+            sqlSelWord.AddColumn("id").AddFrom("words").AddWhereAnd("word", word);
+            for (auto [i] : db.query<int>(sqlSelWord.BuildQuery()))
             {
                 resWord.push_back(i);
             }
             if (resWord.empty()) {
-                db.exec("INSERT INTO words(word) VALUES('" + db.esc(word) + "');");
-                for (auto [i] : db.query<int>("SELECT id FROM words WHERE word = '" + db.esc(word) + "';"))
+                SqlInsertQueryBuilder sqlInsWord;
+                sqlInsWord.AddNameTable("words").AddColumn("word", word);
+                db.exec(sqlInsWord.BuildQuery());
+                ++addedW;
+                for (auto [i] : db.query<int>(sqlSelWord.BuildQuery()))
                 {
                     resWord.push_back(i);
                 }
@@ -222,23 +239,30 @@ void indexator::inputBD(const addrSite& site, const std::string& title, const st
             if (resWord.empty() || resSite.empty())
                 continue;
             std::vector<int> resCount;
-            for (auto [i] : db.query<int>("SELECT count_word FROM counts WHERE"
-                " id_word = " + std::to_string(resWord[0]) + " AND id_site = " + std::to_string(resSite[0]) + ";"))
+
+            SqlSelectQueryBuilder sqlSelCW;
+            sqlSelCW.AddFrom("counts").AddColumn("count_word").AddWhereAnd("id_word", resWord[0]).AddWhereAnd("id_site", resSite[0]);
+            for (auto [i] : db.query<int>(sqlSelCW.BuildQuery()))
             {
                 resCount.push_back(i);
             }
+            
             if (resCount.empty()) {
-                db.exec("INSERT INTO counts(id_site, id_word, count_word)"
-                    " VALUES(" + std::to_string(resSite[0]) + ", " + std::to_string(resWord[0]) + ", " + std::to_string(1) + ");");
+                SqlInsertQueryBuilder sqlInsCW;
+                sqlInsCW.AddNameTable("counts").AddColumn("id_site", resSite[0]).AddColumn("id_word", resWord[0]).AddColumn("count_word", 1);
+                db.exec(sqlInsCW.BuildQuery());
             }
             else {
-                db.exec("UPDATE counts SET count_word = " + std::to_string((resCount[0]) + 1) +
-                    " WHERE id_site = " + std::to_string(resSite[0]) + " AND id_word = " + std::to_string(resWord[0]) + ";");
+                SqlUpdateQueryBuilder sqlUpdCW;
+                sqlUpdCW.AddNameTable("counts").AddColumnValue("count_word", resCount[0] + 1).
+                    AddWhereAnd("id_site", resSite[0]).AddWhereAnd("id_word", resWord[0]);
+                db.exec(sqlUpdCW.BuildQuery());
+                ++updatedW;
             }
-            db.commit();
+            db.commit();           
         }
-        catch (pqxx::sql_error& erPQXX) { std::cout << "Err pqxx to word" << forErr << std::endl << erPQXX.what(); }
-        catch (std::exception& e) { std::cout << "Err to word" << forErr << std::endl << e.what(); }
+        catch (pqxx::sql_error& erPQXX) { std::cout << "Err pqxx to word " << forErr << std::endl << erPQXX.what() << std::endl; }
+        catch (std::exception& e) { std::cout << "Err to word " << forErr << std::endl << e.what() << std::endl; }
 
     }
 }

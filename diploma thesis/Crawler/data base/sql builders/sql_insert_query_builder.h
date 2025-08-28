@@ -18,6 +18,11 @@ public:
         query.pairValues.push_back(val);
         return *this;
     }
+    SqlInsertQueryBuilder& AddColumn(std::string col, int val) {
+        query.pairColumns.push_back(col);
+        query.pairValues.push_back(val);
+        return *this;
+    }
 
     std::string BuildQuery() {
         std::string result;
@@ -34,7 +39,7 @@ public:
             if (i.isString())
                 result += "'" + i.getStr() + "', ";
             else
-                result += i.getInt() + ", ";
+                result += std::to_string( i.getInt()) + ", ";
         }
         result.resize(result.size() - 2);
         result += ");";

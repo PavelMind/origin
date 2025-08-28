@@ -13,7 +13,13 @@ public:
         return *this;
     }
 
-    SqlUpdateQueryBuilder& AddColumn(std::string col, std::string val) {
+    SqlUpdateQueryBuilder& AddColumnValue(std::string col, std::string val) {
+        query.pairColumns.push_back(col);
+        query.pairValues.push_back(val);
+        return *this;
+    }
+
+    SqlUpdateQueryBuilder& AddColumnValue(std::string col, int val) {
         query.pairColumns.push_back(col);
         query.pairValues.push_back(val);
         return *this;
@@ -30,7 +36,7 @@ public:
         return *this;
     }
 
-    SqlUpdateQueryBuilder& AddWhere(std::string columStr, std::string valueStr) {
+    SqlUpdateQueryBuilder& AddWhereAnd(std::string columStr, std::string valueStr) {
         if (query.where.empty())
             query.where = "WHERE " + columStr + "=" + valueStr;
         else
@@ -38,14 +44,39 @@ public:
         return *this;
     }
 
+    SqlUpdateQueryBuilder& AddWhereAnd(std::string columStr, int valueStr) {
+        if (query.where.empty())
+            query.where = "WHERE " + columStr + "=" + std::to_string(valueStr);
+        else
+            query.where += " AND " + columStr + "=" + std::to_string(valueStr);
+        return *this;
+    }
+
+    SqlUpdateQueryBuilder& AddWhereOr(std::string columStr, std::string valueStr) {
+        if (query.where.empty())
+            query.where = "WHERE " + columStr + "=" + valueStr;
+        else
+            query.where += " OR " + columStr + "=" + valueStr;
+        return *this;
+    }
+
+    SqlUpdateQueryBuilder& AddWhereOr(std::string columStr, int valueStr) {
+        if (query.where.empty())
+            query.where = "WHERE " + columStr + "=" + std::to_string(valueStr);
+        else
+            query.where += " OR " + columStr + "=" + std::to_string(valueStr);
+        return *this;
+    }
+
     std::string BuildQuery() {
         if (query.where.empty())
             return std::string{};
-        return BuildQueryFullT();
+        return BuildQueryFullTable(true);
     }
 
-    std::string BuildQueryFullT() {
+    std::string BuildQueryFullTable(bool yes) {
         std::string result;
+        if (!yes) return result;
         if (query.nameTable.empty() || query.pairColumns.empty())
             return result;
 
@@ -55,12 +86,14 @@ public:
             result += query.pairColumns[i] + " = ";            
             if(query.pairValues[i].isString())
                 result += "'" + query.pairValues[i].getStr() + "', ";
-            else
-                result += query.pairValues[i].getInt() + ", ";
+            else {
+                int tmp = query.pairValues[i].getInt();
+                result += std::to_string(tmp) + ", ";
+            }                
         }
 
         result.resize(result.size() - 2);
-        result += query.where + ";";
+        result += " " + query.where + ";";
         return result;
     }
 };

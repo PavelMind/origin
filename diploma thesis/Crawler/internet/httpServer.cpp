@@ -2,7 +2,7 @@
 #include <fstream>
 #include <exception>
 #include <chrono>
-
+#include "../data base/sql_query_builders.h"
 
 
 HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
@@ -167,36 +167,24 @@ std::vector<std::pair<std::string, std::string>> HTTPserver::reqFromDB(const std
         int c;
         
 
-        std::string req{ "SELECT title, URL, SUM(count_word) AS su FROM counts"
-          " INNER JOIN words ON words.id = counts.id_word"
-          " INNER JOIN sites ON sites.id = counts.id_site"
-          " WHERE" };
-        for (auto& w : words) {
-            req += " word = \'" + tr.esc(w) + "\' OR";
+        SqlSelectQueryBuilder sqlReq;
+        sqlReq.AddColumn("title").AddColumn("URL").AddColumn("SUM(count_word) AS su").AddFrom("counts").
+            AddJoin(JoinType::INNER, "counts", "id_word", "words", "id").
+            AddJoin(JoinType::INNER, "counts", "id_site", "sites", "id").
+            AddGroupBy("title").AddGroupBy("URL").AddOrderByDesc("su").AddLimit("10");
+        for (auto& i : words) {
+            sqlReq.AddWhereOr("word", i);
         }
-        req.resize(req.size() - 2);
-        req += " GROUP BY title, URL"
-            " ORDER BY su DESC"
-            " LIMIT 10;";
 
-        for (auto [ti, url, c] : tr.query<std::string, std::string, int>(req))
+        for (auto [ti, url, c] : tr.query<std::string, std::string, int>(sqlReq.BuildQuery()))
         {
             result.push_back({ ti, url });
         }
     }
-    catch (pqxx::sql_error erPQXX) { std::cout << erPQXX.what(); }
-    catch (std::exception e) { std::cout << e.what(); }
+    catch (pqxx::sql_error erPQXX) { std::cout << erPQXX.what() << std::endl; }
+    catch (std::exception e) { std::cout << e.what() << std::endl; }
 
-    /*SqlSelectQueryBuilder sqlReq;
-    sqlReq.AddColumn("title").AddColumn("UR").AddColumn("SUM(count_words) AS su").AddFrom("counter").
-        AddJoin(JoinType::INNER, "counter", "id_word", "words", "id").
-        AddJoin(JoinType::INNER, "counter", "id_site", "sites", "id").
-        AddGroupBy("title").AddGroupBy("UR").AddOrderByDesc("su").AddLimit("10");
-    for (auto& i : words) {
-        sqlReq.AddWhereOr("word", i);
-    }*/
     
-
     /*struct strucSelect {
         std::string tit;
         std::string url;
@@ -206,7 +194,7 @@ std::vector<std::pair<std::string, std::string>> HTTPserver::reqFromDB(const std
     std::string tmp2{};
     int tmp3=0;*/
     //...
-    //auto resultSelect = DB->selectMult<strucSelect>(req, tmp1, tmp2, tmp3);
+    //auto resultSelect = DB->selectMult<strucSelect>(sqlReq, tmp1, tmp2, tmp3);
     
     /*std::vector<std::pair<std::string, std::string>> result;
     std::string req = sqlReq.BuildQuery();

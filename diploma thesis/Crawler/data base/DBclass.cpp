@@ -1,5 +1,6 @@
 #include "DBclass.h"
 #include <iostream>
+#include "sql_query_builders.h"
 
 
 DBclass::DBclass(ini_parser& ini) {
@@ -22,17 +23,14 @@ DBclass::DBclass(ini_parser& ini) {
     catch (std::exception& e) {
         std::cout << e.what();
     }
-    try {
-        std::string str{ "host=" + host +
+    std::string str{ "host=" + host +
             " port=" + port +
             " dbname=" + DBname +
             " user=" + user +
-            " password=" + password };
+            " password=" + password 
+    };
 
-        connect = std::make_unique<pqxx::connection>(str);        
-    }
-    catch (pqxx::sql_error& erPQXX) { std::cout << erPQXX.what(); }
-    catch (std::exception& e) { std::cout << e.what(); }
+    connect = std::make_unique<pqxx::connection>(str);
 
     createTables();
 }
@@ -44,19 +42,18 @@ pqxx::connection& DBclass::getConn() {
 void DBclass::createTables() {    
     try {
         pqxx::work tr{ *connect };
-        tr.exec("CREATE TABLE IF NOT EXISTS sites(\
-            id SERIAL PRIMARY KEY,\
-            title VARCHAR(30),\
-            URL VARCHAR(50) UNIQUE NOT NULL);");
 
-        tr.exec("CREATE TABLE IF NOT EXISTS words (\
-            id SERIAL PRIMARY KEY,\
-            word VARCHAR(20) UNIQUE NOT NULL);");
+        SqlCreateQueryBuilder sites, words, counts;
+        sites.AddNameTable("sites").AddKey("id").AddString("title", 30).AddStringUniNN("URL", 50);
 
-        tr.exec("CREATE TABLE IF NOT EXISTS counts (\
-            id_site INTEGER NOT NULL REFERENCES sites(id),\
-            id_word INTEGER NOT NULL REFERENCES words(id),\
-            count_word INTEGER NOT NULL);");
+        words.AddNameTable("words").AddKey("id").AddStringUniNN("word", 20);
+
+        counts.AddNameTable("counts").AddReference("id_site", "sites", "id").
+            AddReference("id_word", "words", "id").AddIntNN("count_word");
+
+        tr.exec(sites.BuildQuery());
+        tr.exec(words.BuildQuery());
+        tr.exec(counts.BuildQuery());
         tr.commit();
     }
     catch (pqxx::sql_error& erPQXX) { std::cout << erPQXX.what(); }

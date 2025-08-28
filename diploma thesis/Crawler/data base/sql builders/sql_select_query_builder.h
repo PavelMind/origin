@@ -120,7 +120,7 @@ public:
             return result;
 
         if (query.column.empty())
-            result = "SELECT *";
+            return result;
         else
             result = "SELECT " + query.column;
         result += " " + query.from + " " + query.join + " " + query.where + " " +

@@ -1,35 +1,78 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include <cassert>
+#include <cstdlib>
 #include <vector>
 
 enum class JoinType {
     INNER, LEFT, RIGHT, FULL
 };
 
+// exceptoin 
+// not understand;  не понимаю, почему
+//class valueSql {
+//    union V{
+//        std::string str_;
+//        int i_;
+//        V() {}
+//        V(std::string s):str_(s){}
+//        V(int i):i_(i){}
+//        ~V(){}
+//    };
+//    V val;
+//    bool isStr;
+//public:
+//    valueSql(std::string s) : val(s), isStr(true) {}
+//    valueSql(int i): val(i), isStr(false){}
+//    ~valueSql() { if (isStr) val.str_.~basic_string/*<char>*/(); }
+//    valueSql(const valueSql& oth) { 
+//        isStr = oth.isStr;
+//        if (isStr)
+//            val.str_ = oth.val.str_; // <- exception
+//        else val.i_ = oth.val.i_; 
+//    }
+//    std::string getStr() {
+//        if (!isStr) {
+//            std::cout << "\nError sql_query! Not string, mast be";
+//            std::exit(-1);
+//        }
+//
+//        assert(isStr);
+//        return val.str_;
+//    }
+//    int getInt() {
+//        if (isStr) {
+//            std::cout << "\nError sql_query! Not string, mast be";
+//            std::exit(-1);
+//        }
+//        assert(!isStr);
+//        return val.i_;
+//    }
+//    bool isString() { return isStr; }
+//};
 class valueSql {
-    union {
-        std::string str_;
-        int i_;
-    };
+    std::string strV;
+    int intV;
     bool isStr;
 public:
-    valueSql(std::string s) : str_(s), isStr(true) {}
-    valueSql(int i): i_(i), isStr(false){}
-    ~valueSql() { if (isStr) str_.~basic_string/*<wchar_t>*/(); }
-    valueSql(const valueSql& oth) { 
-        isStr = oth.isStr;
-        if (isStr)
-            str_ = oth.str_; 
-        else i_ = oth.i_; 
-    }
+    valueSql(std::string s) : strV(s), isStr(true) {}
+    valueSql(int i) : intV(i), isStr(false) {}
+    ~valueSql() {}
+    valueSql(const valueSql& oth) = default;
     std::string getStr() {
-        assert(isStr);
-        return str_;
+        if (!isStr) {
+            std::cout << "\nError sql_query! Not string, mast be";
+            std::exit(-1);
+        }
+        return strV;
     }
     int getInt() {
-        assert(!isStr);
-        return i_;
+        if (isStr) {
+            std::cout << "\nError sql_query! Not string, mast be";
+            std::exit(-1);
+        }
+        return intV;
     }
     bool isString() { return isStr; }
 };

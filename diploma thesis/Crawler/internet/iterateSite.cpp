@@ -37,7 +37,6 @@ iterateSite::iterateSite(ini_parser& p, std::shared_ptr<DBclass> db, int thrdCou
 bool iterateSite::isProcessed(addrSite& site) {
     if (processedSites.find(site) == processedSites.end())
     {
-        std::cout << "no proc; will ran: " << site.url()<<std::endl;
         return false;
     }
     else
@@ -63,11 +62,14 @@ void iterateSite::scanning() {
 
     if(needProces)
         recursScan(textSite, start, count - 1);
-    std::cout << "\nEnd of scanong" << std::endl;
+    std::cout << "\nEnd of scaning" << std::endl;
+    int addS, addW, updW;
+    indexat.getAdded(addS, addW, updW);
+    std::cout << "Be added: " << addS << " sites, " << addW << " words; be update: " << updW << std::endl;
 }
 
 void iterateSite::recursScan(std::string& text, const addrSite& site, int count) {
-    //std::cout << "Scaning to Recursiv level: " << count << std::endl;
+    std::cout << "Recurs lvl: "<<count << ". Site: " << site.url() << std::endl;
     try { 
         processedSites.insert(site);
         indexat.indexation(text, site);
