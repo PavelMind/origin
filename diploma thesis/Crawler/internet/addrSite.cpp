@@ -1,5 +1,8 @@
 #include "addrSite.h"
 #include <iostream>
+#include <algorithm>
+
+const std::vector<std::string> addrSite::siteFile={ ".html", ".shtml", ".htm", ".php" };
 
 addrSite::addrSite(bool b, std::string h, std::string p): _host(h), _path(p) {
     if (b)
@@ -10,10 +13,10 @@ addrSite::addrSite(bool b, std::string h, std::string p): _host(h), _path(p) {
 
 addrSite::addrSite() { protocol = other; }
 
-addrSite::addrSite(std::string url, bool currS, std::string currH) {
+addrSite::addrSite(std::string url, const addrSite curr) {    
     int size = url.size();
     int p = 0;
-    p = url.find("://");
+    p = url.find("://");    
     if (p != -1) {
         std::string prot = url.substr(0, p);
         if (prot == "http") {
@@ -35,21 +38,69 @@ addrSite::addrSite(std::string url, bool currS, std::string currH) {
             _host = url.substr(p);
             _path = "/";
         }
-
     }
     else {
-        if (currS) {
-            protocol = https;
+        protocol = curr.protocol;
+        _host = curr._host;
+        if (url.substr(0, 3) == "../")
+            relativeLinkBack(url, curr);
+        else if (url[0] == '/')
+            relativeLinkSlash(url, curr);
+        else
+            relativeLink(url, curr);
+    }
+    int anchor = _path.find('#');
+    if (anchor != -1) {
+        _path.resize(anchor);
+    }
+}
+
+void addrSite::relativeLink(std::string& newPh, const addrSite& curr) {
+    std::string CuPath = curr._path;
+    bool isFile = false;
+    int lastSl = CuPath.find_last_of('/', CuPath.size()-2);
+
+    for (auto& i : siteFile) {
+        int p = CuPath.rfind(i);
+        if (p != -1 && p > lastSl) {
+            isFile = true;
+            break;
+        }
+    }
+    if (isFile) {
+        CuPath.erase(lastSl);
+    }
+    if (CuPath.back() != '/')
+        CuPath.push_back('/');
+
+    _path = CuPath + newPh;
+}
+
+void addrSite::relativeLinkSlash(std::string& newPh, const addrSite& curr) {
+    _path = newPh;
+}
+
+void addrSite::relativeLinkBack(std::string& newPh, const addrSite& curr) {    
+    std::string CPath = curr._path;
+
+    while (newPh.substr(0, 3) == "../") {
+        newPh.erase(0, 3);
+        int pDelSl = 0;
+        if (CPath != "/") {
+            if (CPath[CPath.size() - 1] == '/') {   //  "/....../"
+                pDelSl = CPath.find_last_of('/', CPath.size() - 2);
+            }
+            else {  //  "/....."
+                pDelSl = CPath.find_last_of('/');
+            }
+            CPath.erase(pDelSl + 1);
         }
         else {
-            protocol = http;
+            std::cout << "Not correct link url: child:\"../\", perent path:\"/\".\n";
+            std::cout << "parent url: " << curr.url() << ", child path: " << newPh << std::endl;
         }
-        _host = currH;
-        if (url[0] == '/')
-            _path = url;
-        else
-            _path = "/" + url;
     }
+    _path = CPath + newPh;
 }
 
 addrSite::addrSite(std::string url) {
@@ -70,6 +121,7 @@ addrSite::addrSite(std::string url) {
     else {
         protocol = other;
     }
+
     p += 3;
     int b = url.find("/", p);
     if (b != -1) {
@@ -79,6 +131,10 @@ addrSite::addrSite(std::string url) {
     else {
         _host = url.substr(p);
         _path = "/";
+    }
+    int anchor = _path.find('#');
+    if (anchor != -1) {
+        _path.resize(anchor);
     }
 }
 
@@ -100,17 +156,14 @@ bool addrSite::SSL() const {
 
 bool addrSite::ref() const {
     bool prot = (protocol == https || protocol == http);
+    bool notFile = true;
+
     int p = _path.find_last_of(".");
-    bool notFile;
-    if (p == -1) {
-        notFile = true;
-    }
-    else {
-        if ( (_path.substr(p) == ".html") || (_path.substr(p) == ".shtml"))
-            notFile = true;
-        else
+    if (p != -1) {
+        std::string strFile = _path.substr(p);
+        if (std::find(siteFile.begin(), siteFile.end(), strFile) == siteFile.end())
             notFile = false;
-    }
+    }    
     return prot && notFile;
 }
 
@@ -130,8 +183,10 @@ std::string addrSite::url() const {
     else if (protocol == http)
         res = "http://";
     else
-        return "bad protocol"; // -> not to connect
+        return "Not site protocol:"; // -> not to connect
     res += _host + _path;
+    if (res.back() == '/')
+        res.pop_back();
     return res;
 }
 

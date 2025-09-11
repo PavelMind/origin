@@ -1,18 +1,12 @@
 #include "iterateSite.h"
-#include <iostream>
 #include "httpClient.h"
+#include <iostream>
 #include <utility>
-
-
-std::string downloadSite(addrSite site) {
-    HTTPclient client(site.host());
-    return client.Get(site.path());
-}
-
+#include <functional>
 
 
 iterateSite::iterateSite(ini_parser& p, std::shared_ptr<DBclass> db, int thrdCount) :
-    pool(thrdCount), DB(db), indexat(db) {
+    pool(thrdCount), DB(db), links{ std::make_shared<listLinks>() }, indexat(db, links) {
         try {
             countRecurs = p.get_value<int>("spider.recurs");
             std::string str = p.get_value<std::string>("spider.start");
@@ -22,101 +16,83 @@ iterateSite::iterateSite(ini_parser& p, std::shared_ptr<DBclass> db, int thrdCou
         }
         catch (myexpect& mye) {
             std::wcout << mye.what();
-            std::cout << "In line:" << mye.numberErrLine();
+            std::cout << " In line:" << mye.numberErrLine();
             start = addrSite("https://example.com/");
             countRecurs = 1;
         }
         catch (std::exception& e) {
-            std::cout << e.what();
+            std::cout << e.what()<<std::endl;
             start = addrSite("https://example.com/");
             countRecurs = 1;
         }
-
 }
 
-bool iterateSite::isProcessed(addrSite& site) {
-    if (processedSites.find(site) == processedSites.end())
-    {
-        return false;
-    }
-    else
-        return true;
+std::string iterateSite::downloadSite(addrSite site) {
+    HTTPclient client(site.host());
+    return client.Get(site.path());
 }
 
 void iterateSite::scanning() {
     std::cout << "Start of scaning" << std::endl;
-    int count = countRecurs;
-    std::string textSite;
-    bool needProces = !isProcessed(start);
-    try {
-        if (needProces) {
-            //auto resFuture = pool.submit(&downloadSite, this, start);
-            auto resFuture = pool.submit(downloadSite, start);
-            textSite = resFuture.get();
-        }
-    }
-    catch (std::exception& e) {
-        std::cout << "Error of download to website page:\n" << e.what() << std::endl;
-        return;
-    }
+    links->push(start);
+    int cntRecurs = countRecurs;
+    do {
+        std::vector<addrSite> vecSite = std::move(links->getLinks());
+        std::vector<std::future<bool>> vecFut;
 
-    if(needProces)
-        recursScan(textSite, start, count - 1);
-    std::cout << "\nEnd of scaning" << std::endl;
-    int addS, addW, updW;
-    indexat.getAdded(addS, addW, updW);
-    std::cout << "Be added: " << addS << " sites, " << addW << " words; be update: " << updW << std::endl;
-}
-
-void iterateSite::recursScan(std::string& text, const addrSite& site, int count) {
-    std::cout << "Recurs lvl: "<<count << ". Site: " << site.url() << std::endl;
-    try { 
-        processedSites.insert(site);
-        indexat.indexation(text, site);
-    }
-    catch (errorOfTextSite& errText) {
-        std::cout << "\nError. Not correct code of website page.\n";
-        return;
-    }
-    catch (std::exception& e) {
-        std::cout << "\nError of indexation:\n" << e.what() << std::endl;
-        return;
-    }
-
-    if (count > 0) {
-        auto siteList = indexat.getLinks();
-        std::vector< std::pair<std::string, int> > textSites;
-        std::vector< std::pair<std::future<std::string>, int> > futureSites;
-
-        for (auto i = 0; i < siteList.size(); ++i) {
+        for (auto& i : vecSite) {
             try {
-                if (!isProcessed(siteList[i])) {
-                    //auto f = pool.submit(&downloadSite, this, s);
-                    auto f = pool.submit(downloadSite, siteList[i]);
-                    futureSites.push_back({ std::move(f), i });
+                if (!links->isProcAndMarked(i)) {
+                    auto f = pool.submit(std::bind(&iterateSite::work, this, i, cntRecurs));
+                    vecFut.push_back(std::move(f));
                 }
             }
             catch (std::exception& e) {
                 std::cout << "Error in pool.submit(): " << e.what() << std::endl;
             }
         }
-
-        for (auto i = 0; i < futureSites.size(); ++i) {
+        
+        for (auto& i : vecFut) {
             try {
-                auto text = futureSites[i].first.get();
-                std::pair<std::string, int> pr(std::move(text), futureSites[i].second);
-                textSites.push_back(std::move(pr));
+                auto tmp = i.get();
             }
             catch (std::exception& e) {
-                std::cout << "\nError of download to website page:\n" << e.what() << std::endl;
+                std::cout << "Error of download to website page: " << e.what() << std::endl;
                 continue;
             }
         }
-        for (auto i = 0; i < textSites.size(); ++i) {
-            auto sit = siteList[textSites[i].second];
-            recursScan(textSites[i].first, sit, count-1);
-        }
+        --cntRecurs;
+    } while (!links->empty() && cntRecurs > 0);
+
+    std::cout << "\nEnd of scaning" << std::endl;
+    int addS, addW, updW;
+    indexat.getAdded(addS, addW, updW);
+    std::cout << "Be added: " << addS << " sites, " << addW << " words; be update: " << updW << std::endl;
+}
+
+bool iterateSite::work(addrSite site, int count) {
+    std::string text;
+    try {
+        text = downloadSite(site);
     }
-    else
-        return;
+    catch (std::exception& e) {
+        std::cout << e.what();
+        return false;
+    }
+
+    std::string ouuRecCnt{ "Recurs lvl: " + std::to_string(count) + ". Site: " + site.url() + "\n" };
+    std::cout << ouuRecCnt;
+
+    try {
+        indexat.indexation(text, site);
+    }
+    catch (errorOfTextSite& errText) {
+        std::cout << "Error. Not correct code of website page.\n";
+        return false;
+    }
+    catch (std::exception& e) {
+        std::cout << "Error of indexation:" << e.what() << std::endl;
+        return false;
+    }
+    return true;
 }

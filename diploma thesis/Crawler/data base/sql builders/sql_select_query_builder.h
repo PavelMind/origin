@@ -71,7 +71,7 @@ public:
         case JoinType::INNER: typJoin = "INNER"; break;
         case JoinType::LEFT: typJoin = "LEFT"; break;
         case JoinType::RIGHT: typJoin = "RIGHT"; break;
-        case JoinType::FULL: typJoin = "FUL"; break;
+        case JoinType::FULL: typJoin = "FULL"; break;
         }
         query.join += " " + typJoin + " JOIN " + tabl2 + " ON "
             + tabl2 + "." + c2 + " = " + tabl1 + "." + c1;

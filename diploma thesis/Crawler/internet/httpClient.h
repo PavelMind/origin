@@ -12,7 +12,7 @@ class HTTPclient {
 #else    
     httplib::Client clnt;
 #endif
-
+    std::string host;
 public:
     HTTPclient(std::string host);
     HTTPclient(std::string host, int port);

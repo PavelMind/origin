@@ -4,12 +4,11 @@
 #include <algorithm>
 #include "../data base/sql_query_builders.h"
 
-indexator::indexator(std::shared_ptr<DBclass> b): DB(b) {
-    readBlackList();
-}
+const std::string indexator::delitedChar{ ",./\\|\"\'\t\n\r\f\a\b\v!@#$%^?¹&*(){}[]-_=+;:~`" };
+const std::vector<std::string> indexator::rangeTags{ "style", "script", "code", "button" };
 
-std::vector<addrSite>&& indexator::getLinks() {
-    return std::move(links); 
+indexator::indexator(std::shared_ptr<DBclass> b, std::shared_ptr<listLinks> l): DB(b), prLinks(l) {
+    readBlackList();
 }
 
 void indexator::getAdded(int& site, int& word, int& upd) {
@@ -39,7 +38,6 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
     size_t sizeText = text.size();
     bool isProcessed = false;
     bool takedTitle = false;
-
     for (size_t i = 0; i < sizeText; ++i) {
         if (text[i] == '<') {
             size_t endDeleted = 0;
@@ -74,13 +72,15 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
                 }
                 else
                     throw errorOfTextSite{};
-                if (strAddr.size() > 0) {
-                    
-                    addrSite st(strAddr, currS.SSL(), currS.host());
-                    bool noInBlack = std::find(blackListSite.begin(), blackListSite.end(), st.host()) == blackListSite.end();
-                    bool noInList = std::find(links.begin(), links.end(), st) == links.end();
-                    if (st.ref() && noInList && noInBlack) {
-                        links.push_back(st);
+                if (strAddr.size() > 0) {                    
+                    addrSite st(strAddr, currS);
+                    bool noInBlack;                    
+                    {
+                        std::lock_guard<std::mutex> mut{ mtxBlack };
+                        noInBlack = std::find(blackListSite.begin(), blackListSite.end(), st.host()) == blackListSite.end();
+                    }
+                    if (st.ref() && noInBlack) {
+                        prLinks->push(st);
                     }
                 }
             }// if(... == "a ")
@@ -135,7 +135,6 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
             }
         }
 
-
         if (delitedChar.find(text[i]) != std::string::npos) {
             text[i] = ' ';            
         }
@@ -144,9 +143,7 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
 }
 
 
-
 void indexator::indexation(std::string& text, const addrSite& currSite) {
-    links.clear();
     std::string title{};
     cleanerText(text, title, currSite);
     std::vector<std::string> words;
@@ -156,7 +153,7 @@ void indexator::indexation(std::string& text, const addrSite& currSite) {
     size_t endWord = 0;
     size_t i = 0;
     bool run = true;
-
+    
     while (run){
         beginWord = text.find_first_not_of(" ", i);
         if (beginWord == std::string::npos) {
@@ -182,15 +179,26 @@ void indexator::indexation(std::string& text, const addrSite& currSite) {
 
 void indexator::inputBD(const addrSite& site, const std::string& title, const std::vector<std::string>& words) {
     if (words.empty())
-        return;
+        return;    
+    auto smolTitle = title.substr(0, DB->lengthTitle()-1);
+    for (auto i : smolTitle) {
+        if (i == '\'')
+            i = ' ';
+    }
+
     int i;
-    auto smolTitle = title.substr(0, 29);
     std::vector<int> resSite;
+
+    std::lock_guard<std::mutex> mutx{ mtxDB };
     try {
         pqxx::work db{ DB->getConn() };
-        std::string url = site.url();
-        if (url.size() > 50)
+        std::string url = site.url();        
+        if (url.size() > DB->lengthUrl()) {
+            std::string underSizeStr{ "Site length exceeded: " + site.url() + "\n" };
+            std::cout << underSizeStr;
             return;
+        }
+
         SqlSelectQueryBuilder sqlSelSite;
         sqlSelSite.AddColumn("id").AddFrom("sites").AddWhereAnd("URL", url);
         for (auto [i] : db.query<int>(sqlSelSite.BuildQuery()))
@@ -201,21 +209,31 @@ void indexator::inputBD(const addrSite& site, const std::string& title, const st
             SqlInsertQueryBuilder sqlInsSite;
             sqlInsSite.AddNameTable("sites").AddColumn("title", smolTitle).AddColumn("URL", url);
             db.exec(sqlInsSite.BuildQuery());
-            db.commit();
             ++addedS;
             for (auto [i] : db.query<int>(sqlSelSite.BuildQuery()))
             {
                 resSite.push_back(i);
             }
-        }        
+        }
+        db.commit();
     }
-    catch (pqxx::sql_error& erPQXX) { std::cout << "Err pqxx to site. " << erPQXX.what() << std::endl; }
-    catch (std::exception& e) { std::cout << "Err to site. "  << e.what() << std::endl; }
+    catch (pqxx::sql_error& erPQXX) { 
+        std::cout << "Err DB pqxx to site. " << erPQXX.what() << std::endl; 
+        return;
+    }
+    catch (std::exception& e) { 
+        std::cout << "Err DB to site. "  << e.what() << std::endl; 
+        return;
+    }
 
     std::string forErr;
+    const int maxLengthWord = DB->lengthWord();
     for (auto word : words) {
-        if (word.size() > 20)
+        if (word.size() > maxLengthWord) {
+            std::string underSizeStr{ "Word length exceeded: " + word + "\n" };
+            std::cout << underSizeStr;
             continue;
+        }
         try {
             pqxx::work db{ DB->getConn() };
             forErr = word;
@@ -261,9 +279,14 @@ void indexator::inputBD(const addrSite& site, const std::string& title, const st
             }
             db.commit();           
         }
-        catch (pqxx::sql_error& erPQXX) { std::cout << "Err pqxx to word " << forErr << std::endl << erPQXX.what() << std::endl; }
-        catch (std::exception& e) { std::cout << "Err to word " << forErr << std::endl << e.what() << std::endl; }
-
-    }
+        catch (pqxx::sql_error& erPQXX) { 
+            std::cout << "Err DB pqxx to word " << forErr << std::endl << erPQXX.what() << std::endl; 
+            continue;
+        }
+        catch (std::exception& e) { 
+            std::cout << "Err DB to word " << forErr << std::endl << e.what() << std::endl; 
+            continue;
+        }
+    }//for
 }
 

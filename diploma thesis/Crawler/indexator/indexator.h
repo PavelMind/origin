@@ -2,29 +2,31 @@
 #include <string>
 #include <vector>
 #include <exception>
-#include "../data base/DBclass.h"
 #include <memory>
+#include <mutex>
+#include "DBclass.h"
 #include "addrSite.h"
+#include "listLinks.h"
+
 
 class indexator {
     std::shared_ptr<DBclass> DB;
+    std::shared_ptr<listLinks> prLinks;
     int addedS = 0, addedW = 0, updatedW = 0;
+    std::mutex mtxDB, mtxBlack;
      
     const int minSizeWord = 3; // >= 1
     const int maxSizeWord = 20;
-    const std::string delitedChar { ",./\\|\"\'\t\n\r\f\a\b\v!@#$%^?¹&*(){}[]-_=+;:~`" };
-    const std::vector<std::string> rangeTags { "style", "script", "code", "button"};
-
+    const static std::string delitedChar;
+    const static std::vector<std::string> rangeTags;
     std::vector<std::string> blackListSite;
-    std::vector<addrSite> links;
-    
+
     void cleanerText(std::string&, std::string& tit, const addrSite& currAddr);
     void readBlackList();
     void inputBD(const addrSite&,const std::string& tit, const std::vector<std::string>& wrd);
 public:
-    indexator(std::shared_ptr<DBclass> );
+    indexator(std::shared_ptr<DBclass>, std::shared_ptr<listLinks>);
     void indexation(std::string& body, const addrSite& site);
-    std::vector<addrSite>&& getLinks();
     void getAdded(int& site, int& word, int& updWord);
 };
 

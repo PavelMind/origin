@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class addrSite {
+    const static std::vector<std::string> siteFile;
     enum protocolType {
         http,
         https,
@@ -10,10 +12,14 @@ class addrSite {
     protocolType protocol;
     std::string _host;
     std::string _path;
+
+    void relativeLink(std::string& _new, const addrSite& curr);
+    void relativeLinkSlash(std::string& _new, const addrSite& curr);
+    void relativeLinkBack(std::string& _new, const addrSite& curr);
 public:
     addrSite(bool isSSL, std::string host, std::string path);
     explicit addrSite(std::string);
-    addrSite(std::string _new, bool currSll, std::string currHost);
+    addrSite(std::string _new, const addrSite curr);
     addrSite();
     addrSite& operator =(const addrSite&);
     bool operator ==(const addrSite&);

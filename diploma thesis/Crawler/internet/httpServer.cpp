@@ -6,7 +6,7 @@
 
 
 HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
     : serv( cert, key ) 
 #endif 
 {
@@ -44,7 +44,7 @@ HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
 }
 
 HTTPserver::HTTPserver(ini_parser& p, std::shared_ptr<DBclass> db) 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
     : serv(cert, key)
 #endif 
 {
@@ -116,7 +116,7 @@ void HTTPserver::readMyStartHtml() {
 }
 
 std::string HTTPserver::createListResp(const std::string stringReq) {
-    std::string text{ "<html>\n<head>\n<title>Результаты поиска</title>\n" };
+    std::string text{ "<html>\n<head>\n<title>Result</title>\n" };
     text += "<style>p{margin-top: 1px;margin-bottom: 0.1px;}h5{margin-top: 0.1px;margin-bottom: 1px;}</style>";
     text += "</head>\n<body>\n" ;
     text += "<table align=\"left\" border=\"1\" cellpadding=\"1\" cellspacing=\"1\" id=\"id_table_req\" style=\"width: 500px\">";
@@ -184,23 +184,5 @@ std::vector<std::pair<std::string, std::string>> HTTPserver::reqFromDB(const std
     catch (pqxx::sql_error erPQXX) { std::cout << erPQXX.what() << std::endl; }
     catch (std::exception e) { std::cout << e.what() << std::endl; }
 
-    
-    /*struct strucSelect {
-        std::string tit;
-        std::string url;
-        int summ;
-    };
-    std::string tmp1{};
-    std::string tmp2{};
-    int tmp3=0;*/
-    //...
-    //auto resultSelect = DB->selectMult<strucSelect>(sqlReq, tmp1, tmp2, tmp3);
-    
-    /*std::vector<std::pair<std::string, std::string>> result;
-    std::string req = sqlReq.BuildQuery();
-    auto resultSelect = DB->selectSiteList(req);
-    for (auto& i : resultSelect) {
-        result.push_back(std::pair(i.name, i.URL));
-    }*/
     return result;
 }

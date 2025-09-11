@@ -51,6 +51,8 @@ find_package (Boost COMPONENTS locale REQUIRED )
 find_package(OpenSSL REQUIRED)
 include_directories(${OpenSSL_DIR}) 
 
+
+
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS}) 
     add_executable(Crawler main.cpp ${DBfiles} ${INIParsFiles} ${TrdPoolFiles} ${InetFiles}

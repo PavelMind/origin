@@ -1,5 +1,6 @@
 #include "DBclass.h"
 #include <iostream>
+#include <string>
 #include "sql_query_builders.h"
 
 
@@ -44,9 +45,9 @@ void DBclass::createTables() {
         pqxx::work tr{ *connect };
 
         SqlCreateQueryBuilder sites, words, counts;
-        sites.AddNameTable("sites").AddKey("id").AddString("title", 30).AddStringUniNN("URL", 50);
+        sites.AddNameTable("sites").AddKey("id").AddString("title", lnghtTitle).AddStringUniNN("URL", lnghtUrl);
 
-        words.AddNameTable("words").AddKey("id").AddStringUniNN("word", 20);
+        words.AddNameTable("words").AddKey("id").AddStringUniNN("word", lnghtWord);
 
         counts.AddNameTable("counts").AddReference("id_site", "sites", "id").
             AddReference("id_word", "words", "id").AddIntNN("count_word");
@@ -85,41 +86,3 @@ std::pair<int, int> DBclass::status() {
 
     return std::pair{ cntSites , cntWords };
 }
-
-
-
-void DBclass::todo(std::string str) {
-    pqxx::work tr{ *connect };
-    tr.exec(str);
-    tr.commit();
-}
-
-
-std::vector<respSelSiteList> DBclass::selectSiteList(std::string req) {
-    pqxx::work tr{ *connect };    
-    std::string url;
-    std::string nm;
-    int c;
-    std::vector<respSelSiteList> result;
-    
-    for (auto [nm, url, c] : tr.query<std::string, std::string, int>(req) )
-    {
-        respSelSiteList tmpl{ nm, url, c };
-        result.push_back(tmpl);
-    }
-    return result;
-}
-
-std::vector<int> DBclass::selectMultInt(std::string req) {
-    pqxx::work tr{ *connect };
-    int c;
-    std::vector<int> result;
-
-    for (auto [c] : tr.query<int>(req)  )
-    {        
-        result.push_back(c);
-    }
-    return result;
-}
-
-

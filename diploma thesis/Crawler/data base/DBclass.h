@@ -1,17 +1,14 @@
 #pragma once
 #include <pqxx/pqxx>
-#include <string>
 #include <memory>
+#include <utility>
 #include "../ini-parser/parser.h"
 
-struct respSelSiteList {
-    std::string name;
-    std::string URL;
-    int count;
-};
+
 
 class DBclass {
     std::unique_ptr<pqxx::connection> connect;
+    const int lnghtWord = 20, lnghtUrl = 100, lnghtTitle = 30;
 
     void createTables();
 public:
@@ -19,32 +16,11 @@ public:
     ~DBclass() = default;
     pqxx::connection& getConn();    
     std::pair<int, int> status();
-    
-    void todo(std::string query);
-    
-    std::vector<respSelSiteList> selectSiteList(std::string);
-    std::vector<int> selectMultInt(std::string);
-    
-    
-    //template<typename TableType, typename ...ArgT>
-    //std::vector<TableType> selectMult(std::string, ArgT...);
+    const int lengthWord() { return lnghtWord; }
+    const int lengthUrl() { return lnghtUrl; }
+    const int lengthTitle() { return lnghtTitle; }
  };
 
-//template<typename TableType, typename ...ArgT>
-//std::vector<TableType> DBclass::selectMult(std::string req, ArgT... fields) {
-//    pqxx::work tr{ connect };
-//
-//    std::vector<TableType> result;
-//
-//    for (auto [fields] :
-//        tr.query<ArgT...>(req)
-//        )
-//    {
-//        TableType tmpl{ fields };
-//        result.push_back(tmpl);
-//    }
-//    return result;
-//}
 
 
 
