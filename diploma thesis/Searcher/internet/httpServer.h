@@ -19,6 +19,7 @@ class HTTPserver {
     std::string mainHTML;
     std::thread thrd;
     std::shared_ptr<DBclass> DB;
+    bool errServer = false;
     
     void readMyStartHtml();
     std::string createListResp(std::string);

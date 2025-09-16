@@ -8,26 +8,34 @@
 
 HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
 #ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
-    : serv( cert, key ) 
+    : serv( cert, key )
 #endif 
 {
     DB = db;
     readMyStartHtml();
-    serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
-        res.set_content(mainHTML, "text/html");
-        }
-    );
+    if (errServer) {
+        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+            res.set_content("<html>\n<body><p>ERROR ON SERVER</p></body>\n</html>", "text/html");
+            }
+        );
+    }
+    else{
+        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+            res.set_content(mainHTML, "text/html");
+            }
+        );
 
-    serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
-        std::string stringReq = req.form.get_field("nameLabl");
-        std::string newPage = "/" + stringReq;        
-        serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
-            res.set_content(createListResp(stringReq), "text/html");
-            });
+        serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+            std::string stringReq = req.form.get_field("nameLabl");
+            std::string newPage = "/" + stringReq;
+            serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
+                res.set_content(createListResp(stringReq), "text/html");
+                });
 
-        res.set_redirect(newPage);
-        }
-    );
+            res.set_redirect(newPage);
+            }
+        );
+    }
     
     
     thrd = std::thread([&]() {
@@ -62,21 +70,29 @@ HTTPserver::HTTPserver(ini_parser& p, std::shared_ptr<DBclass> db)
     }
     DB = db;
     readMyStartHtml();
-    serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
-        res.set_content(mainHTML, "text/html");
-        }
-    );
+    if (errServer) {
+        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+            res.set_content("<html>\n<body><p>ERROR ON SERVER</p></body>\n</html>", "text/html");
+            }
+        );
+    }
+    else {
+        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+            res.set_content(mainHTML, "text/html");
+            }
+        );
 
-    serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
-        std::string stringReq = req.form.get_field("nameLabl");
-        std::string newPage = "/" + stringReq;
-        serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
-            res.set_content(createListResp(stringReq), "text/html");
-            });
+        serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+            std::string stringReq = req.form.get_field("nameLabl");
+            std::string newPage = "/" + stringReq;
+            serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
+                res.set_content(createListResp(stringReq), "text/html");
+                });
 
-        res.set_redirect(newPage);
-        }
-    );
+            res.set_redirect(newPage);
+            }
+        );
+    }
 
 
     thrd = std::thread([&]() {
@@ -108,7 +124,9 @@ void HTTPserver::stop() {
 void HTTPserver::readMyStartHtml() {
     std::ifstream file("main_crawler.html");
     if (!file.is_open()) {
-        throw std::exception("Not open file \"main_crawler.html\"");
+        std::cout<<"Not open file \"main_crawler.html\"";
+        errServer = true;
+        return;
     }
     std::stringstream buffer;
     buffer << file.rdbuf();
@@ -121,6 +139,11 @@ std::string HTTPserver::createListResp(std::string stringReq) {
     std::locale utf8Loc(gen(""));
     stringReq = boost::locale::to_lower(stringReq, utf8Loc);
 
+    for (auto i : stringReq) {
+        if (i == '\'')
+            i = ' ';
+    }
+
     std::string text{ "<html>\n<head>\n<title>Result</title>\n" };
     text += "<style>p{margin-top: 1px;margin-bottom: 0.1px;}h5{margin-top: 0.1px;margin-bottom: 1px;}</style>";
     text += "</head>\n<body>\n" ;
@@ -130,12 +153,17 @@ std::string HTTPserver::createListResp(std::string stringReq) {
     std::vector<std::string> words;
     createListWords(words, stringReq);
     auto siteList = reqFromDB(words);
+
+    if (errServer) {
+        return std::string{ "<html>\n<body><p>ERROR ON SERVER</p></body>\n</html>" };
+    }
     for (auto& i : siteList) {
         text += "\n<p>" + i.first + "</p>" + "\n<h5> <a href = \"" +
             i.second + "\" id = \"id\" name = \"name\" target = \"_blank\" title = \"handle\" type = \"type\">" + i.second + "</a>\n</h5>" +
             "<p>&nbsp; </p>";
     }
-
+    if (siteList.empty())
+        text += "\n<p>nothing found</p>";
     text += "</body>\n</html> ";
     return text;
 }
@@ -186,8 +214,14 @@ std::vector<std::pair<std::string, std::string>> HTTPserver::reqFromDB(const std
             result.push_back({ ti, url });
         }
     }
-    catch (pqxx::sql_error erPQXX) { std::cout << erPQXX.what() << std::endl; }
-    catch (std::exception e) { std::cout << e.what() << std::endl; }
+    catch (pqxx::sql_error erPQXX) { 
+        errServer = true;
+        std::cout << erPQXX.what() << std::endl; 
+    }
+    catch (std::exception e) { 
+        errServer = true;
+        std::cout << e.what() << std::endl; 
+    }
 
     return result;
 }
