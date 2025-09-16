@@ -1,25 +1,25 @@
 CXX = clang++
-CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow $(EXTRA_CXXFLAGS) -DCPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO # -fno-exceptions -DCPPHTTPLIB_NO_EXCEPTIONS -fsanitize=address
+CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow $(EXTRA_CXXFLAGS) -DS_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO # -fno-exceptions -DS_CPPHTTPLIB_NO_EXCEPTIONS -fsanitize=address
 
 PREFIX ?= $(shell brew --prefix)
 
 OPENSSL_DIR = $(PREFIX)/opt/openssl@3
-OPENSSL_SUPPORT = -DCPPHTTPLIB_OPENSSL_SUPPORT_S -I$(OPENSSL_DIR)/include -L$(OPENSSL_DIR)/lib -lssl -lcrypto
+OPENSSL_SUPPORT = -DS_CPPHTTPLIB_OPENSSL_SUPPORT_S -I$(OPENSSL_DIR)/include -L$(OPENSSL_DIR)/lib -lssl -lcrypto
 
 ifneq ($(OS), Windows_NT)
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S), Darwin)
-		OPENSSL_SUPPORT += -DCPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN -framework Security
+		OPENSSL_SUPPORT += -DS_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN -framework Security
 	endif
 endif
 
-ZLIB_SUPPORT = -DCPPHTTPLIB_ZLIB_SUPPORT -lz
+ZLIB_SUPPORT = -DS_CPPHTTPLIB_ZLIB_SUPPORT -lz
 
 BROTLI_DIR = $(PREFIX)/opt/brotli
-BROTLI_SUPPORT = -DCPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
+BROTLI_SUPPORT = -DS_CPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
 
 ZSTD_DIR = $(PREFIX)/opt/zstd
-ZSTD_SUPPORT = -DCPPHTTPLIB_ZSTD_SUPPORT -I$(ZSTD_DIR)/include -L$(ZSTD_DIR)/lib -lzstd
+ZSTD_SUPPORT = -DS_CPPHTTPLIB_ZSTD_SUPPORT -I$(ZSTD_DIR)/include -L$(ZSTD_DIR)/lib -lzstd
 
 LIBS = -lpthread -lcurl
 ifneq ($(OS), Windows_NT)

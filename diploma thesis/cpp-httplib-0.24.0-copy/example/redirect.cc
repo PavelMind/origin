@@ -15,7 +15,7 @@ using namespace httplib_S;
 int main(void) {
   // HTTP server
   Server http;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLServer https(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
 #endif
 
@@ -28,7 +28,7 @@ int main(void) {
   });
 
   // HTTPS server
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   https.Get("/", [=](const Request & /*req*/, Response &res) {
     res.set_redirect("/hi");
   });
@@ -46,13 +46,13 @@ int main(void) {
   // Run servers
   auto httpThread = std::thread([&]() { http.listen("localhost", 8080); });
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto httpsThread = std::thread([&]() { https.listen("localhost", 8081); });
 #endif
 
   httpThread.join();
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   httpsThread.join();
 #endif
 

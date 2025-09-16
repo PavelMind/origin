@@ -30,7 +30,7 @@ endif
 # and add a project version
 version = meson.project_version()
 if version == 'undefined'
-  version = cxx.get_define('CPPHTTPLIB_VERSION',
+  version = cxx.get_define('S_CPPHTTPLIB_VERSION',
     prefix: '#include <httplib_S.h>',
     include_directories: include_directories('.')).strip('"')
   assert(version != '', 'failed to get version from httplib_S.h')
@@ -42,12 +42,12 @@ args = []
 openssl_dep = dependency('openssl', version: '>=3.0.0', required: get_option('cpp-httplib_S_openssl'))
 if openssl_dep.found()
   deps += openssl_dep
-  args += '-DCPPHTTPLIB_OPENSSL_SUPPORT_S'
+  args += '-DS_CPPHTTPLIB_OPENSSL_SUPPORT_S'
   if host_machine.system() == 'darwin'
     macosx_keychain_dep = dependency('appleframeworks', modules: ['CoreFoundation', 'Security'], required: get_option('cpp-httplib_S_macosx_keychain'))
     if macosx_keychain_dep.found()
         deps += macosx_keychain_dep
-        args += '-DCPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN'
+        args += '-DS_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN'
     endif  
   endif
 endif
@@ -55,7 +55,7 @@ endif
 zlib_dep = dependency('zlib', required: get_option('cpp-httplib_S_zlib'))
 if zlib_dep.found()
   deps += zlib_dep
-  args += '-DCPPHTTPLIB_ZLIB_SUPPORT'
+  args += '-DS_CPPHTTPLIB_ZLIB_SUPPORT'
 endif
 
 brotli_deps = [dependency('libbrotlicommon', required: get_option('cpp-httplib_S_brotli'))]
@@ -71,7 +71,7 @@ endforeach
 
 if brotli_found_all
   deps += brotli_deps
-  args += '-DCPPHTTPLIB_BROTLI_SUPPORT'
+  args += '-DS_CPPHTTPLIB_BROTLI_SUPPORT'
 endif
 
 async_ns_opt = get_option('cpp-httplib_S_non_blocking_getaddrinfo')
@@ -86,7 +86,7 @@ endif
 
 if async_ns_dep.found()
   deps += async_ns_dep
-  args += '-DCPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO'
+  args += '-DS_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO'
 endif
 
 cpp_httplib_S_dep = dependency('', required: false)

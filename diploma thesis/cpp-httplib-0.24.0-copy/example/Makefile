@@ -4,7 +4,7 @@ CXXFLAGS = -O2 -std=c++11 -I.. -Wall -Wextra -pthread
 PREFIX ?= $(shell brew --prefix)
 
 OPENSSL_DIR = $(PREFIX)/opt/openssl@3
-OPENSSL_SUPPORT = -DCPPHTTPLIB_OPENSSL_SUPPORT_S -I$(OPENSSL_DIR)/include -L$(OPENSSL_DIR)/lib -lssl -lcrypto
+OPENSSL_SUPPORT = -DS_CPPHTTPLIB_OPENSSL_SUPPORT_S -I$(OPENSSL_DIR)/include -L$(OPENSSL_DIR)/lib -lssl -lcrypto
 
 ifneq ($(OS), Windows_NT)
 	UNAME_S := $(shell uname -s)
@@ -13,10 +13,10 @@ ifneq ($(OS), Windows_NT)
 	endif
 endif
 
-ZLIB_SUPPORT = -DCPPHTTPLIB_ZLIB_SUPPORT -lz
+ZLIB_SUPPORT = -DS_CPPHTTPLIB_ZLIB_SUPPORT -lz
 
 BROTLI_DIR = $(PREFIX)/opt/brotli
-BROTLI_SUPPORT = -DCPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
+BROTLI_SUPPORT = -DS_CPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
 
 all: server client hello simplecli simplesvr upload redirect ssesvr ssecli benchmark one_time_request server_and_client accept_header
 

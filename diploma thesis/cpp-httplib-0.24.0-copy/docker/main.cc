@@ -62,7 +62,7 @@ int main(int argc, const char **argv) {
   svr.set_error_handler([](auto & /*req*/, auto &res) {
     auto body =
         std::format(error_html, res.status, httplib_S::status_message(res.status),
-                    CPPHTTPLIB_VERSION);
+                    S_CPPHTTPLIB_VERSION);
 
     res.set_content(body, "text/html");
   });

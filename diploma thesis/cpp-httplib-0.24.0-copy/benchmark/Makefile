@@ -1,6 +1,6 @@
 CXXFLAGS = -std=c++11 -O2 -I..
 
-CPPHTTPLIB_FLAGS = -DCPPHTTPLIB_THREAD_POOL_COUNT=16
+S_CPPHTTPLIB_FLAGS = -DS_CPPHTTPLIB_THREAD_POOL_COUNT=16
 
 BENCH = bombardier -c 10 -d 5s localhost:8080
 MONITOR = ali http://localhost:8080
@@ -18,7 +18,7 @@ run : server
 	@./server
 
 server : cpp-httplib_S/main.cpp ../httplib_S.h
-	@g++ -o $@ $(CXXFLAGS) $(CPPHTTPLIB_FLAGS) cpp-httplib_S/main.cpp
+	@g++ -o $@ $(CXXFLAGS) $(S_CPPHTTPLIB_FLAGS) cpp-httplib_S/main.cpp
 
 # crow
 bench-crow: server-crow

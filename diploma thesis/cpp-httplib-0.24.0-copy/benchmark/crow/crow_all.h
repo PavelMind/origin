@@ -13707,7 +13707,7 @@ namespace crow
  * It defines a handler when the client make a request for an
  * undefined route in the blueprint.
  *
- * \see [Page of the guide "Blueprint" (Define a custom Catchall route)](https://crowcpp.org/master/guides/blueprints/#define-a-custom-catchall-route).
+ * \see [Page of the guide "Blueprint" (Define a custom Catchall route)](https://crowcpp.org/master/guides/blueprints/#define -a-custom-catchall-route).
  */ 
 #define CROW_BP_CATCHALL_ROUTE(blueprint) blueprint.catchall_rule()
 

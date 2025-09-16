@@ -31,13 +31,10 @@ void indexator::readBlackList() {
 }
 
 void indexator::cleanerText(std::string& text, std::string& title, const addrSite& currS){
-    boost::locale::generator gen;
-    std::locale utf8Loc(gen(""));
-    text = boost::locale::to_lower(text, utf8Loc);
-    
     size_t sizeText = text.size();
     bool isProcessed = false;
     bool takedTitle = false;
+    
     for (size_t i = 0; i < sizeText; ++i) {
         if (text[i] == '<') {
             size_t endDeleted = 0;
@@ -50,7 +47,7 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
                 takedTitle = true;
             }
 
-            if (text.substr(i + 1, 2) == "a ") {
+            if (text.substr(i + 1, 2) == "a " || text.substr(i + 1, 2) == "A ") {
                 int begH, endA, begSt, endSt, pClick;
                 std::string strAddr;
 
@@ -58,6 +55,7 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
                 if (endA != -1) {
                     std::string tag = text.substr(i + 1, endA - i - 1);
                     begH = tag.find("href", 2);
+                    begH = (begH != -1) ? begH : tag.find("HREF", 2);
                     if (begH != -1) {
                         begSt = tag.find("\"", begH + 4);
                         if (begSt != -1) {
@@ -76,7 +74,7 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
                     addrSite st(strAddr, currS);
                     bool noInBlack;                    
                     {
-                        std::lock_guard<std::mutex> mut{ mtxBlack };
+                        //std::lock_guard<std::mutex> mut{ mtxBlack };
                         noInBlack = std::find(blackListSite.begin(), blackListSite.end(), st.host()) == blackListSite.end();
                     }
                     if (st.ref() && noInBlack) {
@@ -140,6 +138,9 @@ void indexator::cleanerText(std::string& text, std::string& title, const addrSit
         }
 
     }//for
+    boost::locale::generator gen;
+    std::locale utf8Loc(gen(""));
+    text = boost::locale::to_lower(text, utf8Loc);
 }
 
 

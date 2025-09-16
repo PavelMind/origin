@@ -11,7 +11,7 @@
 using namespace std;
 
 int main(void) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto scheme_host_port = "https://localhost:8080";
 #else
   auto scheme_host_port = "http://localhost:8080";

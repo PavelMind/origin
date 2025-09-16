@@ -59,7 +59,7 @@ FormData &get_file_value(std::vector<FormData> &items, const char *key) {
   auto it = std::find_if(items.begin(), items.end(), [&](const FormData &file) {
     return file.name == key;
   });
-#ifdef CPPHTTPLIB_NO_EXCEPTIONS
+#ifdef S_CPPHTTPLIB_NO_EXCEPTIONS
   return *it;
 #else
   if (it != items.end()) { return *it; }
@@ -1057,7 +1057,7 @@ TEST(ParseAcceptEncoding1, AcceptEncoding) {
 
   auto ret = detail::encoding_type(req, res);
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Gzip);
 #else
   EXPECT_TRUE(ret == detail::EncodingType::None);
@@ -1073,11 +1073,11 @@ TEST(ParseAcceptEncoding2, AcceptEncoding) {
 
   auto ret = detail::encoding_type(req, res);
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Brotli);
-#elif CPPHTTPLIB_ZLIB_SUPPORT
+#elif S_CPPHTTPLIB_ZLIB_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Gzip);
-#elif CPPHTTPLIB_ZSTD_SUPPORT
+#elif S_CPPHTTPLIB_ZSTD_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Zstd);
 #else
   EXPECT_TRUE(ret == detail::EncodingType::None);
@@ -1094,11 +1094,11 @@ TEST(ParseAcceptEncoding3, AcceptEncoding) {
 
   auto ret = detail::encoding_type(req, res);
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Brotli);
-#elif CPPHTTPLIB_ZLIB_SUPPORT
+#elif S_CPPHTTPLIB_ZLIB_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Gzip);
-#elif CPPHTTPLIB_ZSTD_SUPPORT
+#elif S_CPPHTTPLIB_ZSTD_SUPPORT
   EXPECT_TRUE(ret == detail::EncodingType::Zstd);
 #else
   EXPECT_TRUE(ret == detail::EncodingType::None);
@@ -1155,13 +1155,13 @@ class ChunkedEncodingTest : public ::testing::Test {
 protected:
   ChunkedEncodingTest()
       : cli_(HOST, PORT)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
         ,
         svr_(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE)
 #endif
   {
     cli_.set_connection_timeout(2);
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     cli_.enable_server_certificate_verification(false);
 #endif
   }
@@ -1207,7 +1207,7 @@ protected:
     t_.join();
   }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli_;
   SSLServer svr_;
 #else
@@ -1267,7 +1267,7 @@ TEST_F(ChunkedEncodingTest, WithResponseHandlerAndContentReceiver) {
 }
 
 TEST(RangeTest, FromHTTPBin_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/range/32"};
 #else
@@ -1275,7 +1275,7 @@ TEST(RangeTest, FromHTTPBin_Online) {
   auto path = std::string{"/httpbin/range/32"};
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 443;
   SSLClient cli(host, port);
 #else
@@ -1334,7 +1334,7 @@ TEST(RangeTest, FromHTTPBin_Online) {
 TEST(ConnectionErrorTest, InvalidHost) {
   auto host = "-abcde.com";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 443;
   SSLClient cli(host, port);
 #else
@@ -1351,7 +1351,7 @@ TEST(ConnectionErrorTest, InvalidHost) {
 TEST(ConnectionErrorTest, InvalidHost2) {
   auto host = "httpbin.org/";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -1366,7 +1366,7 @@ TEST(ConnectionErrorTest, InvalidHost2) {
 TEST(ConnectionErrorTest, InvalidHostCheckResultErrorToString) {
   auto host = "httpbin.org/";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -1384,7 +1384,7 @@ TEST(ConnectionErrorTest, InvalidPort) {
   auto host = "localhost";
   auto port = 44380;
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host, port);
 #else
   Client cli(host, port);
@@ -1400,7 +1400,7 @@ TEST(ConnectionErrorTest, InvalidPort) {
 TEST(ConnectionErrorTest, Timeout_Online) {
   auto host = "google.com";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 44380;
   SSLClient cli(host, port);
 #else
@@ -1420,7 +1420,7 @@ TEST(ConnectionErrorTest, Timeout_Online) {
 }
 
 TEST(CancelTest, NoCancel_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/range/32"};
 #else
@@ -1428,7 +1428,7 @@ TEST(CancelTest, NoCancel_Online) {
   auto path = std::string{"/httpbin/range/32"};
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 443;
   SSLClient cli(host, port);
 #else
@@ -1444,7 +1444,7 @@ TEST(CancelTest, NoCancel_Online) {
 }
 
 TEST(CancelTest, WithCancelSmallPayload_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/range/32"};
 #else
@@ -1452,7 +1452,7 @@ TEST(CancelTest, WithCancelSmallPayload_Online) {
   auto path = std::string{"/httpbin/range/32"};
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 443;
   SSLClient cli(host, port);
 #else
@@ -1467,7 +1467,7 @@ TEST(CancelTest, WithCancelSmallPayload_Online) {
 }
 
 TEST(CancelTest, WithCancelLargePayload_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/range/65536"};
 #else
@@ -1475,7 +1475,7 @@ TEST(CancelTest, WithCancelLargePayload_Online) {
   auto path = std::string{"/httpbin/range/65536"};
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 443;
   SSLClient cli(host, port);
 #else
@@ -1816,7 +1816,7 @@ static std::string remove_whitespace(const std::string &input) {
 }
 
 TEST(BaseAuthTest, FromHTTPWatch_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/basic-auth/hello/world"};
 #else
@@ -1824,7 +1824,7 @@ TEST(BaseAuthTest, FromHTTPWatch_Online) {
   auto path = std::string{"/httpbin/basic-auth/hello/world"};
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   auto port = 443;
   SSLClient cli(host, port);
 #else
@@ -1871,9 +1871,9 @@ TEST(BaseAuthTest, FromHTTPWatch_Online) {
   }
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(DigestAuthTest, FromHTTPWatch_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto unauth_path = std::string{"/digest-auth/auth/hello/world"};
   auto paths = std::vector<std::string>{
@@ -1937,7 +1937,7 @@ TEST(SpecifyServerIPAddressTest, AnotherHostname_Online) {
   auto another_host = "example.com";
   auto wrong_ip = "0.0.0.0";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -1953,7 +1953,7 @@ TEST(SpecifyServerIPAddressTest, RealHostname_Online) {
   auto host = "google.com";
   auto wrong_ip = "0.0.0.0";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -1968,7 +1968,7 @@ TEST(SpecifyServerIPAddressTest, RealHostname_Online) {
 TEST(AbsoluteRedirectTest, Redirect_Online) {
   auto host = "nghttp2.org";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -1983,7 +1983,7 @@ TEST(AbsoluteRedirectTest, Redirect_Online) {
 TEST(RedirectTest, Redirect_Online) {
   auto host = "nghttp2.org";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -1998,7 +1998,7 @@ TEST(RedirectTest, Redirect_Online) {
 TEST(RelativeRedirectTest, Redirect_Online) {
   auto host = "nghttp2.org";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -2013,7 +2013,7 @@ TEST(RelativeRedirectTest, Redirect_Online) {
 TEST(TooManyRedirectTest, Redirect_Online) {
   auto host = "nghttp2.org";
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -2025,7 +2025,7 @@ TEST(TooManyRedirectTest, Redirect_Online) {
   EXPECT_EQ(Error::ExceedRedirectCount, res.error());
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(YahooRedirectTest, Redirect_Online) {
   Client cli("yahoo.com");
 
@@ -2391,7 +2391,7 @@ TEST(BindServerTest, BindAndListenSeparately) {
   svr.stop();
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(BindServerTest, BindAndListenSeparatelySSL) {
   SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE, CLIENT_CA_CERT_FILE,
                 CLIENT_CA_CERT_DIR);
@@ -2402,7 +2402,7 @@ TEST(BindServerTest, BindAndListenSeparatelySSL) {
 }
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(BindServerTest, BindAndListenSeparatelySSLEncryptedKey) {
   SSLServer svr(SERVER_ENCRYPTED_CERT_FILE, SERVER_ENCRYPTED_PRIVATE_KEY_FILE,
                 nullptr, nullptr, SERVER_ENCRYPTED_PRIVATE_KEY_PASS);
@@ -2413,7 +2413,7 @@ TEST(BindServerTest, BindAndListenSeparatelySSLEncryptedKey) {
 }
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 X509 *readCertificate(const std::string &strFileName) {
   std::ifstream inStream(strFileName);
   std::string strCertPEM((std::istreambuf_iterator<char>(inStream)),
@@ -2508,7 +2508,7 @@ TEST(ErrorHandlerTest, ContentLength) {
   }
 }
 
-#ifndef CPPHTTPLIB_NO_EXCEPTIONS
+#ifndef S_CPPHTTPLIB_NO_EXCEPTIONS
 TEST(ExceptionTest, WithoutExceptionHandler) {
   Server svr;
 
@@ -2690,7 +2690,7 @@ TEST(NoContentTest, ContentLength) {
 }
 
 TEST(RoutingHandlerTest, PreAndPostRoutingHandlers) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
   ASSERT_TRUE(svr.is_valid());
 #else
@@ -2730,7 +2730,7 @@ TEST(RoutingHandlerTest, PreAndPostRoutingHandlers) {
   svr.wait_until_ready();
 
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     SSLClient cli(HOST, PORT);
     cli.enable_server_certificate_verification(false);
 #else
@@ -2748,7 +2748,7 @@ TEST(RoutingHandlerTest, PreAndPostRoutingHandlers) {
   }
 
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     SSLClient cli(HOST, PORT);
     cli.enable_server_certificate_verification(false);
 #else
@@ -2764,7 +2764,7 @@ TEST(RoutingHandlerTest, PreAndPostRoutingHandlers) {
   }
 
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     SSLClient cli(HOST, PORT);
     cli.enable_server_certificate_verification(false);
 #else
@@ -2935,12 +2935,12 @@ class ServerTest : public ::testing::Test {
 protected:
   ServerTest()
       : cli_(HOST, PORT)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
         ,
         svr_(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE)
 #endif
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     cli_.enable_server_certificate_verification(false);
 #endif
   }
@@ -3532,8 +3532,8 @@ protected:
                    const httplib_S::ContentReader &) {
                   res.set_content("ok", "text/plain");
                 })
-#if defined(CPPHTTPLIB_ZLIB_SUPPORT) || defined(CPPHTTPLIB_BROTLI_SUPPORT) ||  \
-    defined(CPPHTTPLIB_ZSTD_SUPPORT)
+#if defined(S_CPPHTTPLIB_ZLIB_SUPPORT) || defined(S_CPPHTTPLIB_BROTLI_SUPPORT) ||  \
+    defined(S_CPPHTTPLIB_ZSTD_SUPPORT)
         .Get("/compress",
              [&](const Request & /*req*/, Response &res) {
                res.set_content(
@@ -3585,7 +3585,7 @@ protected:
   }
 
   map<string, string> persons_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli_;
   SSLServer svr_;
 #else
@@ -4246,7 +4246,7 @@ TEST_F(ServerTest, AlmostTooLongRequest) {
   // line URI is max URI length, minus 14 other chars in req line (GET, space,
   // leading /, space, HTTP/1.1)
   std::string request =
-      "/" + string(CPPHTTPLIB_REQUEST_URI_MAX_LENGTH - 14, 'A');
+      "/" + string(S_CPPHTTPLIB_REQUEST_URI_MAX_LENGTH - 14, 'A');
 
   auto res = cli_.Get(request.c_str());
 
@@ -4669,7 +4669,7 @@ TEST_F(ServerTest, GetStreamedWithRangeMultipart) {
 
 TEST_F(ServerTest, GetStreamedWithTooManyRanges) {
   Ranges ranges;
-  for (size_t i = 0; i < CPPHTTPLIB_RANGE_MAX_COUNT + 1; i++) {
+  for (size_t i = 0; i < S_CPPHTTPLIB_RANGE_MAX_COUNT + 1; i++) {
     ranges.emplace_back(0, -1);
   }
 
@@ -5099,7 +5099,7 @@ TEST_F(ServerTest, PostWithContentProviderWithoutLengthAbort) {
   EXPECT_EQ(Error::Canceled, res.error());
 }
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
 TEST_F(ServerTest, PutWithContentProviderWithGzip) {
   cli_.set_compress(true);
   auto res = cli_.Put(
@@ -5164,7 +5164,7 @@ TEST_F(ServerTest, PutLargeFileWithGzip) {
 }
 
 TEST_F(ServerTest, PutLargeFileWithGzip2) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   std::string s = std::string("https://") + HOST + ":" + std::to_string(PORT);
   Client cli(s.c_str());
   cli.enable_server_certificate_verification(false);
@@ -5373,7 +5373,7 @@ TEST(GzipDecompressor, LargeRandomData) {
 #endif
 #endif
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
 TEST_F(ServerTest, GetStreamedChunkedWithBrotli) {
   Headers headers;
   headers.emplace("Accept-Encoding", "br");
@@ -5548,7 +5548,7 @@ void TestWithHeadersAndContentReceiver(
 }
 
 TEST_F(ServerTest, PostWithHeadersAndContentReceiver) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5562,7 +5562,7 @@ TEST_F(ServerTest, PostWithHeadersAndContentReceiver) {
 }
 
 TEST_F(ServerTest, PutWithHeadersAndContentReceiver) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5576,7 +5576,7 @@ TEST_F(ServerTest, PutWithHeadersAndContentReceiver) {
 }
 
 TEST_F(ServerTest, PatchWithHeadersAndContentReceiver) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5620,7 +5620,7 @@ void TestWithHeadersAndContentReceiverWithProgress(
 }
 
 TEST_F(ServerTest, PostWithHeadersAndContentReceiverWithProgress) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5634,7 +5634,7 @@ TEST_F(ServerTest, PostWithHeadersAndContentReceiverWithProgress) {
 }
 
 TEST_F(ServerTest, PutWithHeadersAndContentReceiverWithProgress) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5648,7 +5648,7 @@ TEST_F(ServerTest, PutWithHeadersAndContentReceiverWithProgress) {
 }
 
 TEST_F(ServerTest, PatchWithHeadersAndContentReceiverWithProgress) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5686,7 +5686,7 @@ void TestWithHeadersAndContentReceiverError(
 }
 
 TEST_F(ServerTest, PostWithHeadersAndContentReceiverError) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5700,7 +5700,7 @@ TEST_F(ServerTest, PostWithHeadersAndContentReceiverError) {
 }
 
 TEST_F(ServerTest, PuttWithHeadersAndContentReceiverError) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5714,7 +5714,7 @@ TEST_F(ServerTest, PuttWithHeadersAndContentReceiverError) {
 }
 
 TEST_F(ServerTest, PatchWithHeadersAndContentReceiverError) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   using ClientT = SSLClient;
 #else
   using ClientT = Client;
@@ -5800,7 +5800,7 @@ TEST_F(ServerTest, TooManyRedirect) {
   EXPECT_EQ(Error::ExceedRedirectCount, res.error());
 }
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
 TEST_F(ServerTest, Gzip) {
   Headers headers;
   headers.emplace("Accept-Encoding", "gzip, deflate");
@@ -5939,7 +5939,7 @@ TEST_F(ServerTest, MultipartFormDataGzip) {
 }
 #endif
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
 TEST_F(ServerTest, Brotli) {
   Headers headers;
   headers.emplace("Accept-Encoding", "br");
@@ -5956,7 +5956,7 @@ TEST_F(ServerTest, Brotli) {
 }
 #endif
 
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
 TEST_F(ServerTest, Zstd) {
   Headers headers;
   headers.emplace("Accept-Encoding", "zstd");
@@ -7260,7 +7260,7 @@ TEST(KeepAliveTest, Issue1959) {
   EXPECT_LT(elapsed, 5000);
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(KeepAliveTest, SSLClientReconnection) {
   SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
   ASSERT_TRUE(svr.is_valid());
@@ -7592,7 +7592,7 @@ TEST(GetWithParametersTest, GetWithParameters2) {
 }
 
 TEST(ClientDefaultHeadersTest, DefaultHeaders_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/range/32"};
 #else
@@ -7600,7 +7600,7 @@ TEST(ClientDefaultHeadersTest, DefaultHeaders_Online) {
   auto path = std::string{"/httpbin/range/32"};
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli(host);
 #else
   Client cli(host);
@@ -7651,7 +7651,7 @@ TEST(ServerDefaultHeadersTest, DefaultHeaders) {
   EXPECT_EQ("World", res->get_header_value("Hello"));
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(KeepAliveTest, ReadTimeoutSSL) {
   SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
   ASSERT_TRUE(svr.is_valid());
@@ -7694,12 +7694,12 @@ class ServerTestWithAI_PASSIVE : public ::testing::Test {
 protected:
   ServerTestWithAI_PASSIVE()
       : cli_(HOST, PORT)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
         ,
         svr_(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE)
 #endif
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     cli_.enable_server_certificate_verification(false);
 #endif
   }
@@ -7720,7 +7720,7 @@ protected:
     t_.join();
   }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli_;
   SSLServer svr_;
 #else
@@ -7771,12 +7771,12 @@ class PayloadMaxLengthTest : public ::testing::Test {
 protected:
   PayloadMaxLengthTest()
       : cli_(HOST, PORT)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
         ,
         svr_(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE)
 #endif
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     cli_.enable_server_certificate_verification(false);
 #endif
   }
@@ -7798,7 +7798,7 @@ protected:
     t_.join();
   }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli_;
   SSLServer svr_;
 #else
@@ -7950,12 +7950,12 @@ class LargePayloadMaxLengthTest : public ::testing::Test {
 protected:
   LargePayloadMaxLengthTest()
       : cli_(HOST, PORT)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
         ,
         svr_(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE)
 #endif
   {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     cli_.enable_server_certificate_verification(false);
 #endif
   }
@@ -7978,7 +7978,7 @@ protected:
     t_.join();
   }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLClient cli_;
   SSLServer svr_;
 #else
@@ -8085,7 +8085,7 @@ TEST(HostAndPortPropertiesTest, NoSSLWithSimpleAPI) {
   ASSERT_EQ(1234, cli.port());
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(HostAndPortPropertiesTest, SSL) {
   httplib_S::SSLClient cli("www.google.com");
   ASSERT_EQ("www.google.com", cli.host());
@@ -8093,7 +8093,7 @@ TEST(HostAndPortPropertiesTest, SSL) {
 }
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(SSLClientTest, UpdateCAStore) {
   httplib_S::SSLClient httplib_S_client("www.google.com");
   auto ca_store_1 = X509_STORE_new();
@@ -8108,7 +8108,7 @@ TEST(SSLClientTest, UpdateCAStore) {
 }
 
 TEST(SSLClientTest, ServerNameIndication_Online) {
-#ifdef CPPHTTPLIB_DEFAULT_HTTPBIN
+#ifdef S_CPPHTTPLIB_DEFAULT_HTTPBIN
   auto host = "httpbin.org";
   auto path = std::string{"/get"};
 #else
@@ -8689,13 +8689,13 @@ TEST(CleanupTest, WSACleanup) {
 }
 #endif
 
-#ifndef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifndef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(NoSSLSupport, SimpleInterface) {
   ASSERT_ANY_THROW(Client cli("https://yahoo.com"));
 }
 #endif
 
-#ifndef CPPHTTPLIB_NO_EXCEPTIONS
+#ifndef S_CPPHTTPLIB_NO_EXCEPTIONS
 TEST(InvalidScheme, SimpleInterface) {
   ASSERT_ANY_THROW(Client cli("scheme://yahoo.com"));
 }
@@ -8820,7 +8820,7 @@ TEST(ServerLargeContentTest, DISABLED_SendLargeContent) {
 }
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(YahooRedirectTest2, SimpleInterface_Online) {
   Client cli("http://yahoo.com");
 
@@ -8873,7 +8873,7 @@ TEST(YahooRedirectTest3, NewResultInterface_Online) {
   EXPECT_EQ("https://www.yahoo.com/", res->location);
 }
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
 TEST(DecodeWithChunkedEncoding, BrotliEncoding_Online) {
   Client cli("https://cdnjs.cloudflare.com");
   auto res =
@@ -9814,7 +9814,7 @@ TEST(TaskQueueTest, IncreaseAtomicInteger) {
   static constexpr unsigned int number_of_tasks{1000000};
   std::atomic_uint count{0};
   std::unique_ptr<TaskQueue> task_queue{
-      new ThreadPool{CPPHTTPLIB_THREAD_POOL_COUNT}};
+      new ThreadPool{S_CPPHTTPLIB_THREAD_POOL_COUNT}};
 
   for (unsigned int i = 0; i < number_of_tasks; ++i) {
     auto queued = task_queue->enqueue(
@@ -9972,7 +9972,7 @@ TEST(RedirectTest, RedirectToUrlWithPlusInQueryParameters) {
   }
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(RedirectTest, Issue2185_Online) {
   SSLClient client("github.com");
   client.set_follow_location(true);
@@ -10571,7 +10571,7 @@ TEST(MaxTimeoutTest, ContentStream) {
   max_timeout_test(svr, cli, timeout, threshold);
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 TEST(MaxTimeoutTest, ContentStreamSSL) {
   time_t timeout = 2000;
   time_t threshold = 1200; // SSL_shutdown is slow on some operating systems.

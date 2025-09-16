@@ -5,11 +5,11 @@
 //  MIT License
 //
 
-#ifndef CPPHTTPLIB_HTTPLIB_H
-#define CPPHTTPLIB_HTTPLIB_H
+#ifndef S_CPPHTTPLIB_HTTPLIB_H
+#define S_CPPHTTPLIB_HTTPLIB_H
 
-#define CPPHTTPLIB_VERSION "0.24.0"
-#define CPPHTTPLIB_VERSION_NUM "0x001800"
+#define S_CPPHTTPLIB_VERSION "0.24.0"
+#define S_CPPHTTPLIB_VERSION_NUM "0x001800"
 
 /*
  * Platform compatibility check
@@ -37,147 +37,147 @@
  * Configuration
  */
 
-#ifndef CPPHTTPLIB_KEEPALIVE_TIMEOUT_SECOND
-#define CPPHTTPLIB_KEEPALIVE_TIMEOUT_SECOND 5
+#ifndef S_CPPHTTPLIB_KEEPALIVE_TIMEOUT_SECOND
+#define S_CPPHTTPLIB_KEEPALIVE_TIMEOUT_SECOND 5
 #endif
 
-#ifndef CPPHTTPLIB_KEEPALIVE_TIMEOUT_CHECK_INTERVAL_USECOND
-#define CPPHTTPLIB_KEEPALIVE_TIMEOUT_CHECK_INTERVAL_USECOND 10000
+#ifndef S_CPPHTTPLIB_KEEPALIVE_TIMEOUT_CHECK_INTERVAL_USECOND
+#define S_CPPHTTPLIB_KEEPALIVE_TIMEOUT_CHECK_INTERVAL_USECOND 10000
 #endif
 
-#ifndef CPPHTTPLIB_KEEPALIVE_MAX_COUNT
-#define CPPHTTPLIB_KEEPALIVE_MAX_COUNT 100
+#ifndef S_CPPHTTPLIB_KEEPALIVE_MAX_COUNT
+#define S_CPPHTTPLIB_KEEPALIVE_MAX_COUNT 100
 #endif
 
-#ifndef CPPHTTPLIB_CONNECTION_TIMEOUT_SECOND
-#define CPPHTTPLIB_CONNECTION_TIMEOUT_SECOND 300
+#ifndef S_CPPHTTPLIB_CONNECTION_TIMEOUT_SECOND
+#define S_CPPHTTPLIB_CONNECTION_TIMEOUT_SECOND 300
 #endif
 
-#ifndef CPPHTTPLIB_CONNECTION_TIMEOUT_USECOND
-#define CPPHTTPLIB_CONNECTION_TIMEOUT_USECOND 0
+#ifndef S_CPPHTTPLIB_CONNECTION_TIMEOUT_USECOND
+#define S_CPPHTTPLIB_CONNECTION_TIMEOUT_USECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_SERVER_READ_TIMEOUT_SECOND
-#define CPPHTTPLIB_SERVER_READ_TIMEOUT_SECOND 5
+#ifndef S_CPPHTTPLIB_SERVER_READ_TIMEOUT_SECOND
+#define S_CPPHTTPLIB_SERVER_READ_TIMEOUT_SECOND 5
 #endif
 
-#ifndef CPPHTTPLIB_SERVER_READ_TIMEOUT_USECOND
-#define CPPHTTPLIB_SERVER_READ_TIMEOUT_USECOND 0
+#ifndef S_CPPHTTPLIB_SERVER_READ_TIMEOUT_USECOND
+#define S_CPPHTTPLIB_SERVER_READ_TIMEOUT_USECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_SERVER_WRITE_TIMEOUT_SECOND
-#define CPPHTTPLIB_SERVER_WRITE_TIMEOUT_SECOND 5
+#ifndef S_CPPHTTPLIB_SERVER_WRITE_TIMEOUT_SECOND
+#define S_CPPHTTPLIB_SERVER_WRITE_TIMEOUT_SECOND 5
 #endif
 
-#ifndef CPPHTTPLIB_SERVER_WRITE_TIMEOUT_USECOND
-#define CPPHTTPLIB_SERVER_WRITE_TIMEOUT_USECOND 0
+#ifndef S_CPPHTTPLIB_SERVER_WRITE_TIMEOUT_USECOND
+#define S_CPPHTTPLIB_SERVER_WRITE_TIMEOUT_USECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_CLIENT_READ_TIMEOUT_SECOND
-#define CPPHTTPLIB_CLIENT_READ_TIMEOUT_SECOND 300
+#ifndef S_CPPHTTPLIB_CLIENT_READ_TIMEOUT_SECOND
+#define S_CPPHTTPLIB_CLIENT_READ_TIMEOUT_SECOND 300
 #endif
 
-#ifndef CPPHTTPLIB_CLIENT_READ_TIMEOUT_USECOND
-#define CPPHTTPLIB_CLIENT_READ_TIMEOUT_USECOND 0
+#ifndef S_CPPHTTPLIB_CLIENT_READ_TIMEOUT_USECOND
+#define S_CPPHTTPLIB_CLIENT_READ_TIMEOUT_USECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_SECOND
-#define CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_SECOND 5
+#ifndef S_CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_SECOND
+#define S_CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_SECOND 5
 #endif
 
-#ifndef CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_USECOND
-#define CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_USECOND 0
+#ifndef S_CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_USECOND
+#define S_CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_USECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_CLIENT_MAX_TIMEOUT_MSECOND
-#define CPPHTTPLIB_CLIENT_MAX_TIMEOUT_MSECOND 0
+#ifndef S_CPPHTTPLIB_CLIENT_MAX_TIMEOUT_MSECOND
+#define S_CPPHTTPLIB_CLIENT_MAX_TIMEOUT_MSECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_IDLE_INTERVAL_SECOND
-#define CPPHTTPLIB_IDLE_INTERVAL_SECOND 0
+#ifndef S_CPPHTTPLIB_IDLE_INTERVAL_SECOND
+#define S_CPPHTTPLIB_IDLE_INTERVAL_SECOND 0
 #endif
 
-#ifndef CPPHTTPLIB_IDLE_INTERVAL_USECOND
+#ifndef S_CPPHTTPLIB_IDLE_INTERVAL_USECOND
 #ifdef _WIN64
-#define CPPHTTPLIB_IDLE_INTERVAL_USECOND 1000
+#define S_CPPHTTPLIB_IDLE_INTERVAL_USECOND 1000
 #else
-#define CPPHTTPLIB_IDLE_INTERVAL_USECOND 0
+#define S_CPPHTTPLIB_IDLE_INTERVAL_USECOND 0
 #endif
 #endif
 
-#ifndef CPPHTTPLIB_REQUEST_URI_MAX_LENGTH
-#define CPPHTTPLIB_REQUEST_URI_MAX_LENGTH 8192
+#ifndef S_CPPHTTPLIB_REQUEST_URI_MAX_LENGTH
+#define S_CPPHTTPLIB_REQUEST_URI_MAX_LENGTH 8192
 #endif
 
-#ifndef CPPHTTPLIB_HEADER_MAX_LENGTH
-#define CPPHTTPLIB_HEADER_MAX_LENGTH 8192
+#ifndef S_CPPHTTPLIB_HEADER_MAX_LENGTH
+#define S_CPPHTTPLIB_HEADER_MAX_LENGTH 8192
 #endif
 
-#ifndef CPPHTTPLIB_HEADER_MAX_COUNT
-#define CPPHTTPLIB_HEADER_MAX_COUNT 100
+#ifndef S_CPPHTTPLIB_HEADER_MAX_COUNT
+#define S_CPPHTTPLIB_HEADER_MAX_COUNT 100
 #endif
 
-#ifndef CPPHTTPLIB_REDIRECT_MAX_COUNT
-#define CPPHTTPLIB_REDIRECT_MAX_COUNT 20
+#ifndef S_CPPHTTPLIB_REDIRECT_MAX_COUNT
+#define S_CPPHTTPLIB_REDIRECT_MAX_COUNT 20
 #endif
 
-#ifndef CPPHTTPLIB_MULTIPART_FORM_DATA_FILE_MAX_COUNT
-#define CPPHTTPLIB_MULTIPART_FORM_DATA_FILE_MAX_COUNT 1024
+#ifndef S_CPPHTTPLIB_MULTIPART_FORM_DATA_FILE_MAX_COUNT
+#define S_CPPHTTPLIB_MULTIPART_FORM_DATA_FILE_MAX_COUNT 1024
 #endif
 
-#ifndef CPPHTTPLIB_PAYLOAD_MAX_LENGTH
-#define CPPHTTPLIB_PAYLOAD_MAX_LENGTH ((std::numeric_limits<size_t>::max)())
+#ifndef S_CPPHTTPLIB_PAYLOAD_MAX_LENGTH
+#define S_CPPHTTPLIB_PAYLOAD_MAX_LENGTH ((std::numeric_limits<size_t>::max)())
 #endif
 
-#ifndef CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH
-#define CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH 8192
+#ifndef S_CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH
+#define S_CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH 8192
 #endif
 
-#ifndef CPPHTTPLIB_RANGE_MAX_COUNT
-#define CPPHTTPLIB_RANGE_MAX_COUNT 1024
+#ifndef S_CPPHTTPLIB_RANGE_MAX_COUNT
+#define S_CPPHTTPLIB_RANGE_MAX_COUNT 1024
 #endif
 
-#ifndef CPPHTTPLIB_TCP_NODELAY
-#define CPPHTTPLIB_TCP_NODELAY false
+#ifndef S_CPPHTTPLIB_TCP_NODELAY
+#define S_CPPHTTPLIB_TCP_NODELAY false
 #endif
 
-#ifndef CPPHTTPLIB_IPV6_V6ONLY
-#define CPPHTTPLIB_IPV6_V6ONLY false
+#ifndef S_CPPHTTPLIB_IPV6_V6ONLY
+#define S_CPPHTTPLIB_IPV6_V6ONLY false
 #endif
 
-#ifndef CPPHTTPLIB_RECV_BUFSIZ
-#define CPPHTTPLIB_RECV_BUFSIZ size_t(16384u)
+#ifndef S_CPPHTTPLIB_RECV_BUFSIZ
+#define S_CPPHTTPLIB_RECV_BUFSIZ size_t(16384u)
 #endif
 
-#ifndef CPPHTTPLIB_SEND_BUFSIZ
-#define CPPHTTPLIB_SEND_BUFSIZ size_t(16384u)
+#ifndef S_CPPHTTPLIB_SEND_BUFSIZ
+#define S_CPPHTTPLIB_SEND_BUFSIZ size_t(16384u)
 #endif
 
-#ifndef CPPHTTPLIB_COMPRESSION_BUFSIZ
-#define CPPHTTPLIB_COMPRESSION_BUFSIZ size_t(16384u)
+#ifndef S_CPPHTTPLIB_COMPRESSION_BUFSIZ
+#define S_CPPHTTPLIB_COMPRESSION_BUFSIZ size_t(16384u)
 #endif
 
-#ifndef CPPHTTPLIB_THREAD_POOL_COUNT
-#define CPPHTTPLIB_THREAD_POOL_COUNT                                           \
+#ifndef S_CPPHTTPLIB_THREAD_POOL_COUNT
+#define S_CPPHTTPLIB_THREAD_POOL_COUNT                                           \
   ((std::max)(8u, std::thread::hardware_concurrency() > 0                      \
                       ? std::thread::hardware_concurrency() - 1                \
                       : 0))
 #endif
 
-#ifndef CPPHTTPLIB_RECV_FLAGS
-#define CPPHTTPLIB_RECV_FLAGS 0
+#ifndef S_CPPHTTPLIB_RECV_FLAGS
+#define S_CPPHTTPLIB_RECV_FLAGS 0
 #endif
 
-#ifndef CPPHTTPLIB_SEND_FLAGS
-#define CPPHTTPLIB_SEND_FLAGS 0
+#ifndef S_CPPHTTPLIB_SEND_FLAGS
+#define S_CPPHTTPLIB_SEND_FLAGS 0
 #endif
 
-#ifndef CPPHTTPLIB_LISTEN_BACKLOG
-#define CPPHTTPLIB_LISTEN_BACKLOG 5
+#ifndef S_CPPHTTPLIB_LISTEN_BACKLOG
+#define S_CPPHTTPLIB_LISTEN_BACKLOG 5
 #endif
 
-#ifndef CPPHTTPLIB_MAX_LINE_LENGTH
-#define CPPHTTPLIB_MAX_LINE_LENGTH 32768
+#ifndef S_CPPHTTPLIB_MAX_LINE_LENGTH
+#define S_CPPHTTPLIB_MAX_LINE_LENGTH 32768
 #endif
 
 /*
@@ -223,7 +223,7 @@ using ssize_t = __int64;
 #if __has_include(<afunix.h>)
 // afunix.h uses types declared in winsock2.h, so has to be included after it.
 #include <afunix.h>
-#define CPPHTTPLIB_HAVE_AFUNIX_H 1
+#define S_CPPHTTPLIB_HAVE_AFUNIX_H 1
 #endif
 #endif
 
@@ -301,16 +301,16 @@ using socket_t = int;
 #include <unordered_set>
 #include <utility>
 
-#if defined(CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO) ||                        \
-    defined(CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN)
+#if defined(S_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO) ||                        \
+    defined(S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN)
 #if TARGET_OS_OSX
 #include <CFNetwork/CFHost.h>
 #include <CoreFoundation/CoreFoundation.h>
 #endif
-#endif // CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO or
-       // CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN
+#endif // S_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO or
+       // S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 #ifdef _WIN64
 #include <wincrypt.h>
 
@@ -326,11 +326,11 @@ using socket_t = int;
 #endif
 #endif // _WIN64
 
-#if defined(CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN)
+#if defined(S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN)
 #if TARGET_OS_OSX
 #include <Security/Security.h>
 #endif
-#endif // CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO
+#endif // S_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO
 
 #include <openssl/err.h>
 #include <openssl/evp.h>
@@ -353,18 +353,18 @@ using socket_t = int;
 #error Sorry, OpenSSL versions prior to 3.0.0 are not supported
 #endif
 
-#endif // CPPHTTPLIB_OPENSSL_SUPPORT_S
+#endif // S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
 #include <zlib.h>
 #endif
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
 #include <brotli/decode.h>
 #include <brotli/encode.h>
 #endif
 
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
 #include <zstd.h>
 #endif
 
@@ -737,7 +737,7 @@ struct Request {
   ContentReceiverWithProgress content_receiver;
   DownloadProgress download_progress;
   UploadProgress upload_progress;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   const SSL *ssl = nullptr;
 #endif
 
@@ -760,7 +760,7 @@ struct Request {
   bool is_multipart_form_data() const;
 
   // private members...
-  size_t redirect_count_ = CPPHTTPLIB_REDIRECT_MAX_COUNT;
+  size_t redirect_count_ = S_CPPHTTPLIB_REDIRECT_MAX_COUNT;
   size_t content_length_ = 0;
   ContentProvider content_provider_;
   bool is_chunked_content_provider_ = false;
@@ -927,7 +927,7 @@ private:
         fn();
       }
 
-#if defined(CPPHTTPLIB_OPENSSL_SUPPORT_S) && !defined(OPENSSL_IS_BORINGSSL) &&   \
+#if defined(S_CPPHTTPLIB_OPENSSL_SUPPORT_S) && !defined(OPENSSL_IS_BORINGSSL) &&   \
     !defined(LIBRESSL_VERSION_NUMBER)
       OPENSSL_thread_stop();
 #endif
@@ -1157,15 +1157,15 @@ protected:
                        const std::function<void(Request &)> &setup_request);
 
   std::atomic<socket_t> svr_sock_{INVALID_SOCKET};
-  size_t keep_alive_max_count_ = CPPHTTPLIB_KEEPALIVE_MAX_COUNT;
-  time_t keep_alive_timeout_sec_ = CPPHTTPLIB_KEEPALIVE_TIMEOUT_SECOND;
-  time_t read_timeout_sec_ = CPPHTTPLIB_SERVER_READ_TIMEOUT_SECOND;
-  time_t read_timeout_usec_ = CPPHTTPLIB_SERVER_READ_TIMEOUT_USECOND;
-  time_t write_timeout_sec_ = CPPHTTPLIB_SERVER_WRITE_TIMEOUT_SECOND;
-  time_t write_timeout_usec_ = CPPHTTPLIB_SERVER_WRITE_TIMEOUT_USECOND;
-  time_t idle_interval_sec_ = CPPHTTPLIB_IDLE_INTERVAL_SECOND;
-  time_t idle_interval_usec_ = CPPHTTPLIB_IDLE_INTERVAL_USECOND;
-  size_t payload_max_length_ = CPPHTTPLIB_PAYLOAD_MAX_LENGTH;
+  size_t keep_alive_max_count_ = S_CPPHTTPLIB_KEEPALIVE_MAX_COUNT;
+  time_t keep_alive_timeout_sec_ = S_CPPHTTPLIB_KEEPALIVE_TIMEOUT_SECOND;
+  time_t read_timeout_sec_ = S_CPPHTTPLIB_SERVER_READ_TIMEOUT_SECOND;
+  time_t read_timeout_usec_ = S_CPPHTTPLIB_SERVER_READ_TIMEOUT_USECOND;
+  time_t write_timeout_sec_ = S_CPPHTTPLIB_SERVER_WRITE_TIMEOUT_SECOND;
+  time_t write_timeout_usec_ = S_CPPHTTPLIB_SERVER_WRITE_TIMEOUT_USECOND;
+  time_t idle_interval_sec_ = S_CPPHTTPLIB_IDLE_INTERVAL_SECOND;
+  time_t idle_interval_usec_ = S_CPPHTTPLIB_IDLE_INTERVAL_USECOND;
+  size_t payload_max_length_ = S_CPPHTTPLIB_PAYLOAD_MAX_LENGTH;
 
 private:
   using Handlers =
@@ -1255,8 +1255,8 @@ private:
   Logger pre_compression_logger_;
 
   int address_family_ = AF_UNSPEC;
-  bool tcp_nodelay_ = CPPHTTPLIB_TCP_NODELAY;
-  bool ipv6_v6only_ = CPPHTTPLIB_IPV6_V6ONLY;
+  bool tcp_nodelay_ = S_CPPHTTPLIB_TCP_NODELAY;
+  bool ipv6_v6only_ = S_CPPHTTPLIB_IPV6_V6ONLY;
   SocketOptions socket_options_ = default_socket_options;
 
   Headers default_headers_;
@@ -1297,7 +1297,7 @@ public:
          Headers &&request_headers = Headers{})
       : res_(std::move(res)), err_(err),
         request_headers_(std::move(request_headers)) {}
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   Result(std::unique_ptr<Response> &&res, Error err, Headers &&request_headers,
          int ssl_error)
       : res_(std::move(res)), err_(err),
@@ -1322,7 +1322,7 @@ public:
   // Error
   Error error() const { return err_; }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   // SSL Error
   int ssl_error() const { return ssl_error_; }
   // OpenSSL Error
@@ -1342,7 +1342,7 @@ private:
   std::unique_ptr<Response> res_;
   Error err_ = Error::Unknown;
   Headers request_headers_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   int ssl_error_ = 0;
   unsigned long ssl_openssl_error_ = 0;
 #endif
@@ -1485,7 +1485,7 @@ public:
 
   void set_basic_auth(const std::string &username, const std::string &password);
   void set_bearer_token_auth(const std::string &token);
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void set_digest_auth(const std::string &username,
                        const std::string &password);
 #endif
@@ -1505,19 +1505,19 @@ public:
   void set_proxy_basic_auth(const std::string &username,
                             const std::string &password);
   void set_proxy_bearer_token_auth(const std::string &token);
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void set_proxy_digest_auth(const std::string &username,
                              const std::string &password);
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void set_ca_cert_path(const std::string &ca_cert_file_path,
                         const std::string &ca_cert_dir_path = std::string());
   void set_ca_cert_store(X509_STORE *ca_cert_store);
   X509_STORE *create_ca_cert_store(const char *ca_cert, std::size_t size) const;
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void enable_server_certificate_verification(bool enabled);
   void enable_server_hostname_verification(bool enabled);
   void set_server_certificate_verifier(
@@ -1529,7 +1529,7 @@ public:
 protected:
   struct Socket {
     socket_t sock = INVALID_SOCKET;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     SSL *ssl = nullptr;
 #endif
 
@@ -1586,18 +1586,18 @@ protected:
   std::string client_cert_path_;
   std::string client_key_path_;
 
-  time_t connection_timeout_sec_ = CPPHTTPLIB_CONNECTION_TIMEOUT_SECOND;
-  time_t connection_timeout_usec_ = CPPHTTPLIB_CONNECTION_TIMEOUT_USECOND;
-  time_t read_timeout_sec_ = CPPHTTPLIB_CLIENT_READ_TIMEOUT_SECOND;
-  time_t read_timeout_usec_ = CPPHTTPLIB_CLIENT_READ_TIMEOUT_USECOND;
-  time_t write_timeout_sec_ = CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_SECOND;
-  time_t write_timeout_usec_ = CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_USECOND;
-  time_t max_timeout_msec_ = CPPHTTPLIB_CLIENT_MAX_TIMEOUT_MSECOND;
+  time_t connection_timeout_sec_ = S_CPPHTTPLIB_CONNECTION_TIMEOUT_SECOND;
+  time_t connection_timeout_usec_ = S_CPPHTTPLIB_CONNECTION_TIMEOUT_USECOND;
+  time_t read_timeout_sec_ = S_CPPHTTPLIB_CLIENT_READ_TIMEOUT_SECOND;
+  time_t read_timeout_usec_ = S_CPPHTTPLIB_CLIENT_READ_TIMEOUT_USECOND;
+  time_t write_timeout_sec_ = S_CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_SECOND;
+  time_t write_timeout_usec_ = S_CPPHTTPLIB_CLIENT_WRITE_TIMEOUT_USECOND;
+  time_t max_timeout_msec_ = S_CPPHTTPLIB_CLIENT_MAX_TIMEOUT_MSECOND;
 
   std::string basic_auth_username_;
   std::string basic_auth_password_;
   std::string bearer_token_auth_token_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   std::string digest_auth_username_;
   std::string digest_auth_password_;
 #endif
@@ -1608,8 +1608,8 @@ protected:
   bool path_encode_ = true;
 
   int address_family_ = AF_UNSPEC;
-  bool tcp_nodelay_ = CPPHTTPLIB_TCP_NODELAY;
-  bool ipv6_v6only_ = CPPHTTPLIB_IPV6_V6ONLY;
+  bool tcp_nodelay_ = S_CPPHTTPLIB_TCP_NODELAY;
+  bool ipv6_v6only_ = S_CPPHTTPLIB_IPV6_V6ONLY;
   SocketOptions socket_options_ = nullptr;
 
   bool compress_ = false;
@@ -1623,19 +1623,19 @@ protected:
   std::string proxy_basic_auth_username_;
   std::string proxy_basic_auth_password_;
   std::string proxy_bearer_token_auth_token_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   std::string proxy_digest_auth_username_;
   std::string proxy_digest_auth_password_;
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   std::string ca_cert_file_path_;
   std::string ca_cert_dir_path_;
 
   X509_STORE *ca_cert_store_ = nullptr;
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   bool server_certificate_verification_ = true;
   bool server_hostname_verification_ = true;
   std::function<SSLVerifierResponse(SSL *ssl)> server_certificate_verifier_;
@@ -1643,7 +1643,7 @@ protected:
 
   Logger logger_;
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   int last_ssl_error_ = 0;
   unsigned long last_openssl_error_ = 0;
 #endif
@@ -1834,7 +1834,7 @@ public:
 
   void set_basic_auth(const std::string &username, const std::string &password);
   void set_bearer_token_auth(const std::string &token);
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void set_digest_auth(const std::string &username,
                        const std::string &password);
 #endif
@@ -1855,12 +1855,12 @@ public:
   void set_proxy_basic_auth(const std::string &username,
                             const std::string &password);
   void set_proxy_bearer_token_auth(const std::string &token);
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void set_proxy_digest_auth(const std::string &username,
                              const std::string &password);
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void enable_server_certificate_verification(bool enabled);
   void enable_server_hostname_verification(bool enabled);
   void set_server_certificate_verifier(
@@ -1870,7 +1870,7 @@ public:
   void set_logger(Logger logger);
 
   // SSL
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   void set_ca_cert_path(const std::string &ca_cert_file_path,
                         const std::string &ca_cert_dir_path = std::string());
 
@@ -1885,12 +1885,12 @@ public:
 private:
   std::unique_ptr<ClientImpl> cli_;
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   bool is_ssl_ = false;
 #endif
 };
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 class SSLServer : public Server {
 public:
   SSLServer(const char *cert_path, const char *private_key_path,
@@ -1918,7 +1918,7 @@ private:
 
   SSL_CTX *ctx_;
   std::mutex ctx_mutex_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   int last_ssl_error_ = 0;
 #endif
 };
@@ -2468,7 +2468,7 @@ public:
                 Callback callback) override;
 };
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
 class gzip_compressor final : public compressor {
 public:
   gzip_compressor();
@@ -2498,7 +2498,7 @@ private:
 };
 #endif
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
 class brotli_compressor final : public compressor {
 public:
   brotli_compressor();
@@ -2527,7 +2527,7 @@ private:
 };
 #endif
 
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
 class zstd_compressor : public compressor {
 public:
   zstd_compressor();
@@ -2966,12 +2966,12 @@ inline bool stream_line_reader::getline() {
   fixed_buffer_used_size_ = 0;
   growable_buffer_.clear();
 
-#ifndef CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
+#ifndef S_CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
   char prev_byte = 0;
 #endif
 
   for (size_t i = 0;; i++) {
-    if (size() >= CPPHTTPLIB_MAX_LINE_LENGTH) {
+    if (size() >= S_CPPHTTPLIB_MAX_LINE_LENGTH) {
       // Treat exceptionally long lines as an error to
       // prevent infinite loops/memory exhaustion
       return false;
@@ -2991,7 +2991,7 @@ inline bool stream_line_reader::getline() {
 
     append(byte);
 
-#ifdef CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
+#ifdef S_CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
     if (byte == '\n') { break; }
 #else
     if (prev_byte == '\r' && byte == '\n') { break; }
@@ -3322,7 +3322,7 @@ private:
   static const size_t read_buff_size_ = 1024l * 4;
 };
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 class SSLSocketStream final : public Stream {
 public:
   SSLSocketStream(
@@ -3360,7 +3360,7 @@ inline bool keep_alive(const std::atomic<socket_t> &svr_sock, socket_t sock,
   using namespace std::chrono;
 
   const auto interval_usec =
-      CPPHTTPLIB_KEEPALIVE_TIMEOUT_CHECK_INTERVAL_USECOND;
+      S_CPPHTTPLIB_KEEPALIVE_TIMEOUT_CHECK_INTERVAL_USECOND;
 
   // Avoid expensive `steady_clock::now()` call for the first time
   if (select_read(sock, 0, interval_usec) > 0) { return true; }
@@ -3464,7 +3464,7 @@ unescape_abstract_namespace_unix_domain(const std::string &s) {
 inline int getaddrinfo_with_timeout(const char *node, const char *service,
                                     const struct addrinfo *hints,
                                     struct addrinfo **res, time_t timeout_sec) {
-#ifdef CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO
+#ifdef S_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO
   if (timeout_sec <= 0) {
     // No timeout specified, use standard getaddrinfo
     return getaddrinfo(node, service, hints, res);
@@ -3803,7 +3803,7 @@ socket_t create_socket(const std::string &host, const std::string &ip, int port,
     hints.ai_flags = socket_flags;
   }
 
-#if !defined(_WIN64) || defined(CPPHTTPLIB_HAVE_AFUNIX_H)
+#if !defined(_WIN64) || defined(S_CPPHTTPLIB_HAVE_AFUNIX_H)
   if (hints.ai_family == AF_UNIX) {
     const auto addrlen = host.length();
     if (addrlen > sizeof(sockaddr_un::sun_path)) { return INVALID_SOCKET; }
@@ -4247,19 +4247,19 @@ inline EncodingType encoding_type(const Request &req, const Response &res) {
   const auto &s = req.get_header_value("Accept-Encoding");
   (void)(s);
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
   // TODO: 'Accept-Encoding' has br, not br;q=0
   ret = s.find("br") != std::string::npos;
   if (ret) { return EncodingType::Brotli; }
 #endif
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
   // TODO: 'Accept-Encoding' has gzip, not gzip;q=0
   ret = s.find("gzip") != std::string::npos;
   if (ret) { return EncodingType::Gzip; }
 #endif
 
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
   // TODO: 'Accept-Encoding' has zstd, not zstd;q=0
   ret = s.find("zstd") != std::string::npos;
   if (ret) { return EncodingType::Zstd; }
@@ -4274,7 +4274,7 @@ inline bool nocompressor::compress(const char *data, size_t data_length,
   return callback(data, data_length);
 }
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
 inline gzip_compressor::gzip_compressor() {
   std::memset(&strm_, 0, sizeof(strm_));
   strm_.zalloc = Z_NULL;
@@ -4305,7 +4305,7 @@ inline bool gzip_compressor::compress(const char *data, size_t data_length,
     auto flush = (last && data_length == 0) ? Z_FINISH : Z_NO_FLUSH;
     auto ret = Z_OK;
 
-    std::array<char, CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
+    std::array<char, S_CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
     do {
       strm_.avail_out = static_cast<uInt>(buff.size());
       strm_.next_out = reinterpret_cast<Bytef *>(buff.data());
@@ -4360,7 +4360,7 @@ inline bool gzip_decompressor::decompress(const char *data, size_t data_length,
     data_length -= strm_.avail_in;
     data += strm_.avail_in;
 
-    std::array<char, CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
+    std::array<char, S_CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
     while (strm_.avail_in > 0 && ret == Z_OK) {
       strm_.avail_out = static_cast<uInt>(buff.size());
       strm_.next_out = reinterpret_cast<Bytef *>(buff.data());
@@ -4387,7 +4387,7 @@ inline bool gzip_decompressor::decompress(const char *data, size_t data_length,
 }
 #endif
 
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
 inline brotli_compressor::brotli_compressor() {
   state_ = BrotliEncoderCreateInstance(nullptr, nullptr, nullptr);
 }
@@ -4398,7 +4398,7 @@ inline brotli_compressor::~brotli_compressor() {
 
 inline bool brotli_compressor::compress(const char *data, size_t data_length,
                                         bool last, Callback callback) {
-  std::array<uint8_t, CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
+  std::array<uint8_t, S_CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
 
   auto operation = last ? BROTLI_OPERATION_FINISH : BROTLI_OPERATION_PROCESS;
   auto available_in = data_length;
@@ -4454,7 +4454,7 @@ inline bool brotli_decompressor::decompress(const char *data,
 
   decoder_r = BROTLI_DECODER_RESULT_NEEDS_MORE_OUTPUT;
 
-  std::array<char, CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
+  std::array<char, S_CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
   while (decoder_r == BROTLI_DECODER_RESULT_NEEDS_MORE_OUTPUT) {
     char *next_out = buff.data();
     size_t avail_out = buff.size();
@@ -4473,7 +4473,7 @@ inline bool brotli_decompressor::decompress(const char *data,
 }
 #endif
 
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
 inline zstd_compressor::zstd_compressor() {
   ctx_ = ZSTD_createCCtx();
   ZSTD_CCtx_setParameter(ctx_, ZSTD_c_compressionLevel, ZSTD_fast);
@@ -4483,14 +4483,14 @@ inline zstd_compressor::~zstd_compressor() { ZSTD_freeCCtx(ctx_); }
 
 inline bool zstd_compressor::compress(const char *data, size_t data_length,
                                       bool last, Callback callback) {
-  std::array<char, CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
+  std::array<char, S_CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
 
   ZSTD_EndDirective mode = last ? ZSTD_e_end : ZSTD_e_continue;
   ZSTD_inBuffer input = {data, data_length, 0};
 
   bool finished;
   do {
-    ZSTD_outBuffer output = {buff.data(), CPPHTTPLIB_COMPRESSION_BUFSIZ, 0};
+    ZSTD_outBuffer output = {buff.data(), S_CPPHTTPLIB_COMPRESSION_BUFSIZ, 0};
     size_t const remaining = ZSTD_compressStream2(ctx_, &output, &input, mode);
 
     if (ZSTD_isError(remaining)) { return false; }
@@ -4512,11 +4512,11 @@ inline bool zstd_decompressor::is_valid() const { return ctx_ != nullptr; }
 
 inline bool zstd_decompressor::decompress(const char *data, size_t data_length,
                                           Callback callback) {
-  std::array<char, CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
+  std::array<char, S_CPPHTTPLIB_COMPRESSION_BUFSIZ> buff{};
   ZSTD_inBuffer input = {data, data_length, 0};
 
   while (input.pos < input.size) {
-    ZSTD_outBuffer output = {buff.data(), CPPHTTPLIB_COMPRESSION_BUFSIZ, 0};
+    ZSTD_outBuffer output = {buff.data(), S_CPPHTTPLIB_COMPRESSION_BUFSIZ, 0};
     size_t const remaining = ZSTD_decompressStream(ctx_, &output, &input);
 
     if (ZSTD_isError(remaining)) { return false; }
@@ -4605,7 +4605,7 @@ inline bool read_headers(Stream &strm, Headers &headers) {
       // Blank line indicates end of headers.
       if (line_reader.size() == 2) { break; }
     } else {
-#ifdef CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
+#ifdef S_CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
       // Blank line indicates end of headers.
       if (line_reader.size() == 1) { break; }
       line_terminator_len = 1;
@@ -4614,10 +4614,10 @@ inline bool read_headers(Stream &strm, Headers &headers) {
 #endif
     }
 
-    if (line_reader.size() > CPPHTTPLIB_HEADER_MAX_LENGTH) { return false; }
+    if (line_reader.size() > S_CPPHTTPLIB_HEADER_MAX_LENGTH) { return false; }
 
     // Check header count limit
-    if (header_count >= CPPHTTPLIB_HEADER_MAX_COUNT) { return false; }
+    if (header_count >= S_CPPHTTPLIB_HEADER_MAX_COUNT) { return false; }
 
     // Exclude line terminator
     auto end = line_reader.ptr() + line_reader.size() - line_terminator_len;
@@ -4638,12 +4638,12 @@ inline bool read_headers(Stream &strm, Headers &headers) {
 inline bool read_content_with_length(Stream &strm, size_t len,
                                      DownloadProgress progress,
                                      ContentReceiverWithProgress out) {
-  char buf[CPPHTTPLIB_RECV_BUFSIZ];
+  char buf[S_CPPHTTPLIB_RECV_BUFSIZ];
 
   size_t r = 0;
   while (r < len) {
     auto read_len = static_cast<size_t>(len - r);
-    auto n = strm.read(buf, (std::min)(read_len, CPPHTTPLIB_RECV_BUFSIZ));
+    auto n = strm.read(buf, (std::min)(read_len, S_CPPHTTPLIB_RECV_BUFSIZ));
     if (n <= 0) { return false; }
 
     if (!out(buf, static_cast<size_t>(n), r, len)) { return false; }
@@ -4658,11 +4658,11 @@ inline bool read_content_with_length(Stream &strm, size_t len,
 }
 
 inline void skip_content_with_length(Stream &strm, size_t len) {
-  char buf[CPPHTTPLIB_RECV_BUFSIZ];
+  char buf[S_CPPHTTPLIB_RECV_BUFSIZ];
   size_t r = 0;
   while (r < len) {
     auto read_len = static_cast<size_t>(len - r);
-    auto n = strm.read(buf, (std::min)(read_len, CPPHTTPLIB_RECV_BUFSIZ));
+    auto n = strm.read(buf, (std::min)(read_len, S_CPPHTTPLIB_RECV_BUFSIZ));
     if (n <= 0) { return; }
     r += static_cast<size_t>(n);
   }
@@ -4677,10 +4677,10 @@ enum class ReadContentResult {
 inline ReadContentResult
 read_content_without_length(Stream &strm, size_t payload_max_length,
                             ContentReceiverWithProgress out) {
-  char buf[CPPHTTPLIB_RECV_BUFSIZ];
+  char buf[S_CPPHTTPLIB_RECV_BUFSIZ];
   size_t r = 0;
   for (;;) {
-    auto n = strm.read(buf, CPPHTTPLIB_RECV_BUFSIZ);
+    auto n = strm.read(buf, S_CPPHTTPLIB_RECV_BUFSIZ);
     if (n == 0) { return ReadContentResult::Success; }
     if (n < 0) { return ReadContentResult::Error; }
 
@@ -4797,12 +4797,12 @@ inline ReadContentResult read_content_chunked(Stream &strm, T &x,
 
   size_t trailer_header_count = 0;
   while (strcmp(line_reader.ptr(), "\r\n") != 0) {
-    if (line_reader.size() > CPPHTTPLIB_HEADER_MAX_LENGTH) {
+    if (line_reader.size() > S_CPPHTTPLIB_HEADER_MAX_LENGTH) {
       return ReadContentResult::Error;
     }
 
     // Check trailer header count limit
-    if (trailer_header_count >= CPPHTTPLIB_HEADER_MAX_COUNT) {
+    if (trailer_header_count >= S_CPPHTTPLIB_HEADER_MAX_COUNT) {
       return ReadContentResult::Error;
     }
 
@@ -4838,21 +4838,21 @@ bool prepare_content_receiver(T &x, int &status,
     std::unique_ptr<decompressor> decompressor;
 
     if (encoding == "gzip" || encoding == "deflate") {
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
       decompressor = detail::make_unique<gzip_decompressor>();
 #else
       status = StatusCode::UnsupportedMediaType_415;
       return false;
 #endif
     } else if (encoding.find("br") != std::string::npos) {
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
       decompressor = detail::make_unique<brotli_decompressor>();
 #else
       status = StatusCode::UnsupportedMediaType_415;
       return false;
 #endif
     } else if (encoding == "zstd") {
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
       decompressor = detail::make_unique<zstd_decompressor>();
 #else
       status = StatusCode::UnsupportedMediaType_415;
@@ -5297,7 +5297,7 @@ inline void parse_disposition_params(const std::string &s, Params &params) {
   });
 }
 
-#ifdef CPPHTTPLIB_NO_EXCEPTIONS
+#ifdef S_CPPHTTPLIB_NO_EXCEPTIONS
 inline bool parse_range_header(const std::string &s, Ranges &ranges) {
 #else
 inline bool parse_range_header(const std::string &s, Ranges &ranges) try {
@@ -5342,7 +5342,7 @@ inline bool parse_range_header(const std::string &s, Ranges &ranges) try {
     return all_valid_ranges && !ranges.empty();
   }
   return false;
-#ifdef CPPHTTPLIB_NO_EXCEPTIONS
+#ifdef S_CPPHTTPLIB_NO_EXCEPTIONS
 }
 #else
 } catch (...) { return false; }
@@ -5405,7 +5405,7 @@ inline bool parse_accept_header(const std::string &s,
         return;
       }
 
-#ifdef CPPHTTPLIB_NO_EXCEPTIONS
+#ifdef S_CPPHTTPLIB_NO_EXCEPTIONS
       {
         std::istringstream iss(quality_str);
         iss >> accept_entry.quality;
@@ -5511,7 +5511,7 @@ public:
       }
       case 2: { // Headers
         auto pos = buf_find(crlf_);
-        if (pos > CPPHTTPLIB_HEADER_MAX_LENGTH) { return false; }
+        if (pos > S_CPPHTTPLIB_HEADER_MAX_LENGTH) { return false; }
         while (pos < buf_size()) {
           // Empty line
           if (pos == 0) {
@@ -5884,7 +5884,7 @@ inline bool range_error(Request &req, Response &res) {
     // https://www.rfc-editor.org/rfc/rfc9110#section-14.2
 
     // Too many ranges
-    if (req.ranges.size() > CPPHTTPLIB_RANGE_MAX_COUNT) { return true; }
+    if (req.ranges.size() > S_CPPHTTPLIB_RANGE_MAX_COUNT) { return true; }
 
     for (auto &r : req.ranges) {
       auto &first_pos = r.first;
@@ -6072,7 +6072,7 @@ inline bool has_crlf(const std::string &s) {
   return false;
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline std::string message_digest(const std::string &s, const EVP_MD *algo) {
   auto context = std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>(
       EVP_MD_CTX_new(), EVP_MD_CTX_free);
@@ -6201,7 +6201,7 @@ inline bool load_system_certs_on_windows(X509_STORE *store) {
 
   return result;
 }
-#elif defined(CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN) &&                    \
+#elif defined(S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN) &&                    \
     defined(TARGET_OS_OSX)
 template <typename T>
 using CFObjectPtr =
@@ -6291,7 +6291,7 @@ inline bool load_system_certs_on_macos(X509_STORE *store) {
   return result;
 }
 #endif // _WIN64
-#endif // CPPHTTPLIB_OPENSSL_SUPPORT_S
+#endif // S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 
 #ifdef _WIN64
 class WSInit {
@@ -7017,7 +7017,7 @@ inline ssize_t SocketStream::read(char *ptr, size_t size) {
 
   if (size < read_buff_size_) {
     auto n = read_socket(sock_, read_buff_.data(), read_buff_size_,
-                         CPPHTTPLIB_RECV_FLAGS);
+                         S_CPPHTTPLIB_RECV_FLAGS);
     if (n <= 0) {
       return n;
     } else if (n <= static_cast<ssize_t>(size)) {
@@ -7030,7 +7030,7 @@ inline ssize_t SocketStream::read(char *ptr, size_t size) {
       return static_cast<ssize_t>(size);
     }
   } else {
-    return read_socket(sock_, ptr, size, CPPHTTPLIB_RECV_FLAGS);
+    return read_socket(sock_, ptr, size, S_CPPHTTPLIB_RECV_FLAGS);
   }
 }
 
@@ -7042,7 +7042,7 @@ inline ssize_t SocketStream::write(const char *ptr, size_t size) {
       (std::min)(size, static_cast<size_t>((std::numeric_limits<int>::max)()));
 #endif
 
-  return send_socket(sock_, ptr, size, CPPHTTPLIB_SEND_FLAGS);
+  return send_socket(sock_, ptr, size, S_CPPHTTPLIB_SEND_FLAGS);
 }
 
 inline void SocketStream::get_remote_ip_and_port(std::string &ip,
@@ -7104,7 +7104,7 @@ inline PathParamsMatcher::PathParamsMatcher(const std::string &pattern)
   // One past the last ending position of a path param substring
   std::size_t last_param_end = 0;
 
-#ifndef CPPHTTPLIB_NO_EXCEPTIONS
+#ifndef S_CPPHTTPLIB_NO_EXCEPTIONS
   // Needed to ensure that parameter names are unique during matcher
   // construction
   // If exceptions are disabled, only last duplicate path
@@ -7128,7 +7128,7 @@ inline PathParamsMatcher::PathParamsMatcher(const std::string &pattern)
     auto param_name =
         pattern.substr(param_name_start, sep_pos - param_name_start);
 
-#ifndef CPPHTTPLIB_NO_EXCEPTIONS
+#ifndef S_CPPHTTPLIB_NO_EXCEPTIONS
     if (param_name_set.find(param_name) != param_name_set.cend()) {
       std::string msg = "Encountered path parameter '" + param_name +
                         "' multiple times in route pattern '" + pattern + "'.";
@@ -7199,7 +7199,7 @@ inline bool RegexMatcher::match(Request &request) const {
 // HTTP server implementation
 inline Server::Server()
     : new_task_queue(
-          [] { return new ThreadPool(CPPHTTPLIB_THREAD_POOL_COUNT); }) {
+          [] { return new ThreadPool(S_CPPHTTPLIB_THREAD_POOL_COUNT); }) {
 #ifndef _WIN64
   signal(SIGPIPE, SIG_IGN);
 #endif
@@ -7642,15 +7642,15 @@ Server::write_content_with_provider(Stream &strm, const Request &req,
 
       std::unique_ptr<detail::compressor> compressor;
       if (type == detail::EncodingType::Gzip) {
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
         compressor = detail::make_unique<detail::gzip_compressor>();
 #endif
       } else if (type == detail::EncodingType::Brotli) {
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
         compressor = detail::make_unique<detail::brotli_compressor>();
 #endif
       } else if (type == detail::EncodingType::Zstd) {
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
         compressor = detail::make_unique<detail::zstd_compressor>();
 #endif
       } else {
@@ -7682,7 +7682,7 @@ inline bool Server::read_content(Stream &strm, Request &req, Response &res) {
           },
           // Multipart FormData
           [&](const FormData &file) {
-            if (count++ == CPPHTTPLIB_MULTIPART_FORM_DATA_FILE_MAX_COUNT) {
+            if (count++ == S_CPPHTTPLIB_MULTIPART_FORM_DATA_FILE_MAX_COUNT) {
               return false;
             }
 
@@ -7710,7 +7710,7 @@ inline bool Server::read_content(Stream &strm, Request &req, Response &res) {
           })) {
     const auto &content_type = req.get_header_value("Content-Type");
     if (!content_type.find("application/x-www-form-urlencoded")) {
-      if (req.body.size() > CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH) {
+      if (req.body.size() > S_CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH) {
         res.status = StatusCode::PayloadTooLarge_413; // NOTE: should be 414?
         return false;
       }
@@ -7828,7 +7828,7 @@ Server::create_server_socket(const std::string &host, int port,
         if (::bind(sock, ai.ai_addr, static_cast<socklen_t>(ai.ai_addrlen))) {
           return false;
         }
-        if (::listen(sock, CPPHTTPLIB_LISTEN_BACKLOG)) { return false; }
+        if (::listen(sock, S_CPPHTTPLIB_LISTEN_BACKLOG)) { return false; }
         return true;
       });
 }
@@ -8106,17 +8106,17 @@ inline void Server::apply_ranges(const Request &req, Response &res,
       std::string content_encoding;
 
       if (type == detail::EncodingType::Gzip) {
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
         compressor = detail::make_unique<detail::gzip_compressor>();
         content_encoding = "gzip";
 #endif
       } else if (type == detail::EncodingType::Brotli) {
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
         compressor = detail::make_unique<detail::brotli_compressor>();
         content_encoding = "br";
 #endif
       } else if (type == detail::EncodingType::Zstd) {
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
         compressor = detail::make_unique<detail::zstd_compressor>();
         content_encoding = "zstd";
 #endif
@@ -8196,7 +8196,7 @@ Server::process_request(Stream &strm, const std::string &remote_addr,
   }
 
   // Check if the request URI doesn't exceed the limit
-  if (req.target.size() > CPPHTTPLIB_REQUEST_URI_MAX_LENGTH) {
+  if (req.target.size() > S_CPPHTTPLIB_REQUEST_URI_MAX_LENGTH) {
     Headers dummy;
     detail::read_headers(strm, dummy);
     res.status = StatusCode::UriTooLong_414;
@@ -8265,7 +8265,7 @@ Server::process_request(Stream &strm, const std::string &remote_addr,
 
   // Routing
   auto routed = false;
-#ifdef CPPHTTPLIB_NO_EXCEPTIONS
+#ifdef S_CPPHTTPLIB_NO_EXCEPTIONS
   routed = routing(req, res, strm);
 #else
   try {
@@ -8417,7 +8417,7 @@ inline void ClientImpl::copy_settings(const ClientImpl &rhs) {
   basic_auth_username_ = rhs.basic_auth_username_;
   basic_auth_password_ = rhs.basic_auth_password_;
   bearer_token_auth_token_ = rhs.bearer_token_auth_token_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   digest_auth_username_ = rhs.digest_auth_username_;
   digest_auth_password_ = rhs.digest_auth_password_;
 #endif
@@ -8436,16 +8436,16 @@ inline void ClientImpl::copy_settings(const ClientImpl &rhs) {
   proxy_basic_auth_username_ = rhs.proxy_basic_auth_username_;
   proxy_basic_auth_password_ = rhs.proxy_basic_auth_password_;
   proxy_bearer_token_auth_token_ = rhs.proxy_bearer_token_auth_token_;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   proxy_digest_auth_username_ = rhs.proxy_digest_auth_username_;
   proxy_digest_auth_password_ = rhs.proxy_digest_auth_password_;
 #endif
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   ca_cert_file_path_ = rhs.ca_cert_file_path_;
   ca_cert_dir_path_ = rhs.ca_cert_dir_path_;
   ca_cert_store_ = rhs.ca_cert_store_;
 #endif
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   server_certificate_verification_ = rhs.server_certificate_verification_;
   server_hostname_verification_ = rhs.server_hostname_verification_;
   server_certificate_verifier_ = rhs.server_certificate_verifier_;
@@ -8506,7 +8506,7 @@ inline void ClientImpl::close_socket(Socket &socket) {
          socket_requests_are_from_thread_ == std::this_thread::get_id());
 
   // It is also a bug if this happens while SSL is still active
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   assert(socket.ssl == nullptr);
 #endif
   if (socket.sock == INVALID_SOCKET) { return; }
@@ -8522,7 +8522,7 @@ inline bool ClientImpl::read_response_line(Stream &strm, const Request &req,
 
   if (!line_reader.getline()) { return false; }
 
-#ifdef CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
+#ifdef S_CPPHTTPLIB_ALLOW_LF_AS_LINE_TERMINATOR
   thread_local const std::regex re("(HTTP/1\\.[01]) (\\d{3})(?: (.*?))?\r?\n");
 #else
   thread_local const std::regex re("(HTTP/1\\.[01]) (\\d{3})(?: (.*?))?\r\n");
@@ -8572,7 +8572,7 @@ inline bool ClientImpl::send_(Request &req, Response &res, Error &error) {
     if (socket_.is_open()) {
       is_alive = detail::is_socket_alive(socket_.sock);
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
       if (is_alive && is_ssl()) {
         if (detail::is_ssl_peer_could_be_closed(socket_.ssl, socket_.sock)) {
           is_alive = false;
@@ -8595,7 +8595,7 @@ inline bool ClientImpl::send_(Request &req, Response &res, Error &error) {
     if (!is_alive) {
       if (!create_and_connect_socket(socket_, error)) { return false; }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
       // TODO: refactoring
       if (is_ssl()) {
         auto &scli = static_cast<SSLClient &>(*this);
@@ -8668,7 +8668,7 @@ inline Result ClientImpl::send_(Request &&req) {
   auto res = detail::make_unique<Response>();
   auto error = Error::Success;
   auto ret = send(req, *res, error);
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   return Result{ret ? std::move(res) : nullptr, error, std::move(req.headers),
                 last_ssl_error_, last_openssl_error_};
 #else
@@ -8720,7 +8720,7 @@ inline bool ClientImpl::handle_request(Stream &strm, Request &req,
     ret = redirect(req, res, error);
   }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   if ((res.status == StatusCode::Unauthorized_401 ||
        res.status == StatusCode::ProxyAuthenticationRequired_407) &&
       req.authorization_count_ < 5) {
@@ -8823,7 +8823,7 @@ inline bool ClientImpl::create_redirect_client(
 
   // Create appropriate client type and handle redirect
   if (need_ssl) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     // Create SSL client for HTTPS redirect
     SSLClient redirect_client(host, port);
 
@@ -8894,7 +8894,7 @@ inline void ClientImpl::setup_redirect_client(ClientType &client) {
   if (!bearer_token_auth_token_.empty()) {
     client.set_bearer_token_auth(bearer_token_auth_token_);
   }
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   if (!digest_auth_username_.empty()) {
     client.set_digest_auth(digest_auth_username_, digest_auth_password_);
   }
@@ -8914,7 +8914,7 @@ inline void ClientImpl::setup_redirect_client(ClientType &client) {
     if (!proxy_bearer_token_auth_token_.empty()) {
       client.set_proxy_bearer_token_auth(proxy_bearer_token_auth_token_);
     }
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     if (!proxy_digest_auth_username_.empty()) {
       client.set_proxy_digest_auth(proxy_digest_auth_username_,
                                    proxy_digest_auth_password_);
@@ -8944,7 +8944,7 @@ inline bool ClientImpl::write_content_with_provider(Stream &strm,
   if (req.is_chunked_content_provider_) {
     // TODO: Brotli support
     std::unique_ptr<detail::compressor> compressor;
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
     if (compress_) {
       compressor = detail::make_unique<detail::gzip_compressor>();
     } else
@@ -8996,23 +8996,23 @@ inline bool ClientImpl::write_request(Stream &strm, Request &req,
   if (!req.content_receiver) {
     if (!req.has_header("Accept-Encoding")) {
       std::string accept_encoding;
-#ifdef CPPHTTPLIB_BROTLI_SUPPORT
+#ifdef S_CPPHTTPLIB_BROTLI_SUPPORT
       accept_encoding = "br";
 #endif
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
       if (!accept_encoding.empty()) { accept_encoding += ", "; }
       accept_encoding += "gzip, deflate";
 #endif
-#ifdef CPPHTTPLIB_ZSTD_SUPPORT
+#ifdef S_CPPHTTPLIB_ZSTD_SUPPORT
       if (!accept_encoding.empty()) { accept_encoding += ", "; }
       accept_encoding += "zstd";
 #endif
       req.set_header("Accept-Encoding", accept_encoding);
     }
 
-#ifndef CPPHTTPLIB_NO_DEFAULT_USER_AGENT
+#ifndef S_CPPHTTPLIB_NO_DEFAULT_USER_AGENT
     if (!req.has_header("User-Agent")) {
-      auto agent = std::string("cpp-httplib_S/") + CPPHTTPLIB_VERSION;
+      auto agent = std::string("cpp-httplib_S/") + S_CPPHTTPLIB_VERSION;
       req.set_header("User-Agent", agent);
     }
 #endif
@@ -9119,7 +9119,7 @@ inline bool ClientImpl::write_request(Stream &strm, Request &req,
     auto data = req.body.data();
 
     while (written < body_size) {
-      size_t to_write = (std::min)(CPPHTTPLIB_SEND_BUFSIZ, body_size - written);
+      size_t to_write = (std::min)(S_CPPHTTPLIB_SEND_BUFSIZ, body_size - written);
       if (!detail::write_data(strm, data + written, to_write)) {
         error = Error::Write;
         return false;
@@ -9148,11 +9148,11 @@ inline std::unique_ptr<Response> ClientImpl::send_with_content_provider(
     const std::string &content_type, Error &error) {
   if (!content_type.empty()) { req.set_header("Content-Type", content_type); }
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
   if (compress_) { req.set_header("Content-Encoding", "gzip"); }
 #endif
 
-#ifdef CPPHTTPLIB_ZLIB_SUPPORT
+#ifdef S_CPPHTTPLIB_ZLIB_SUPPORT
   if (compress_ && !content_provider_without_length) {
     // TODO: Brotli support
     detail::gzip_compressor compressor;
@@ -9240,7 +9240,7 @@ inline Result ClientImpl::send_with_content_provider(
       req, body, content_length, std::move(content_provider),
       std::move(content_provider_without_length), content_type, error);
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   return Result{std::move(res), error, std::move(req.headers), last_ssl_error_,
                 last_openssl_error_};
 #else
@@ -9260,7 +9260,7 @@ inline bool ClientImpl::process_request(Stream &strm, Request &req,
   // Send request
   if (!write_request(strm, req, close_connection, error)) { return false; }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   if (is_ssl()) {
     auto is_proxy_enabled = !proxy_host_.empty() && proxy_port_ != -1;
     if (!is_proxy_enabled) {
@@ -10120,7 +10120,7 @@ inline void ClientImpl::set_bearer_token_auth(const std::string &token) {
   bearer_token_auth_token_ = token;
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline void ClientImpl::set_digest_auth(const std::string &username,
                                         const std::string &password) {
   digest_auth_username_ = username;
@@ -10183,7 +10183,7 @@ inline void ClientImpl::set_proxy_bearer_token_auth(const std::string &token) {
   proxy_bearer_token_auth_token_ = token;
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline void ClientImpl::set_proxy_digest_auth(const std::string &username,
                                               const std::string &password) {
   proxy_digest_auth_username_ = username;
@@ -10247,7 +10247,7 @@ inline void ClientImpl::set_logger(Logger logger) {
 /*
  * SSL Implementation
  */
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 namespace detail {
 
 template <typename U, typename V>
@@ -10827,7 +10827,7 @@ inline bool SSLClient::load_certs() {
 #ifdef _WIN64
       loaded =
           detail::load_system_certs_on_windows(SSL_CTX_get_cert_store(ctx_));
-#elif defined(CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN) &&                    \
+#elif defined(S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN) &&                    \
     defined(TARGET_OS_OSX)
       loaded = detail::load_system_certs_on_macos(SSL_CTX_get_cert_store(ctx_));
 #endif // _WIN64
@@ -11095,12 +11095,12 @@ inline Client::Client(const std::string &scheme_host_port,
   if (std::regex_match(scheme_host_port, m, re)) {
     auto scheme = m[1].str();
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     if (!scheme.empty() && (scheme != "http" && scheme != "https")) {
 #else
     if (!scheme.empty() && scheme != "http") {
 #endif
-#ifndef CPPHTTPLIB_NO_EXCEPTIONS
+#ifndef S_CPPHTTPLIB_NO_EXCEPTIONS
       std::string msg = "'" + scheme + "' scheme is not supported.";
       throw std::invalid_argument(msg);
 #endif
@@ -11116,7 +11116,7 @@ inline Client::Client(const std::string &scheme_host_port,
     auto port = !port_str.empty() ? std::stoi(port_str) : (is_ssl ? 443 : 80);
 
     if (is_ssl) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
       cli_ = detail::make_unique<SSLClient>(host, port, client_cert_path,
                                             client_key_path);
       is_ssl_ = is_ssl;
@@ -11595,7 +11595,7 @@ inline void Client::set_basic_auth(const std::string &username,
 inline void Client::set_bearer_token_auth(const std::string &token) {
   cli_->set_bearer_token_auth(token);
 }
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline void Client::set_digest_auth(const std::string &username,
                                     const std::string &password) {
   cli_->set_digest_auth(username, password);
@@ -11632,14 +11632,14 @@ inline void Client::set_proxy_basic_auth(const std::string &username,
 inline void Client::set_proxy_bearer_token_auth(const std::string &token) {
   cli_->set_proxy_bearer_token_auth(token);
 }
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline void Client::set_proxy_digest_auth(const std::string &username,
                                           const std::string &password) {
   cli_->set_proxy_digest_auth(username, password);
 }
 #endif
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline void Client::enable_server_certificate_verification(bool enabled) {
   cli_->enable_server_certificate_verification(enabled);
 }
@@ -11658,7 +11658,7 @@ inline void Client::set_logger(Logger logger) {
   cli_->set_logger(std::move(logger));
 }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 inline void Client::set_ca_cert_path(const std::string &ca_cert_file_path,
                                      const std::string &ca_cert_dir_path) {
   cli_->set_ca_cert_path(ca_cert_file_path, ca_cert_dir_path);
@@ -11693,4 +11693,4 @@ inline SSL_CTX *Client::ssl_context() const {
 
 } // namespace httplib_S
 
-#endif // CPPHTTPLIB_HTTPLIB_H
+#endif // S_CPPHTTPLIB_HTTPLIB_H

@@ -13,7 +13,7 @@
 using namespace std;
 
 int main(void) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   httplib_S::SSLClient cli("localhost", 8080);
   // httplib_S::SSLClient cli("google.com");
   // httplib_S::SSLClient cli("www.youtube.com");
@@ -29,7 +29,7 @@ int main(void) {
     cout << res->body << endl;
   } else {
     cout << "error code: " << res.error() << std::endl;
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     auto result = cli.get_openssl_verify_result();
     if (result) {
       cout << "verify error: " << X509_verify_cert_error_string(result) << endl;

@@ -4,7 +4,6 @@
 #include <httplib.h>
 #include <string>
 
-
 class HTTPclient {
     const char* ca_cert = "./ca-bundle.crt";
 #ifdef CPPHTTPLIB_OPENSSL_SUPPORT    

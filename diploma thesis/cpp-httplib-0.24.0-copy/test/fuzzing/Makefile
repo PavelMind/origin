@@ -6,12 +6,12 @@ CXXFLAGS += -ggdb -O0 -std=c++11 -DGTEST_USE_OWN_TR1_TUPLE -I../.. -I. -Wall -We
 OPENSSL_DIR = /usr/local/opt/openssl@1.1
 
 # Using full path to libssl and libcrypto to avoid accidentally picking openssl libs brought in by msan.
-OPENSSL_SUPPORT = -DCPPHTTPLIB_OPENSSL_SUPPORT_S -I$(OPENSSL_DIR)/include -I$(OPENSSL_DIR)/lib  /usr/local/lib/libssl.a /usr/local/lib/libcrypto.a
+OPENSSL_SUPPORT = -DS_CPPHTTPLIB_OPENSSL_SUPPORT_S -I$(OPENSSL_DIR)/include -I$(OPENSSL_DIR)/lib  /usr/local/lib/libssl.a /usr/local/lib/libcrypto.a
 
-ZLIB_SUPPORT = -DCPPHTTPLIB_ZLIB_SUPPORT -lz
+ZLIB_SUPPORT = -DS_CPPHTTPLIB_ZLIB_SUPPORT -lz
 
 BROTLI_DIR = /usr/local/opt/brotli
-# BROTLI_SUPPORT = -DCPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
+# BROTLI_SUPPORT = -DS_CPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
 
 # Runs all the tests and also fuzz tests against seed corpus.
 all : server_fuzzer

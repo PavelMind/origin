@@ -2,11 +2,12 @@
 #include <fstream>
 #include <exception>
 #include <chrono>
+#include <boost/locale.hpp>
 #include "../data base/sql_query_builders.h"
 
 
 HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     : serv( cert, key ) 
 #endif 
 {
@@ -115,7 +116,11 @@ void HTTPserver::readMyStartHtml() {
     file.close();
 }
 
-std::string HTTPserver::createListResp(const std::string stringReq) {
+std::string HTTPserver::createListResp(std::string stringReq) {
+    boost::locale::generator gen;
+    std::locale utf8Loc(gen(""));
+    stringReq = boost::locale::to_lower(stringReq, utf8Loc);
+
     std::string text{ "<html>\n<head>\n<title>Result</title>\n" };
     text += "<style>p{margin-top: 1px;margin-bottom: 0.1px;}h5{margin-top: 0.1px;margin-bottom: 1px;}</style>";
     text += "</head>\n<body>\n" ;

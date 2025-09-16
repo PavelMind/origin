@@ -1,10 +1,10 @@
 
 cmake_minimum_required(VERSION 3.14.0 FATAL_ERROR)
 
-# Get the CPPHTTPLIB_VERSION value and use it as a version
-# This gets the string with the CPPHTTPLIB_VERSION value from the header.
+# Get the S_CPPHTTPLIB_VERSION value and use it as a version
+# This gets the string with the S_CPPHTTPLIB_VERSION value from the header.
 # This is so the maintainer doesn't actually need to update this manually.
-file(STRINGS httplib_S.h _raw_version_string REGEX "CPPHTTPLIB_VERSION \"([0-9]+\\.[0-9]+\\.[0-9]+)\"")
+file(STRINGS httplib_S.h _raw_version_string REGEX "S_CPPHTTPLIB_VERSION \"([0-9]+\\.[0-9]+\\.[0-9]+)\"")
 
 # Extracts just the version string itself from the whole string contained in _raw_version_string
 # since _raw_version_string would contain the entire line of code where it found the version string
@@ -200,13 +200,13 @@ target_link_libraries(${PROJECT_NAME} ${_INTERFACE_OR_PUBLIC}
 
 # Set the definitions to enable optional features
 target_compile_definitions(${PROJECT_NAME} ${_INTERFACE_OR_PUBLIC}
-	$<$<BOOL:${HTTPLIB_NO_EXCEPTIONS}>:CPPHTTPLIB_NO_EXCEPTIONS>
-	$<$<BOOL:${HTTPLIB_IS_USING_BROTLI}>:CPPHTTPLIB_BROTLI_SUPPORT>
-	$<$<BOOL:${HTTPLIB_IS_USING_ZLIB}>:CPPHTTPLIB_ZLIB_SUPPORT>
-	$<$<BOOL:${HTTPLIB_IS_USING_ZSTD}>:CPPHTTPLIB_ZSTD_SUPPORT>
-	$<$<BOOL:${HTTPLIB_IS_USING_OPENSSL}>:CPPHTTPLIB_OPENSSL_SUPPORT_S>
-	$<$<AND:$<PLATFORM_ID:Darwin>,$<BOOL:${HTTPLIB_IS_USING_OPENSSL}>,$<BOOL:${HTTPLIB_IS_USING_CERTS_FROM_MACOSX_KEYCHAIN}>>:CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN>
-	$<$<BOOL:${HTTPLIB_USE_NON_BLOCKING_GETADDRINFO}>:CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO>
+	$<$<BOOL:${HTTPLIB_NO_EXCEPTIONS}>:S_CPPHTTPLIB_NO_EXCEPTIONS>
+	$<$<BOOL:${HTTPLIB_IS_USING_BROTLI}>:S_CPPHTTPLIB_BROTLI_SUPPORT>
+	$<$<BOOL:${HTTPLIB_IS_USING_ZLIB}>:S_CPPHTTPLIB_ZLIB_SUPPORT>
+	$<$<BOOL:${HTTPLIB_IS_USING_ZSTD}>:S_CPPHTTPLIB_ZSTD_SUPPORT>
+	$<$<BOOL:${HTTPLIB_IS_USING_OPENSSL}>:S_CPPHTTPLIB_OPENSSL_SUPPORT_S>
+	$<$<AND:$<PLATFORM_ID:Darwin>,$<BOOL:${HTTPLIB_IS_USING_OPENSSL}>,$<BOOL:${HTTPLIB_IS_USING_CERTS_FROM_MACOSX_KEYCHAIN}>>:S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN>
+	$<$<BOOL:${HTTPLIB_USE_NON_BLOCKING_GETADDRINFO}>:S_CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO>
 )
 
 # CMake configuration files installation directory

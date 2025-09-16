@@ -65,7 +65,7 @@ std::string log(const Request &req, const Response &res) {
 }
 
 int main(void) {
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
 #else
   Server svr;

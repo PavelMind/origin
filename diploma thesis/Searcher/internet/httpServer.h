@@ -11,7 +11,7 @@
 class HTTPserver {
     const char* cert = "./cert.pem";
     const char* key = "./key.pem";
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
     httplib_S::SSLServer serv;
 #else
     httplib_S::Server serv;
@@ -21,7 +21,7 @@ class HTTPserver {
     std::shared_ptr<DBclass> DB;
     
     void readMyStartHtml();
-    std::string createListResp(const std::string);
+    std::string createListResp(std::string);
     void createListWords(std::vector<std::string>&, const std::string&);
     std::vector<std::pair<std::string, std::string>> reqFromDB(const std::vector<std::string>&);
 public:

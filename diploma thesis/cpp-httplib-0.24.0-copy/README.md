@@ -16,7 +16,7 @@ Simple examples
 #### Server (Multi-threaded)
 
 ```c++
-#define CPPHTTPLIB_OPENSSL_SUPPORT_S
+#define S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 #include "path/to/httplib_S.h"
 
 // HTTP
@@ -35,7 +35,7 @@ svr.listen("0.0.0.0", 8080);
 #### Client
 
 ```c++
-#define CPPHTTPLIB_OPENSSL_SUPPORT_S
+#define S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 #include "path/to/httplib_S.h"
 
 // HTTP
@@ -52,16 +52,16 @@ res->body;
 SSL Support
 -----------
 
-SSL support is available with `CPPHTTPLIB_OPENSSL_SUPPORT_S`. `libssl` and `libcrypto` should be linked.
+SSL support is available with `S_CPPHTTPLIB_OPENSSL_SUPPORT_S`. `libssl` and `libcrypto` should be linked.
 
 > [!NOTE]
 > cpp-httplib_S currently supports only version 3.0 or later. Please see [this page](https://www.openssl.org/policies/releasestrat.html) to get more information.
 
 > [!TIP]
-> For macOS: cpp-httplib_S now can use system certs with `CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN`. `CoreFoundation` and `Security` should be linked with `-framework`.
+> For macOS: cpp-httplib_S now can use system certs with `S_CPPHTTPLIB_USE_CERTS_FROM_MACOSX_KEYCHAIN`. `CoreFoundation` and `Security` should be linked with `-framework`.
 
 ```c++
-#define CPPHTTPLIB_OPENSSL_SUPPORT_S
+#define S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 #include "path/to/httplib_S.h"
 
 // Server
@@ -90,7 +90,7 @@ cli.enable_server_hostname_verification(false);
 When SSL operations fail, cpp-httplib_S provides detailed error information through two separate error fields:
 
 ```c++
-#define CPPHTTPLIB_OPENSSL_SUPPORT_S
+#define S_CPPHTTPLIB_OPENSSL_SUPPORT_S
 #include "path/to/httplib_S.h"
 
 httplib_S::Client cli("https://example.com");
@@ -602,7 +602,7 @@ svr.set_payload_max_length(1024 * 1024 * 512); // 512MB
 ```
 
 > [!NOTE]
-> When the request body content type is 'www-form-urlencoded', the actual payload length shouldn't exceed `CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH`.
+> When the request body content type is 'www-form-urlencoded', the actual payload length shouldn't exceed `S_CPPHTTPLIB_FORM_URL_ENCODED_PAYLOAD_MAX_LENGTH`.
 
 ### Server-Sent Events
 
@@ -610,7 +610,7 @@ Please see [Server example](https://github.com/yhirose/cpp-httplib_S/blob/master
 
 ### Default thread pool support
 
-`ThreadPool` is used as the **default** task queue, with a default thread count of 8 or `std::thread::hardware_concurrency() - 1`, whichever is greater. You can change it with `CPPHTTPLIB_THREAD_POOL_COUNT`.
+`ThreadPool` is used as the **default** task queue, with a default thread count of 8 or `std::thread::hardware_concurrency() - 1`, whichever is greater. You can change it with `S_CPPHTTPLIB_THREAD_POOL_COUNT`.
 
 If you want to set the thread count at runtime, there is no convenient way... But here is how.
 
@@ -1024,16 +1024,16 @@ The server can apply compression to the following MIME type contents:
 
 ### Zlib Support
 
-'gzip' compression is available with `CPPHTTPLIB_ZLIB_SUPPORT`. `libz` should be linked.
+'gzip' compression is available with `S_CPPHTTPLIB_ZLIB_SUPPORT`. `libz` should be linked.
 
 ### Brotli Support
 
-Brotli compression is available with `CPPHTTPLIB_BROTLI_SUPPORT`. Necessary libraries should be linked.
+Brotli compression is available with `S_CPPHTTPLIB_BROTLI_SUPPORT`. Necessary libraries should be linked.
 Please see https://github.com/google/brotli for more detail.
 
 ### Zstd Support
 
-Zstd compression is available with `CPPHTTPLIB_ZSTD_SUPPORT`. Necessary libraries should be linked.
+Zstd compression is available with `S_CPPHTTPLIB_ZSTD_SUPPORT`. Necessary libraries should be linked.
 Please see https://github.com/facebook/zstd for more detail.
 
 ### Default `Accept-Encoding` value

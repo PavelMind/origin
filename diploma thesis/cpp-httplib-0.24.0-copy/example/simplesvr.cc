@@ -107,7 +107,7 @@ int main(int argc, const char **argv) {
     return 1;
   }
 
-#ifdef CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
   SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
 #else
   Server svr;
