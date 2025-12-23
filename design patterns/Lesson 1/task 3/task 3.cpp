@@ -12,7 +12,6 @@ int main()
     query_builder.AddFrom("students");
     query_builder.AddWhere('>', "id", "42");
 
-    //std::cout << query_builder.BuildQuery()<<std::endl;
     assert(query_builder.BuildQuery() ==
         "SELECT name, phone FROM students WHERE id>42;");
     std::cout << "all are good!";

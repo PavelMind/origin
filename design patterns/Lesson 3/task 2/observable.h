@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 #include "observer.h"
-//class Observer;
 
 class observable {
 protected:

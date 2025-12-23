@@ -3,4 +3,31 @@ x64/
 task*/task*/
 task*/out/build/
 **/out/build/
+**/*.sln
+**/*.vcxproj
+**/*.vcxproj.filters
+**/*.vcxproj.user
 additionallyFiles/
+
+/basic_programming/
+/database/
+
+/algorithm_i_structures/Lesson [1245]/
+/algorithm_i_structures/Lesson 8/task1/
+/algorithm_i_structures/Lesson 7/task[123]/
+/algorithm_i_structures/Lesson 6/task[12]/
+# L8:t2,  L7:t4,     L6:t3
+
+/advanced programming/Lesson [1-10]/
+/advanced programming/Lesson 11/task1/
+#L11:t2,   ParserINI
+
+/multithreading/Lesson 1/
+/multithreading/Lesson 2/task [13]/
+/multithreading/Lesson 3/task 2/
+/multithreading/Lesson 5/
+# L2:t2,   L3:t1,  network:t1, t2,  TSafe
+
+/design patterns/Lesson 1/task [12]/
+/design patterns/Lesson 4/
+# L1:t3,  L2:t1,t2,   L3:t1,t2,t3,   

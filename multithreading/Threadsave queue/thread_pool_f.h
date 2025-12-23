@@ -1,6 +1,4 @@
 #pragma once
-#include "set include.h"
-#if INCLUDE_WITH_FUNCTION
 #include <thread>
 #include <vector>
 #include "safe_queue_f.h"
@@ -47,5 +45,3 @@ public:
         sQueue.push(std::move(task));
     }
 };
-
-#endif // INCLUDE_WITH_FUNCTION

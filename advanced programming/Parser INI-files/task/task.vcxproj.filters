@@ -21,7 +21,7 @@
     <ClCompile Include="parser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="paparser.cpp">
+    <ClCompile Include="parser2.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,7 @@
     <ClInclude Include="myexpect.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="paparser.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="externHead.h">
+    <ClInclude Include="parser2.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

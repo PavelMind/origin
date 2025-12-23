@@ -152,7 +152,6 @@ big_integer big_integer::multyNum(int mult) const {
 big_integer operator * (const big_integer& a, const big_integer& b) {
     big_integer result;
     for (int i = 0; i < a.arrNumber.size(); ++i) {
-        //auto temp = b.multyNum(a.arrNumber[i] * pow(10, i));
         auto temp = b.multyNum(a.arrNumber[i]);
 
         if (i > 0) {

@@ -1,14 +1,9 @@
 #pragma once
-
-#include "set include.h"
-#if INCLUDE_WITH_FUNCTION
 #include <mutex>
 #include <queue>
 #include <condition_variable>
 #include <functional>
 #include <atomic>
-
-
 
 class thread_pool;
 
@@ -43,5 +38,3 @@ public:
         return Queue.empty();
     }
 };
-
-#endif // INCLUDE_WITH_FUNCTION

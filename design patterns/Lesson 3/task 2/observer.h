@@ -2,14 +2,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-//#include "observable.h"
-//class Observer;
 
 class observable;
-//void observable::removeObserver(Observer*);
 
-class Observer {
-    
+class Observer {    
 public:    
     virtual ~Observer() = default;
     virtual void onWarning(const std::string& message) {}

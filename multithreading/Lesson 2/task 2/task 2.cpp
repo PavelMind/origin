@@ -34,7 +34,7 @@ public:
 };
 
 
-void printBars(std::mutex& mtx, conVar& cond, std::vector<std::thread::id> vecId, massag& mass/*, bool& forBar*/) {    
+void printBars(std::mutex& mtx, conVar& cond, std::vector<std::thread::id> vecId, massag& mass) {    
     bool endWhile = false;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);    
 
@@ -74,7 +74,7 @@ void printBars(std::mutex& mtx, conVar& cond, std::vector<std::thread::id> vecId
     }
 }
 
-void bar(std::mutex& mtx, conVar& cv, massag& mass, int i/*, bool& forBar*/) {
+void bar(std::mutex& mtx, conVar& cv, massag& mass, int i) {
     using namespace std::chrono;
     bool ranWhile = true;
     std::srand(i * time(NULL));
@@ -116,7 +116,6 @@ int main()
 {
     int countTrd = 14;
     int maxBar = 12;
-    //bool forCVBar = false;
     std::vector<std::thread> vecTrd;
     std::vector<std::thread::id> vecId;
     
@@ -125,11 +124,11 @@ int main()
     
     massag mass(countTrd, maxBar);
     for (int i = 0; i < countTrd; ++i) {
-        vecTrd.push_back(std::thread(bar, std::ref(mut), std::ref(cvBar), std::ref(mass), i/*, std::ref(forCVBar)*/));
+        vecTrd.push_back(std::thread(bar, std::ref(mut), std::ref(cvBar), std::ref(mass), i));
         vecId.push_back(vecTrd[i].get_id());
     }
 
-    std::thread print(printBars, std::ref(mut), std::ref(cvBar), vecId, std::ref(mass)/*, std::ref(forCVBar)*/);
+    std::thread print(printBars, std::ref(mut), std::ref(cvBar), vecId, std::ref(mass));
     print.join();
 
     for (int i = 0; i < countTrd; ++i) {

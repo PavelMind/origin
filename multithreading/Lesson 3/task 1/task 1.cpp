@@ -22,7 +22,7 @@ Iter find_min(Iter first, Iter last) {
 }
 
 void choice_sort(std::vector<int> vect, std::promise<std::vector<int>> promis) {
-    int countCore = std::thread::hardware_concurrency() - 2;
+    int countCore = std::thread::hardware_concurrency();
     int minRange = 30;    
     auto last = vect.end();   
 

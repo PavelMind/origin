@@ -5,7 +5,8 @@
 
 int main() {
     auto real_db = VeryHeavyDatabase();
-    auto limit_db = OneShotDB(std::addressof(real_db), 2);
+    auto limit_db = OneShotDB(std::addressof(real_db), 2);//need output "key" 2 count
+    
     std::cout << limit_db.GetData("key") << std::endl;
     std::cout << limit_db.GetData("key") << std::endl;
     std::cout << limit_db.GetData("key") << std::endl;

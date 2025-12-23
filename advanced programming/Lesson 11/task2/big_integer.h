@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <math.h>
+
 
 class big_integer {    
     std::vector<char> arrNumber;

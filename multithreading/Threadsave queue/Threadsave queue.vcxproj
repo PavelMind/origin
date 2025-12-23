@@ -127,13 +127,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="safe_queue_pt.h" />
     <ClInclude Include="safe_queue_f.h" />
-    <ClInclude Include="safe_queue_tmplt.h" />
-    <ClInclude Include="set include.h" />
-    <ClInclude Include="thread_pool_pt.h" />
     <ClInclude Include="thread_pool_f.h" />
-    <ClInclude Include="thread_pool_tmplt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

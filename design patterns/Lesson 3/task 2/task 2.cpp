@@ -1,7 +1,5 @@
-﻿#include <iostream>
-#include <string>
+﻿#include <string>
 #include "observable.h"
-//#include "observer.h"
 
 
 int main()
