@@ -1,4 +1,0 @@
-R:/Работа/Netology homework/basic_programming/Project Racing simulator/task/out/build/x64-Debug/CMakeFiles/TransportLib.dir
-R:/Работа/Netology homework/basic_programming/Project Racing simulator/task/out/build/x64-Debug/CMakeFiles/GameRacing.dir
-R:/Работа/Netology homework/basic_programming/Project Racing simulator/task/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-R:/Работа/Netology homework/basic_programming/Project Racing simulator/task/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

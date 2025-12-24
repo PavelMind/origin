@@ -1,4 +1,0 @@
-R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/dunamicFigure.dir
-R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/dunamicMyLib.dir
-R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-R:/Работа/Netology homework/basic_programming/Lesson 11/task5/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
