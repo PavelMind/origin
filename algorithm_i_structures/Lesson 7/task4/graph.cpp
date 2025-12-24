@@ -72,7 +72,7 @@ void Graph::deepRoundRecurs(int vert, bool* visited) {
 
 void Graph::widthRound(int startVert) {
     std::vector<bool> visited(N, false);
-    std::queue<int> queueV;     //pop - delete first(front)
+    std::queue<int> queueV;
     queueV.push(startVert);
     visited[startVert] = true;
 
@@ -129,7 +129,7 @@ bool Graph::haveCycleRecurs(int vert, int last, std::vector<bool>& visited) {
 
 int Graph::connectComponents(std::vector<int>& result) {
     std::vector<bool> visited(N, false);
-    std::queue<int> queueV;     //pop - delete first(front)
+    std::queue<int> queueV;
     result.resize(N, 0);
     int countComp = 0;
     for (int n = 0; n < N; ++n) {
