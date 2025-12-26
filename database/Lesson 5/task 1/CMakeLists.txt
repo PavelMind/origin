@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(MyProject1)
+project(MyProject1) 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories("R:/Development/Programming_tools/vcpkg/vcpkg/buildtrees/libpqxx/src/7.10.0-a5d32b19bc.clean/include" )
