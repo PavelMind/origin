@@ -7,28 +7,28 @@
 
 
 HTTPserver::HTTPserver(std::string host, int port, std::shared_ptr<DBclass> db)
-#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
     : serv( cert, key )
 #endif 
 {
     DB = db;
     readMyStartHtml();
     if (errServer) {
-        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+        serv.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
             res.set_content("<html>\n<body><p>ERROR ON SERVER</p></body>\n</html>", "text/html");
             }
         );
     }
     else{
-        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+        serv.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
             res.set_content(mainHTML, "text/html");
             }
         );
 
-        serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+        serv.Post("/", [&](const httplib::Request& req, httplib::Response& res) {
             std::string stringReq = req.form.get_field("nameLabl");
             std::string newPage = "/" + stringReq;
-            serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
+            serv.Get(newPage, [=](const httplib::Request&, httplib::Response& res) {
                 res.set_content(createListResp(stringReq), "text/html");
                 });
 
@@ -71,21 +71,21 @@ HTTPserver::HTTPserver(ini_parser& p, std::shared_ptr<DBclass> db)
     DB = db;
     readMyStartHtml();
     if (errServer) {
-        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+        serv.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
             res.set_content("<html>\n<body><p>ERROR ON SERVER</p></body>\n</html>", "text/html");
             }
         );
     }
     else {
-        serv.Get("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+        serv.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
             res.set_content(mainHTML, "text/html");
             }
         );
 
-        serv.Post("/", [&](const httplib_S::Request& req, httplib_S::Response& res) {
+        serv.Post("/", [&](const httplib::Request& req, httplib::Response& res) {
             std::string stringReq = req.form.get_field("nameLabl");
             std::string newPage = "/" + stringReq;
-            serv.Get(newPage, [=](const httplib_S::Request&, httplib_S::Response& res) {
+            serv.Get(newPage, [=](const httplib::Request&, httplib::Response& res) {
                 res.set_content(createListResp(stringReq), "text/html");
                 });
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <httplib_S.h>
+#include <httplib.h>
 #include <string>
 #include <thread>
 #include <memory>
@@ -11,10 +11,10 @@
 class HTTPserver {
     const char* cert = "./cert.pem";
     const char* key = "./key.pem";
-#ifdef S_CPPHTTPLIB_OPENSSL_SUPPORT_S
-    httplib_S::SSLServer serv;
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+    httplib::SSLServer serv;
 #else
-    httplib_S::Server serv;
+    httplib::Server serv;
 #endif   
     std::string mainHTML;
     std::thread thrd;

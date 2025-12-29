@@ -6,8 +6,8 @@ set(Boost_ROOT "R:/Development/Library_and_framework/Boost/boost_1_88_0")
 set(Boost_USE_STATIC_LIBS ON)
 set(OPENSSL_ROOT_DIR "R:/Development/Library_and_framework/OpenSSL/openssl-3.4.2offsite")
 set(OpenSSL_DIR "R:/Development/Library_and_framework/OpenSSL/openssl-3.4.2offsite/include/openssl")
-set(libpqxx_DIR "R:\\Development\\Library_and_framework\\libpq++\\libpqxx-7.10.1")
-set(httplib_DIR_Second "R:/Development/Library_and_framework/cpp-httplib/cpp-httplib-0.24.0-copy")
+set(libpqxx_DIR "R:/Development/Library_and_framework/libpq++/libpqxx-7.10.1")
+set(httplib_DIR_Second "R:/Development/Library_and_framework/cpp-httplib/cpp-httplib-0.24.0")
 
 file(GLOB_RECURSE DBfiles
     "${CMAKE_CURRENT_SOURCE_DIR}/data base/*.cpp"
