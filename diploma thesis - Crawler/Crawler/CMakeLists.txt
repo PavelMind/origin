@@ -36,10 +36,7 @@ include_directories(
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/crawler_data.ini  ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/black_list_site.txt ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${OPENSSL_ROOT_DIR}/demos/sslecho/cert.pem ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${OPENSSL_ROOT_DIR}/demos/sslecho/key.pem ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${OPENSSL_ROOT_DIR}/test/certs/ca-cert.pem ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${httplib_DIR}/example/ca-bundle.crt ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/ca-bundle.crt ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 
 add_subdirectory(${libpqxx_DIR} libpqxx-build)

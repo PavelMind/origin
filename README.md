@@ -23,7 +23,7 @@
 - [TCP-клиент](https://github.com/PavelMind/origin/tree/main/multithreading/Lesson%20Network/task%201)
 - [Многопоточный TCP-сервер](https://github.com/PavelMind/origin/tree/main/multithreading/Lesson%20Network/task%202)  
 
-[Курсовой проект "Потокобезопасная очередь"](https://github.com/PavelMind/origin/tree/main/multithreading/Threadsave%20queue)  
+[Курсовой проект "Потокобезопасная очередь" (Пул потоков)](https://github.com/PavelMind/origin/tree/main/multithreading/Threadsave%20queue)  
 
 ### Тема "Шаблоны проектирования".
 - [Паттерн "строитель"](https://github.com/PavelMind/origin/tree/main/design%20patterns/Lesson%201/task%203)
