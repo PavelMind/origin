@@ -7,7 +7,7 @@ task*/out/build/
 **/*.vcxproj
 **/*.vcxproj.filters
 **/*.vcxproj.user
-additionallyFiles/
+
 
 /basic_programming/
 /database/Lesson\ [12346]/
